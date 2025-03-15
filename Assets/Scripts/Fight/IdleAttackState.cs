@@ -1,4 +1,6 @@
-﻿using Move;
+﻿using Base;
+using Move;
+using UnityEngine;
 
 namespace Fight
 {
@@ -10,18 +12,16 @@ namespace Fight
 
         public override void Enter()
         {
+            Debug.Log("Entering IdleAttack");
         }
 
         public override void Execute( )
         {
-            if (PlayerController.AttackInput)
-            {
-                PlayerController.ChangeState(new AttackState());
-            }
         }
 
         public override void Exit( )
         {
+            Debug.Log("Exiting IdleAttack");
         }
     }
 }

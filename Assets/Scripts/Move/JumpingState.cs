@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Base;
+using UnityEngine;
 
 namespace Move
 {
@@ -10,22 +11,19 @@ namespace Move
 
         public override void Enter()
         {
+            MonoBehaviour.print("Entering Jumping State");
             PlayerController.Jump();
         }
 
         public override void Execute()
         {
-            MonoBehaviour.print("Falling");
             PlayerController.moveSpeed -= 2f * Time.deltaTime;
             PlayerController.Move();
-            if (PlayerController.IsGrounded)
-            {
-                PlayerController.ChangeState(new IdleState());
-            }
         }
 
         public override void Exit()
         {
+            MonoBehaviour.print("Exiting Jumping State");
         }
     }
 }

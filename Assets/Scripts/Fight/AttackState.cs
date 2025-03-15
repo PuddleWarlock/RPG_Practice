@@ -1,30 +1,36 @@
-﻿using Move;
+﻿using Base;
+using Move;
 using UnityEngine;
 
 namespace Fight
 {
     public class AttackState : BasePlayerState
     {
-        public AttackState(PlayerController playerController) : base(playerController)
+        private CooldownSystem _cooldownSystem;
+        private Collider _sword;
+        public AttackState(PlayerController playerController, CooldownSystem cooldownSystem) : base(playerController)
         {
+            _cooldownSystem = cooldownSystem;
+            _sword = GameObject.Find("Sword").GetComponent<BoxCollider>();
         }
 
         public override void Enter()
         {
-            PlayerController.DoAttack();
+            _sword.enabled = true;
+            Debug.Log("Entering Melee");
+            PlayerController._playerAnimator.DoAttack();
+            _cooldownSystem.MeleeReady = false;
+
         }
 
         public override void Execute()
         {
-            if (Mathf.Approximately(PlayerController._animator.GetCurrentAnimatorStateInfo(1).normalizedTime, 1))
-            {
-                PlayerController.ChangeState(new CooldownState());
-            }
         }
 
         public override void Exit()
         {
-            
+            _sword.enabled = false;
+            Debug.Log("Exiting Melee");
         }
     }
 }

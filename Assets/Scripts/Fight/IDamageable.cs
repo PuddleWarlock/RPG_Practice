@@ -1,7 +1,9 @@
-﻿namespace Fight
+﻿using Weapons;
+
+namespace Fight
 {
     public interface IDamageable
     {
-        void TakeDamage(float damage);
+        void TakeDamage(Damage damage);
     }
 }

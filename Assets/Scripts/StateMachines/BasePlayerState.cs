@@ -1,4 +1,7 @@
-﻿namespace Move
+﻿using Base;
+using StateMachines;
+
+namespace Move
 {
     public abstract class BasePlayerState : IPlayerState
     {

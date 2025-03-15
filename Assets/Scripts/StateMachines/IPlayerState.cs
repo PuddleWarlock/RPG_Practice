@@ -1,4 +1,4 @@
-﻿namespace Move
+﻿namespace StateMachines
 {
     public interface IPlayerState
     {

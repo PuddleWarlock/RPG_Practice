@@ -1,35 +1,26 @@
-﻿using UnityEngine;
+﻿using Base;
+using UnityEngine;
 
 namespace Move
 {
-    public class WalkingState: IPlayerState
+    public class WalkingState: BasePlayerState
     {
-        public void Enter(PlayerController playerController)
+        public WalkingState(PlayerController playerController) : base(playerController)
+        {
+        }
+
+        public override void Enter()
         {
             MonoBehaviour.print("Entering Walking State");
-            playerController.moveSpeed = 10f;
+            PlayerController.moveSpeed = 10f;
         }
 
-        public void Execute(PlayerController playerController)
+        public override void Execute()
         {
-            MonoBehaviour.print("Walking");
-            playerController.Move();
-            if (playerController.MoveInput.magnitude == 0)
-            {
-                playerController.ChangeState(new IdleState());
-            }
-            else if (playerController.JumpInput)
-            {
-                playerController.ChangeState(new JumpingState());
-            }
-            else if (playerController.SprintInput)
-            {
-                playerController.ChangeState(new SprintingState());
-            }
-
+            PlayerController.Move();
         }
 
-        public void Exit(PlayerController playerController)
+        public override void Exit()
         {
             MonoBehaviour.print("Exiting Walking State");
         }
