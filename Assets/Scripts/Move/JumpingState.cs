@@ -5,20 +5,20 @@ namespace Move
 {
     public class JumpingState : BasePlayerState
     {
-        public JumpingState(PlayerController playerController) : base(playerController)
+        public JumpingState(MovementController movementController) : base(movementController)
         {
         }
 
         public override void Enter()
         {
             MonoBehaviour.print("Entering Jumping State");
-            PlayerController.Jump();
+            MovementController.Jump();
         }
 
         public override void Execute()
         {
-            PlayerController.moveSpeed -= 2f * Time.deltaTime;
-            PlayerController.Move();
+            MovementController.moveSpeed -= 2f * Time.deltaTime;
+            MovementController.Move();
         }
 
         public override void Exit()

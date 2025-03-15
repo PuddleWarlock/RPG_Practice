@@ -5,19 +5,19 @@ namespace Move
 {
     public class SprintingState : BasePlayerState
     {
-        public SprintingState(PlayerController playerController) : base(playerController)
+        public SprintingState(MovementController movementController) : base(movementController)
         {
         }
 
         public override void Enter()
         {
-            PlayerController.moveSpeed = 20f;
+            MovementController.moveSpeed = 20f;
             MonoBehaviour.print("Entering Sprinting State");
         }
 
         public override void Execute()
         {
-            PlayerController.Move();
+            MovementController.Move();
         }
 
         public override void Exit()

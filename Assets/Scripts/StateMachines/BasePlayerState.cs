@@ -5,11 +5,11 @@ namespace Move
 {
     public abstract class BasePlayerState : IPlayerState
     {
-        protected PlayerController PlayerController;
+        protected MovementController MovementController;
         
-        protected BasePlayerState(PlayerController playerController)
+        protected BasePlayerState(MovementController movementController)
         {
-            PlayerController = playerController;
+            MovementController = movementController;
         }
         
         public virtual void Enter()

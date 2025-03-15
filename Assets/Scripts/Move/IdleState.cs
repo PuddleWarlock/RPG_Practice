@@ -6,7 +6,7 @@ namespace Move
 {
     public class IdleState :  BasePlayerState
     {
-        public IdleState(PlayerController playerController) : base(playerController)
+        public IdleState(MovementController movementController) : base(movementController)
         {
         }
 

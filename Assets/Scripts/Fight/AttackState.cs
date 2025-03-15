@@ -8,7 +8,7 @@ namespace Fight
     {
         private CooldownSystem _cooldownSystem;
         private Collider _sword;
-        public AttackState(PlayerController playerController, CooldownSystem cooldownSystem) : base(playerController)
+        public AttackState(MovementController movementController, CooldownSystem cooldownSystem) : base(movementController)
         {
             _cooldownSystem = cooldownSystem;
             _sword = GameObject.Find("Sword").GetComponent<BoxCollider>();
@@ -18,7 +18,7 @@ namespace Fight
         {
             _sword.enabled = true;
             Debug.Log("Entering Melee");
-            PlayerController._playerAnimator.DoAttack();
+            MovementController._playerAnimator.DoAttack();
             _cooldownSystem.MeleeReady = false;
 
         }

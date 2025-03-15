@@ -6,7 +6,7 @@ namespace Fight
 {
     public class IdleAttackState : BasePlayerState
     {
-        public IdleAttackState(PlayerController playerController) : base(playerController)
+        public IdleAttackState(MovementController movementController) : base(movementController)
         {
         }
 
