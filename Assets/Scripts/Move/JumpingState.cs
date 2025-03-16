@@ -1,11 +1,12 @@
 ﻿using Base;
+using StateMachines;
 using UnityEngine;
 
 namespace Move
 {
-    public class JumpingState : BasePlayerState
+    public class JumpingState : MovementPlayerState
     {
-        public JumpingState(MovementController movementController) : base(movementController)
+        public JumpingState(MovementController movementController, PlayerAnimator animator) : base(movementController, animator)
         {
         }
 

@@ -1,11 +1,12 @@
 ﻿using Base;
+using StateMachines;
 using UnityEngine;
 
 namespace Move
 {
-    public class SprintingState : BasePlayerState
+    public class SprintingState : MovementPlayerState
     {
-        public SprintingState(MovementController movementController) : base(movementController)
+        public SprintingState(MovementController movementController, PlayerAnimator animator) : base(movementController, animator)
         {
         }
 

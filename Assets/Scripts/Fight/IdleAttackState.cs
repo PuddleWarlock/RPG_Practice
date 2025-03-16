@@ -1,12 +1,13 @@
 ﻿using Base;
 using Move;
+using StateMachines;
 using UnityEngine;
 
 namespace Fight
 {
-    public class IdleAttackState : BasePlayerState
+    public class IdleAttackState : FightPlayerState
     {
-        public IdleAttackState(MovementController movementController) : base(movementController)
+        public IdleAttackState(FightController fightController, CooldownSystem cooldownSystem, PlayerAnimator animator) : base(fightController, cooldownSystem, animator)
         {
         }
 

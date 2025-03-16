@@ -1,15 +1,16 @@
 ﻿using Base;
-using StateMachines;
 
-namespace Move
+namespace StateMachines
 {
-    public abstract class BasePlayerState : IPlayerState
+    public abstract class MovementPlayerState : IPlayerState
     {
         protected MovementController MovementController;
+        protected PlayerAnimator PlayerAnimator;
         
-        protected BasePlayerState(MovementController movementController)
+        protected MovementPlayerState(MovementController movementController, PlayerAnimator animator)
         {
             MovementController = movementController;
+            PlayerAnimator = animator;
         }
         
         public virtual void Enter()

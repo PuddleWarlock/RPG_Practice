@@ -8,12 +8,12 @@ namespace Base
     {
         private InputManager _inputManager;
         private StateMachine _moveStateMachine;
-        
+        private PlayerAnimator _playerAnimator;
+
         private CharacterController _controller;
-        
+
         [SerializeField] private Camera _camera;
 
-        [HideInInspector] public PlayerAnimator _playerAnimator;
 
         public bool IsGrounded { get; private set;}
 
@@ -49,10 +49,10 @@ namespace Base
         
         private void MoveStatesInit()
         {
-            var idleState = new IdleState(this);
-            var jumpingState = new JumpingState(this);
-            var walkingState = new WalkingState(this);
-            var sprintingState = new SprintingState(this);
+            var idleState = new IdleState(this, _playerAnimator);
+            var jumpingState = new JumpingState(this,_playerAnimator);
+            var walkingState = new WalkingState(this,_playerAnimator);
+            var sprintingState = new SprintingState(this,_playerAnimator);
 
 
             _moveStateMachine.AddTransition(jumpingState, idleState, () => IsGrounded);

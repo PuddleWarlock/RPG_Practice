@@ -1,11 +1,12 @@
 ﻿using Base;
+using StateMachines;
 using UnityEngine;
 
 namespace Move
 {
-    public class WalkingState: BasePlayerState
+    public class WalkingState: MovementPlayerState
     {
-        public WalkingState(MovementController movementController) : base(movementController)
+        public WalkingState(MovementController movementController, PlayerAnimator animator) : base(movementController, animator)
         {
         }
 

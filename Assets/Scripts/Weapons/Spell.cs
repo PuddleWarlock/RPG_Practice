@@ -23,8 +23,8 @@ namespace Weapons
             if (damageable != null)
             {
                 DoDamage(damageable);
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }

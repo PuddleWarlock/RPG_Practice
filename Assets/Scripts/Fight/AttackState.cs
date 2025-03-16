@@ -1,25 +1,23 @@
 ﻿using Base;
 using Move;
+using StateMachines;
 using UnityEngine;
 
 namespace Fight
 {
-    public class AttackState : BasePlayerState
+    public class AttackState : FightPlayerState
     {
-        private CooldownSystem _cooldownSystem;
-        private Collider _sword;
-        public AttackState(MovementController movementController, CooldownSystem cooldownSystem) : base(movementController)
+
+        public AttackState(FightController fightController, CooldownSystem cooldownSystem, PlayerAnimator animator) : base(fightController, cooldownSystem, animator)
         {
-            _cooldownSystem = cooldownSystem;
-            _sword = GameObject.Find("Sword").GetComponent<BoxCollider>();
         }
 
         public override void Enter()
         {
-            _sword.enabled = true;
+            FightController.SwordCollider.enabled = true;
             Debug.Log("Entering Melee");
-            MovementController._playerAnimator.DoAttack();
-            _cooldownSystem.MeleeReady = false;
+            PlayerAnimator.DoAttack();
+            CooldownSystem.MeleeReady = false;
 
         }
 
@@ -29,7 +27,7 @@ namespace Fight
 
         public override void Exit()
         {
-            _sword.enabled = false;
+            FightController.SwordCollider.enabled = false;
             Debug.Log("Exiting Melee");
         }
     }

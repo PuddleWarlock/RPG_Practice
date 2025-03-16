@@ -1,12 +1,13 @@
 ﻿using System;
 using Base;
+using StateMachines;
 using UnityEngine;
 
 namespace Move
 {
-    public class IdleState :  BasePlayerState
+    public class IdleState :  MovementPlayerState
     {
-        public IdleState(MovementController movementController) : base(movementController)
+        public IdleState(MovementController movementController, PlayerAnimator animator) : base(movementController, animator)
         {
         }
 

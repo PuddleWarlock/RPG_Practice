@@ -10,7 +10,12 @@ namespace Base
         private StateMachine _fightStateMachine;
         private PlayerAnimator _playerAnimator;
         private CooldownSystem _cooldownSystem;
-        private MovementController _movementController;
+
+        [SerializeField] private GameObject _spellProjectile;
+        [SerializeField] private Transform _castPoint;
+        
+        public GameObject SwordGameObject { get; private set; }
+        public Collider SwordCollider { get; private set; }
 
 
         private void Awake()
@@ -19,7 +24,8 @@ namespace Base
             _fightStateMachine = new StateMachine();
             _inputManager = GetComponent<InputManager>();
             _playerAnimator = GetComponent<PlayerAnimator>();
-            _movementController = GetComponent<MovementController>();
+            SwordGameObject = GameObject.Find("Sword");
+            SwordCollider = SwordGameObject.GetComponent<BoxCollider>();
         }
 
         private void Start()
@@ -35,9 +41,9 @@ namespace Base
         
         private void AttackStatesInit()
         {
-            var attackState = new AttackState(_movementController,_cooldownSystem);
-            var spellState = new SpellState(_movementController,_cooldownSystem);
-            var idleAttackState = new IdleAttackState(_movementController);
+            var attackState = new AttackState(this,_cooldownSystem, _playerAnimator);
+            var spellState = new SpellState(this,_cooldownSystem, _playerAnimator);
+            var idleAttackState = new IdleAttackState(this, _cooldownSystem, _playerAnimator);
             
             
             bool MeleeAnimationEnded() => _playerAnimator._animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.99f &&
@@ -54,6 +60,16 @@ namespace Base
             
             _fightStateMachine.SetState(idleAttackState);
             
+        }
+
+        public void CastSpell()
+        {
+            var obj = Instantiate(_spellProjectile,_castPoint.position, Quaternion.identity);
+            var rb = obj.GetComponent<Rigidbody>();
+            rb.AddForce(gameObject.transform.forward*1000f);
+            rb.AddTorque(new Vector3(0.8f,.4f,.3f)*200f);
+            
+
         }
     }
 }

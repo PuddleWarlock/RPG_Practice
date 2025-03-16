@@ -1,35 +1,40 @@
 ﻿using Base;
 using Move;
+using StateMachines;
 using UnityEngine;
 
 namespace Fight
 {
-    public class SpellState : BasePlayerState
+    public class SpellState : FightPlayerState
     {
-        private CooldownSystem _cooldownSystem;
-        private GameObject _sword;
-        public SpellState(MovementController movementController, CooldownSystem cooldownSystem) : base(movementController)
+        private bool _isCasted;
+        public SpellState(FightController fightController, CooldownSystem cooldownSystem, PlayerAnimator animator) : base(fightController, cooldownSystem, animator)
         {
-            _cooldownSystem = cooldownSystem;
         }
 
         public override void Enter()
-        { 
+        {
+            _isCasted = false;
             Debug.Log("Entering Spell");
-            MovementController._playerAnimator.DoSpell();
-            _cooldownSystem.SpellReady = false;
-            _sword = GameObject.Find("Sword");
-            _sword.SetActive(false);
+            PlayerAnimator.DoSpell();
+            CooldownSystem.SpellReady = false;
+            FightController.SwordGameObject.SetActive(false);
 
         }
 
         public override void Execute()
         {
+            if (PlayerAnimator._animator.GetCurrentAnimatorStateInfo(1).IsName("Spell") && 
+                PlayerAnimator._animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= 0.425f && !_isCasted)
+            {
+                FightController.CastSpell();
+                _isCasted = true;
+            }
         }
 
         public override void Exit()
         {
-            _sword.SetActive(true);
+            FightController.SwordGameObject.SetActive(true);
             Debug.Log("Exiting Spell");
         }
     }
