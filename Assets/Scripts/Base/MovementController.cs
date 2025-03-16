@@ -9,7 +9,6 @@ namespace Base
         private InputManager _inputManager;
         private StateMachine _moveStateMachine;
         private PlayerAnimator _playerAnimator;
-
         private CharacterController _controller;
 
         [SerializeField] private Camera _camera;
@@ -27,7 +26,6 @@ namespace Base
         {
             _inputManager = GetComponent<InputManager>();
             _moveStateMachine = new StateMachine();
-            _inputManager = GetComponent<InputManager>();
             _playerAnimator = GetComponent<PlayerAnimator>();
             _controller = GetComponent<CharacterController>();
         }
@@ -55,12 +53,12 @@ namespace Base
             var sprintingState = new SprintingState(this,_playerAnimator);
 
 
-            _moveStateMachine.AddTransition(jumpingState, idleState, () => IsGrounded);
             _moveStateMachine.AddTransition(idleState, walkingState, () => _inputManager.MoveInput != Vector2.zero);
             _moveStateMachine.AddTransition(idleState, sprintingState, () => _inputManager.SprintInput);
             _moveStateMachine.AddTransition(walkingState, idleState, () => _inputManager.MoveInput == Vector2.zero);
             _moveStateMachine.AddTransition(walkingState, sprintingState, () => _inputManager.SprintInput);
             _moveStateMachine.AddTransition(sprintingState,walkingState, () => !_inputManager.SprintInput);
+            _moveStateMachine.AddTransition(jumpingState, idleState, () => IsGrounded);
             _moveStateMachine.AddAnyTransition(jumpingState, () => _inputManager.JumpInput);
             
             _moveStateMachine.SetState(idleState);
@@ -90,8 +88,8 @@ namespace Base
 
             if (_inputManager.MoveInput != Vector2.zero)
             {
-                Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 0.1f);
+                Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.1f);
             }
         
             _controller.Move(moveDirection * (Time.deltaTime * moveSpeed));
@@ -101,7 +99,6 @@ namespace Base
         {
             _velocityVertical = _jumpForce;
             _controller.Move(Vector3.up * (_velocityVertical * Time.deltaTime));
-    
         }
         
 

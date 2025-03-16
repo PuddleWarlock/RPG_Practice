@@ -6,8 +6,8 @@ namespace Fight
     public class CooldownSystem
     {
         public bool MeleeReady;
-        public bool SpellReady;
         private float _meleeTimer = 3f;
+        public bool SpellReady;
         private float _spellTimer = 5f;
 
         public void Tick()

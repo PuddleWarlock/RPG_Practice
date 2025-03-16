@@ -16,11 +16,11 @@ namespace Fight
             Debug.Log("Entering IdleAttack");
         }
 
-        public override void Execute( )
+        public override void Execute()
         {
         }
 
-        public override void Exit( )
+        public override void Exit()
         {
             Debug.Log("Exiting IdleAttack");
         }

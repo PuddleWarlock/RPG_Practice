@@ -14,6 +14,7 @@ namespace Base
         public bool SprintInput {get; private set;}
         public bool MeleeInput {get; private set;}
         public bool SpellInput { get; private set; }
+
        
         
         private void Awake()
@@ -37,7 +38,6 @@ namespace Base
 
         private void OnEnable()
         {
-            
             _inputSystem.Enable();
         }
         
