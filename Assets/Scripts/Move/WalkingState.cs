@@ -1,4 +1,5 @@
-﻿using Base;
+﻿using System;
+using Base;
 using StateMachines;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ namespace Move
         public override void Enter()
         {
             MonoBehaviour.print("Entering Walking State");
-            MovementController.moveSpeed = 10f;
+            PlayerAnimator.DoWalk();
+            MovementController.moveSpeed = 5f;
         }
 
         public override void Execute()
@@ -23,7 +25,9 @@ namespace Move
 
         public override void Exit()
         {
+            PlayerAnimator.DoIdleMove();
             MonoBehaviour.print("Exiting Walking State");
+            
         }
     }
 }
