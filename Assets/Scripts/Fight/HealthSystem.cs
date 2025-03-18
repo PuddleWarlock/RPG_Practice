@@ -31,6 +31,12 @@ namespace Fight
         public void TakeDamage(Damage damage)
         {
             Health -= damage.Value;
+            if (Health <= 0)
+            {
+                Health = MaxHealth;
+            }
         }
+
+        
     }
 }

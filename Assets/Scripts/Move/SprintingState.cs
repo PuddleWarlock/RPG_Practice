@@ -12,7 +12,8 @@ namespace Move
 
         public override void Enter()
         {
-            MovementController.moveSpeed = 20f;
+            PlayerAnimator.DoRun();
+            MovementController.moveSpeed = 10f;
             MonoBehaviour.print("Entering Sprinting State");
         }
 
@@ -23,6 +24,7 @@ namespace Move
 
         public override void Exit()
         {
+            PlayerAnimator.DoIdleMove();
             MonoBehaviour.print("Exiting Sprinting State");
         }
     }
