@@ -15,7 +15,7 @@ namespace Move
         {
             MonoBehaviour.print("Entering Walking State");
             PlayerAnimator.DoWalk();
-            MovementController.moveSpeed = 5f;
+            MovementController.moveSpeed = 2f;
         }
 
         public override void Execute()

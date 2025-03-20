@@ -8,6 +8,7 @@ namespace Fight
 {
     public class HealthSystem : MonoBehaviour, IDamageable
     {
+        
         public float Health
         {
             get => _health;
@@ -19,7 +20,7 @@ namespace Fight
         }
 
         public float MaxHealth { get; private set; } = 100f;
-
+        
         public UnityEvent<float,float> onHealthChanged;
         private float _health;
 
@@ -29,14 +30,13 @@ namespace Fight
         }
 
         public void TakeDamage(Damage damage)
-        {
+        {   
             Health -= damage.Value;
-            if (Health <= 0)
-            {
-                Health = MaxHealth;
-            }
+            // if (Health <= 0)
+            // {  
+            //     Health = MaxHealth;               
+            // }
         }
-
-        
+ 
     }
 }
