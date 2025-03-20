@@ -7,7 +7,7 @@ namespace Fight
 {
     public class IdleAttackState : FightPlayerState
     {
-        public IdleAttackState(FightController fightController, CooldownSystem cooldownSystem, PlayerAnimator animator) : base(fightController, cooldownSystem, animator)
+        public IdleAttackState(FightController fightController, SkillsController skillsController, PlayerAnimator animator) : base(fightController, skillsController, animator)
         {
         }
 

@@ -2,13 +2,15 @@
 using Move;
 using StateMachines;
 using UnityEngine;
+using Weapons;
+using Weapons.Base;
 
 namespace Fight
 {
     public class AttackState : FightPlayerState
     {
 
-        public AttackState(FightController fightController, CooldownSystem cooldownSystem, PlayerAnimator animator) : base(fightController, cooldownSystem, animator)
+        public AttackState(FightController fightController, SkillsController skillsController, PlayerAnimator animator) : base(fightController, skillsController, animator)
         {
         }
 
@@ -17,7 +19,8 @@ namespace Fight
             FightController.SwordCollider.enabled = true;
             Debug.Log("Entering Melee");
             PlayerAnimator.DoAttack();
-            CooldownSystem.MeleeReady = false;
+            //CooldownSystem.MeleeReady = false;
+            SkillsController.Skills[SkillType.Melee].Cast();
 
         }
 

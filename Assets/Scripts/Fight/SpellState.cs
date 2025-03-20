@@ -2,13 +2,15 @@
 using Move;
 using StateMachines;
 using UnityEngine;
+using Weapons;
+using Weapons.Base;
 
 namespace Fight
 {
     public class SpellState : FightPlayerState
     {
         private bool _isCasted;
-        public SpellState(FightController fightController, CooldownSystem cooldownSystem, PlayerAnimator animator) : base(fightController, cooldownSystem, animator)
+        public SpellState(FightController fightController, SkillsController skillsController, PlayerAnimator animator) : base(fightController, skillsController, animator)
         {
         }
 
@@ -17,7 +19,6 @@ namespace Fight
             _isCasted = false;
             Debug.Log("Entering Spell");
             PlayerAnimator.DoSpell();
-            CooldownSystem.SpellReady = false;
             FightController.SwordGameObject.SetActive(false);
 
         }
@@ -27,7 +28,7 @@ namespace Fight
             if (PlayerAnimator._animator.GetCurrentAnimatorStateInfo(1).IsName("Spell") && 
                 PlayerAnimator._animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= 0.425f && !_isCasted)
             {
-                FightController.CastSpell();
+                SkillsController.Skills[SkillType.Fireball].Cast();
                 _isCasted = true;
             }
         }
