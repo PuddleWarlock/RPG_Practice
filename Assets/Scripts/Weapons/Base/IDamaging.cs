@@ -2,7 +2,7 @@
 
 namespace Weapons
 {
-    public interface IWeapon
+    public interface IDamaging
     {
         void DoDamage(IDamageable damageable);
     }

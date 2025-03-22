@@ -13,7 +13,7 @@ namespace Move
         public override void Enter()
         {
             MonoBehaviour.print("Entering Jumping State");
-            // MovementController.Jump();
+            MovementController.Jump();
             PlayerAnimator.DoJump();
         }
 
