@@ -16,7 +16,7 @@ namespace Base
 
         public bool IsGrounded { get; private set;}
 
-        [SerializeField] public float moveSpeed = 5f;
+        [SerializeField] public float moveSpeed = 2f;
         [SerializeField] private float _velocityVertical = 0f;
         [SerializeField] private float _jumpForce;
 
