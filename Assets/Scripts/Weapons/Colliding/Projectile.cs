@@ -1,15 +1,15 @@
 ﻿using Fight;
 using UnityEngine;
 
-namespace Weapons
+namespace Weapons.Colliding
 {
-    public class Spell : MonoBehaviour, IWeapon
+    public class Projectile : MonoBehaviour, IDamaging
     {
         private Damage _damage;
 
-        private void Start()
+        public void Init(Damage damage)
         {
-            _damage = new Damage(DamageType.Magic, 20f);
+            _damage = damage;
         }
 
         public void DoDamage(IDamageable damageable)
@@ -26,5 +26,6 @@ namespace Weapons
                 Destroy(gameObject);
             }
         }
+        
     }
 }

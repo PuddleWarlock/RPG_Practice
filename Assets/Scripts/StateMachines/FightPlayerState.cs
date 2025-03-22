@@ -6,13 +6,13 @@ namespace StateMachines
     public abstract class FightPlayerState : IPlayerState
     {
         protected FightController FightController;
-        protected CooldownSystem CooldownSystem;
+        protected SkillsController SkillsController;
         protected PlayerAnimator PlayerAnimator;
         
-        protected FightPlayerState(FightController fightController, CooldownSystem cooldownSystem, PlayerAnimator animator)
+        protected FightPlayerState(FightController fightController, SkillsController skillsController, PlayerAnimator animator)
         {
             FightController = fightController;
-            CooldownSystem = cooldownSystem;
+            SkillsController = skillsController;
             PlayerAnimator = animator;
         }
         

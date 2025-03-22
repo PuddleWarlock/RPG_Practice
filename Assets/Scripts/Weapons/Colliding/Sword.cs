@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Weapons
 {
-    public class Sword : MonoBehaviour, IWeapon
+    public class Sword : MonoBehaviour, IDamaging
     {
         private Damage _damage;
 
