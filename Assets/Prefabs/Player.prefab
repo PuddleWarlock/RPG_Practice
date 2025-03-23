@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}
       propertyPath: m_LocalPosition.z
@@ -643,6 +643,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6050981333560497744}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7730957177220686900}
   m_SourcePrefab: {fileID: 100100000, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}
 --- !u!1 &527704720479713833 stripped
 GameObject:
@@ -732,8 +735,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0099aa5d4124350a4f01c9601eb9dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spellProjectile: {fileID: 8396076092210822337, guid: fc2f11a48f7838f48bb41217a815b342, type: 3}
-  _castPoint: {fileID: 1307747851880347824}
 --- !u!114 &6050981333560497744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,6 +751,22 @@ MonoBehaviour:
   moveSpeed: 5
   _velocityVertical: 0
   _jumpForce: 7
+--- !u!114 &7730957177220686900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527704720479713833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08550100ef4495b94a7cf05e6dff615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillsArray: {fileID: 11400000, guid: 8024b18a6db960b4895c6dcbee2037d6, type: 2}
+  _projectilePrefab: {fileID: 8396076092210822337, guid: fc2f11a48f7838f48bb41217a815b342, type: 3}
+  _castPoint: {fileID: 1307747851880347824}
+  _caster: {fileID: 871754430356988051}
 --- !u!4 &871754430356988051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}

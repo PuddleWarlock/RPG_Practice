@@ -1,5 +1,4 @@
-﻿using Enemy;
-using Fight;
+﻿using Fight;
 using StateMachines;
 using UnityEngine;
 

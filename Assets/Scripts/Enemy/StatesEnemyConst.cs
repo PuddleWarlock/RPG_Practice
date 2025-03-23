@@ -1,8 +1,6 @@
-﻿using Base;
-using Enemy;
-using Fight;
+﻿using StateMachines;
 
-namespace StateMachines
+namespace Enemy
 {
     public abstract class StatesEnemyConst : IPlayerState
     {

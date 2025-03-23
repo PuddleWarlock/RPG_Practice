@@ -1,7 +1,9 @@
 ﻿using Fight;
 using StateMachines;
 using UnityEngine;
+using Weapons;
 using Weapons.Base;
+using Weapons.Colliding;
 
 namespace Base
 {
@@ -13,7 +15,8 @@ namespace Base
         private InputManager _inputManager;
 
 
-        public GameObject SwordGameObject { get; private set; }
+        [SerializeField] public GameObject swordGameObject;
+        public Sword Sword { get; private set; }
         public Collider SwordCollider { get; private set; }
 
 
@@ -24,8 +27,9 @@ namespace Base
             _playerAnimator = GetComponent<PlayerAnimator>();
             _inputManager = GetComponent<InputManager>();
             // fix .Find() later
-            SwordGameObject = GameObject.Find("Sword");
-            SwordCollider = SwordGameObject.GetComponent<BoxCollider>();
+            Sword = swordGameObject.AddComponent<Sword>();
+            Sword.Init(gameObject.GetComponent<HealthSystem>(),new Damage(DamageType.Physic, 10f));
+            SwordCollider = swordGameObject.GetComponent<BoxCollider>();
         }
 
         private void Start()

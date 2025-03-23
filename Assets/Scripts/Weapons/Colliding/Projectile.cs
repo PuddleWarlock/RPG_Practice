@@ -1,4 +1,5 @@
-﻿using Fight;
+﻿using System.Collections;
+using Fight;
 using UnityEngine;
 
 namespace Weapons.Colliding
@@ -25,6 +26,12 @@ namespace Weapons.Colliding
                 DoDamage(damageable);
                 Destroy(gameObject);
             }
+        }
+
+        public IEnumerator Ttl()
+        {
+            yield return new WaitForSeconds(10f);
+            Destroy(gameObject);
         }
         
     }

@@ -23,7 +23,9 @@ namespace Weapons
         {
             base.Cast();
             var obj = Object.Instantiate(_spellProjectile,_castPoint.position, Quaternion.identity);
-            obj.AddComponent<Projectile>().Init(new Damage(DamageType.Magic,20f));
+            var proj = obj.AddComponent<Projectile>();
+            proj.Init(new Damage(DamageType.Magic,20f));
+            proj.StartCoroutine(proj.Ttl());
             var rb = obj.GetComponent<Rigidbody>();
             rb.AddForce(_caster.forward*1000f);
             rb.AddTorque(new Vector3(0.8f,.4f,.3f)*200f);

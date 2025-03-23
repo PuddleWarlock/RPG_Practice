@@ -1,8 +1,4 @@
-﻿using Base;
-using Enemy;
-using Move;
-using StateMachines;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enemy
 {

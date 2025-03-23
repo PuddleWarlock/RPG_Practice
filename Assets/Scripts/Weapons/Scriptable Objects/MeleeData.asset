@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 0
   skillName: Swing
-  cooldownTime: 3
+  cooldownTime: 1
   sprite: {fileID: 0}

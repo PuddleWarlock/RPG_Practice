@@ -19,7 +19,7 @@ namespace Fight
             _isCasted = false;
             Debug.Log("Entering Spell");
             PlayerAnimator.DoSpell();
-            FightController.SwordGameObject.SetActive(false);
+            FightController.swordGameObject.SetActive(false);
 
         }
 
@@ -35,7 +35,7 @@ namespace Fight
 
         public override void Exit()
         {
-            FightController.SwordGameObject.SetActive(true);
+            FightController.swordGameObject.SetActive(true);
             Debug.Log("Exiting Spell");
         }
     }

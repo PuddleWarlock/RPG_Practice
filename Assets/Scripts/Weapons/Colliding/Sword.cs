@@ -1,16 +1,19 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Fight;
 using UnityEngine;
 
-namespace Weapons
+namespace Weapons.Colliding
 {
     public class Sword : MonoBehaviour, IDamaging
     {
         private Damage _damage;
+        private IDamageable _self;
+        private List<IDamageable> _enemies = new();
 
-        private void Start()
+        public void Init(IDamageable self, Damage damage)
         {
-            _damage = new Damage(DamageType.Physic, 10f);
+            _self = self;
+            _damage = damage;
         }
 
         public void DoDamage(IDamageable damageable)
@@ -21,10 +24,16 @@ namespace Weapons
         private void OnTriggerEnter(Collider other)
         {
             IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                DoDamage(damageable);
-            }
+            if (damageable == null) return;
+            if (damageable == _self) return;
+            if (_enemies.Contains(damageable)) return;
+            DoDamage(damageable);
+            _enemies.Add(damageable);
+        }
+
+        public void ClearEnemiesList()
+        {
+            _enemies.Clear();
         }
     }
 }

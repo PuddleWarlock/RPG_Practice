@@ -4,6 +4,7 @@ using StateMachines;
 using UnityEngine;
 using Weapons;
 using Weapons.Base;
+using Weapons.Colliding;
 
 namespace Fight
 {
@@ -16,6 +17,7 @@ namespace Fight
 
         public override void Enter()
         {
+            FightController.Sword.ClearEnemiesList();
             FightController.SwordCollider.enabled = true;
             Debug.Log("Entering Melee");
             PlayerAnimator.DoAttack();
