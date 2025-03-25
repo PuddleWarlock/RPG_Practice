@@ -14,7 +14,7 @@ namespace Base
         private static readonly int Falling = Animator.StringToHash("Falling");
         private static readonly int Landed = Animator.StringToHash("Landed");
 
-        public Animator _animator { get; private set; }
+        private Animator _animator;
         
         private void Awake()
         {

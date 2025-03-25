@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b660cd77a493604aa6c8df29399bebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 5
+  weightSpeed: 5
 --- !u!1101 &-5376131332892734027
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -209,6 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b660cd77a493604aa6c8df29399bebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 5
+  weightSpeed: 5
 --- !u!1101 &-3735258996323831947
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -257,7 +261,7 @@ AnimatorStateMachine:
     m_Position: {x: 20, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6381349833348682835}
-    m_Position: {x: -40, y: 20, z: 0}
+    m_Position: {x: -10, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2872535106660784851}
     m_Position: {x: 290, y: 10, z: 0}
@@ -443,9 +447,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.3782007
-  m_TransitionOffset: 0.040563636
-  m_ExitTime: 0.765625
+  m_TransitionDuration: 0.5082329
+  m_TransitionOffset: 0.7272999
+  m_ExitTime: 0.48596036
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -608,7 +612,7 @@ AnimatorController:
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 0
+    m_BlendingMode: 1
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 0
     m_IKPass: 1
@@ -632,7 +636,7 @@ AnimatorController:
     m_Mask: {fileID: 31900000, guid: 1b21ad3ad9c228a40a5028db04cdcb80, type: 2}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 1
+    m_BlendingMode: 0
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 1
     m_IKPass: 0
@@ -804,6 +808,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b660cd77a493604aa6c8df29399bebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 5
+  weightSpeed: 5
 --- !u!1102 &5556998183279310793
 AnimatorState:
   serializedVersion: 6
@@ -876,6 +882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b660cd77a493604aa6c8df29399bebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 5
+  weightSpeed: 3
 --- !u!1102 &6381349833348682835
 AnimatorState:
   serializedVersion: 6

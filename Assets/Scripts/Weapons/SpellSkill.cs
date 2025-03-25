@@ -28,8 +28,8 @@ namespace Weapons
             proj.Init(new Damage(DamageType.Magic,20f), _caster.GetComponentInParent<IDamageable>());
             proj.StartCoroutine(proj.Ttl());
             var rb = obj.GetComponent<Rigidbody>();
-            rb.AddForce(_caster.forward*1000f);
-            rb.AddTorque(new Vector3(0.8f,.4f,.3f)*200f);
+            
+            rb.AddForce((_caster.forward + new Vector3(0, .1f, 0)) * 1000f);
         }
     }
 }
