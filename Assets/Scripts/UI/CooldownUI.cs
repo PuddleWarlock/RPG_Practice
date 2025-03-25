@@ -1,5 +1,4 @@
-﻿using System;
-using Fight;
+﻿using Fight;
 using UnityEngine;
 using UnityEngine.UI;
 using Weapons.Base;

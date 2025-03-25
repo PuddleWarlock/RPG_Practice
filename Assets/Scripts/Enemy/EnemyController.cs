@@ -6,7 +6,6 @@ namespace Enemy
 {
     public class EnemyController : MonoBehaviour
     {
-
         private StateMachine enemyStateMachine;
         private EnemyAnimator enemyAnimator;
         private HealthSystem healthSystem;

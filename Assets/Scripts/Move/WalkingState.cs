@@ -25,7 +25,6 @@ namespace Move
 
         public override void Exit()
         {
-            PlayerAnimator.DoIdleMove();
             MonoBehaviour.print("Exiting Walking State");
             
         }

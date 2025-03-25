@@ -7,10 +7,12 @@ namespace Weapons.Colliding
     public class Projectile : MonoBehaviour, IDamaging
     {
         private Damage _damage;
+        private IDamageable _self;
 
-        public void Init(Damage damage)
+        public void Init(Damage damage, IDamageable self)
         {
             _damage = damage;
+            _self = self;
         }
 
         public void DoDamage(IDamageable damageable)
@@ -21,11 +23,10 @@ namespace Weapons.Colliding
         private void OnTriggerEnter(Collider other)
         {
             IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                DoDamage(damageable);
-                Destroy(gameObject);
-            }
+            if (damageable == null) return;
+            if (damageable == _self) return;
+            DoDamage(damageable);
+            Destroy(gameObject);
         }
 
         public IEnumerator Ttl()

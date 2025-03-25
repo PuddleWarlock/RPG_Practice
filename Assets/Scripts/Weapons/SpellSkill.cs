@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using Fight;
+using Unity.VisualScripting;
 using UnityEngine;
 using Weapons.Base;
 using Weapons.Colliding;
@@ -24,7 +25,7 @@ namespace Weapons
             base.Cast();
             var obj = Object.Instantiate(_spellProjectile,_castPoint.position, Quaternion.identity);
             var proj = obj.AddComponent<Projectile>();
-            proj.Init(new Damage(DamageType.Magic,20f));
+            proj.Init(new Damage(DamageType.Magic,20f), _caster.GetComponentInParent<IDamageable>());
             proj.StartCoroutine(proj.Ttl());
             var rb = obj.GetComponent<Rigidbody>();
             rb.AddForce(_caster.forward*1000f);

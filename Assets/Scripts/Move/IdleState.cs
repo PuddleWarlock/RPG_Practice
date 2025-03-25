@@ -13,6 +13,7 @@ namespace Move
 
         public override void Enter()
         {
+            PlayerAnimator.DoIdleMove();
             MonoBehaviour.print("Entering Idle State");
         }
 

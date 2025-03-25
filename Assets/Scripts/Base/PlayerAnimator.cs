@@ -11,6 +11,8 @@ namespace Base
         private static readonly int Walk = Animator.StringToHash("Walk");
         private static readonly int Run = Animator.StringToHash("Run");
         private static readonly int Jump = Animator.StringToHash("Jump");
+        private static readonly int Falling = Animator.StringToHash("Falling");
+        private static readonly int Landed = Animator.StringToHash("Landed");
 
         public Animator _animator { get; private set; }
         
@@ -18,6 +20,11 @@ namespace Base
         {
             _animator = GetComponent<Animator>();
         }
+
+        public bool CheckAnimationState(int layerIndex, float time, string stateName) => 
+            _animator.GetCurrentAnimatorStateInfo(layerIndex).normalizedTime >= time && 
+            _animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
+        
         
         public void DoAttack()
         {
@@ -52,6 +59,22 @@ namespace Base
             _animator.SetBool(Walk, false);
             _animator.SetBool(Run, false);
         }
-        
+
+        public void DoFalling()
+        {
+            _animator.SetBool(Falling, true);
+        }
+
+        public void DoLanding()
+        {
+            _animator.SetBool(Falling, false);
+            _animator.SetTrigger(Landed);
+        }
+
+    }
+    public enum LayerNames
+    {
+        Movement = 1,
+        Fight = 2
     }
 }

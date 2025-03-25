@@ -49,7 +49,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -112,6 +112,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Spell"",
                     ""type"": ""Button"",
                     ""id"": ""d48268e4-f225-46b8-a97d-6a55baaa2256"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RMB"",
+                    ""type"": ""Button"",
+                    ""id"": ""a30c9dc2-9e57-4b21-9ddd-7691d31ada52"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -523,6 +532,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Spell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd73ec37-ff12-49a0-bdcc-beff747f0727"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RMB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1120,6 +1140,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Spell = m_Player.FindAction("Spell", throwIfNotFound: true);
+        m_Player_RMB = m_Player.FindAction("RMB", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1209,6 +1230,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Spell;
+    private readonly InputAction m_Player_RMB;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1223,6 +1245,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Spell => m_Wrapper.m_Player_Spell;
+        public InputAction @RMB => m_Wrapper.m_Player_RMB;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1262,6 +1285,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Spell.started += instance.OnSpell;
             @Spell.performed += instance.OnSpell;
             @Spell.canceled += instance.OnSpell;
+            @RMB.started += instance.OnRMB;
+            @RMB.performed += instance.OnRMB;
+            @RMB.canceled += instance.OnRMB;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1296,6 +1322,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Spell.started -= instance.OnSpell;
             @Spell.performed -= instance.OnSpell;
             @Spell.canceled -= instance.OnSpell;
+            @RMB.started -= instance.OnRMB;
+            @RMB.performed -= instance.OnRMB;
+            @RMB.canceled -= instance.OnRMB;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1488,6 +1517,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnSpell(InputAction.CallbackContext context);
+        void OnRMB(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -27,7 +27,7 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -90,6 +90,15 @@
                     "name": "Spell",
                     "type": "Button",
                     "id": "d48268e4-f225-46b8-a97d-6a55baaa2256",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RMB",
+                    "type": "Button",
+                    "id": "a30c9dc2-9e57-4b21-9ddd-7691d31ada52",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -501,6 +510,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Spell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd73ec37-ff12-49a0-bdcc-beff747f0727",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "RMB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -26,7 +26,6 @@ namespace Base
             _skillsController = GetComponent<SkillsController>();
             _playerAnimator = GetComponent<PlayerAnimator>();
             _inputManager = GetComponent<InputManager>();
-            // fix .Find() later
             Sword = swordGameObject.AddComponent<Sword>();
             Sword.Init(gameObject.GetComponent<HealthSystem>(),new Damage(DamageType.Physic, 10f));
             SwordCollider = swordGameObject.GetComponent<BoxCollider>();
@@ -49,10 +48,8 @@ namespace Base
             var idleAttackState = new IdleAttackState(this, _skillsController, _playerAnimator);
             
             
-            bool MeleeAnimationEnded() => _playerAnimator._animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.99f &&
-                                          _playerAnimator._animator.GetCurrentAnimatorStateInfo(1).IsName("Attack");
-            bool SpellAnimationEnded() => _playerAnimator._animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.99f &&
-                                          _playerAnimator._animator.GetCurrentAnimatorStateInfo(1).IsName("Spell");
+            bool MeleeAnimationEnded() => _playerAnimator.CheckAnimationState((int)LayerNames.Fight,0.99f,"Attack");
+            bool SpellAnimationEnded() => _playerAnimator.CheckAnimationState((int)LayerNames.Fight,0.99f,"Spell");
             
             
             

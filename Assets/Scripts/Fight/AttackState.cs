@@ -1,4 +1,5 @@
-﻿using Base;
+﻿using System.Collections;
+using Base;
 using Move;
 using StateMachines;
 using UnityEngine;
@@ -18,10 +19,9 @@ namespace Fight
         public override void Enter()
         {
             FightController.Sword.ClearEnemiesList();
-            FightController.SwordCollider.enabled = true;
             Debug.Log("Entering Melee");
+            PlayerAnimator.StartCoroutine(SwordColliderSwitch());
             PlayerAnimator.DoAttack();
-            //CooldownSystem.MeleeReady = false;
             SkillsController.Skills[SkillType.Melee].Cast();
 
         }
@@ -32,8 +32,15 @@ namespace Fight
 
         public override void Exit()
         {
-            FightController.SwordCollider.enabled = false;
             Debug.Log("Exiting Melee");
+        }
+
+        private IEnumerator SwordColliderSwitch()
+        {
+            yield return new WaitUntil(()=>PlayerAnimator.CheckAnimationState((int)LayerNames.Fight, 0.4f, "Attack"));
+            FightController.SwordCollider.enabled = true;
+            yield return new WaitUntil(()=>PlayerAnimator.CheckAnimationState((int)LayerNames.Fight, 0.53f, "Attack"));
+            FightController.SwordCollider.enabled = false;
         }
     }
 }

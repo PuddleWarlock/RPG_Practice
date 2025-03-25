@@ -1,7 +1,4 @@
-﻿using Fight;
-using Move;
-using StateMachines;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Base
 {
@@ -9,16 +6,45 @@ namespace Base
     {
         private InputSystem_Actions _inputSystem;
         
+        private static InputManager _instance;
+        
+        public static InputManager Instance
+        {
+            get
+            {
+                if (_instance != null) return _instance;
+                _instance = FindAnyObjectByType<InputManager>();
+                if (_instance != null) return _instance;
+                var go = new GameObject("InputManager");
+                _instance = go.AddComponent<InputManager>();
+
+                return _instance;
+            }
+        }
+        
         public Vector2 MoveInput {get; private set;}
         public bool JumpInput {get; private set;}
         public bool SprintInput {get; private set;}
         public bool MeleeInput {get; private set;}
         public bool SpellInput { get; private set; }
+        public bool RMBInput { get; private set; }
+        
 
        
         
         private void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            
+            
             _inputSystem = new InputSystem_Actions();
             
             
@@ -32,10 +58,11 @@ namespace Base
             _inputSystem.Player.Attack.canceled += ctx => MeleeInput = false;
             _inputSystem.Player.Spell.performed += ctx => SpellInput = true;
             _inputSystem.Player.Spell.canceled += ctx => SpellInput = false;
-            
-            
-        }
+            _inputSystem.Player.RMB.performed += ctx => RMBInput = true;
+            _inputSystem.Player.RMB.canceled += ctx => RMBInput = false;
 
+        }
+        
         private void OnEnable()
         {
             _inputSystem.Enable();

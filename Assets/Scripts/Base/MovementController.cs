@@ -10,7 +10,7 @@ namespace Base
         private StateMachine _moveStateMachine;
         private PlayerAnimator _playerAnimator;
         private CharacterController _controller;
-
+        [SerializeField] private Transform _spine;
         [SerializeField] private Camera _camera;
 
 
@@ -21,6 +21,8 @@ namespace Base
         [SerializeField] private float _jumpForce;
 
         private float _groundCheckDistance;
+        
+        private Vector3 _inertialMoveDirection;
 
         private void Awake()
         {
@@ -41,6 +43,7 @@ namespace Base
         private void Update()
         {
             _moveStateMachine.Tick();
+            Rotate();
             ApplyGravity();
             CheckGround();
         }
@@ -51,14 +54,18 @@ namespace Base
             var jumpingState = new JumpingState(this,_playerAnimator);
             var walkingState = new WalkingState(this,_playerAnimator);
             var sprintingState = new SprintingState(this,_playerAnimator);
+            var fallingState = new FallingState(this,_playerAnimator);
 
 
             _moveStateMachine.AddTransition(idleState, walkingState, () => _inputManager.MoveInput != Vector2.zero);
             _moveStateMachine.AddTransition(idleState, sprintingState, () => _inputManager.SprintInput);
             _moveStateMachine.AddTransition(walkingState, idleState, () => _inputManager.MoveInput == Vector2.zero);
             _moveStateMachine.AddTransition(walkingState, sprintingState, () => _inputManager.SprintInput);
+            _moveStateMachine.AddTransition(walkingState,fallingState, ()=> !IsGrounded);
             _moveStateMachine.AddTransition(sprintingState,walkingState, () => !_inputManager.SprintInput);
-            _moveStateMachine.AddTransition(jumpingState, idleState, () => IsGrounded);
+            _moveStateMachine.AddTransition(sprintingState,fallingState, ()=> !IsGrounded);
+            _moveStateMachine.AddTransition(jumpingState, fallingState, () => !IsGrounded);
+            _moveStateMachine.AddTransition(fallingState, idleState, () => IsGrounded);
             _moveStateMachine.AddAnyTransition(jumpingState, () => _inputManager.JumpInput);
             
             _moveStateMachine.SetState(idleState);
@@ -77,6 +84,26 @@ namespace Base
             }
         }
 
+        private void Rotate()
+        {
+            Vector3 forwardDirection = _camera.transform.forward;
+            Vector3 rightDirection = _camera.transform.right;
+            forwardDirection.y = 0;
+            rightDirection.y = 0;
+            Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
+            /*if (_inputManager.RMBInput)
+            {
+                Quaternion desiredRotation = Quaternion.LookRotation(forwardDirection, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
+
+            }*/
+            if (_inputManager.MoveInput != Vector2.zero)
+            {
+                Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
+            }
+        }
+
 
         public void Move()
         {
@@ -85,14 +112,19 @@ namespace Base
             forwardDirection.y = 0;
             rightDirection.y = 0;
             Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
-
-            if (_inputManager.MoveInput != Vector2.zero)
+            _inertialMoveDirection = moveDirection;
+            /*if (_inputManager.MoveInput != Vector2.zero)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.1f);
-            }
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
+            }*/
         
             _controller.Move(moveDirection * (Time.deltaTime * moveSpeed));
+        }
+
+        public void InertialMove()
+        {
+            _controller.Move(_inertialMoveDirection * (Time.deltaTime * moveSpeed));
         }
     
         public void Jump()
