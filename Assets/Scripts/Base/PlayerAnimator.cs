@@ -32,6 +32,8 @@ namespace Base
             SetBlend();
         }
 
+        
+        
         public bool CheckAnimationState(int layerIndex, float time, string stateName) => 
             _animator.GetCurrentAnimatorStateInfo(layerIndex).normalizedTime >= time && 
             _animator.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
@@ -95,8 +97,19 @@ namespace Base
         private void SetBlend()
         {
             Vector2 moveInput = InputManager.Instance.MoveInput;
-            _animator.SetFloat(MoveX, moveInput.x);
-            _animator.SetFloat(MoveY, moveInput.y);
+            _animator.SetFloat(MoveX, SnapInput(moveInput.x));
+            _animator.SetFloat(MoveY, SnapInput(moveInput.y));
+        }
+        
+        private float SnapInput(float value)
+        {
+            float threshold = 0.5f;
+
+            if (Mathf.Abs(value) > threshold)
+            {
+                return Mathf.Sign(value); // Возвращает -1 или 1
+            }
+            return 0; 
         }
 
         private void SetRMB()
