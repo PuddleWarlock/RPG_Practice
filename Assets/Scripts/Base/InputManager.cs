@@ -28,6 +28,7 @@ namespace Base
         public bool MeleeInput {get; private set;}
         public bool SpellInput { get; private set; }
         public bool RMBInput { get; private set; }
+        public bool IsSheathed { get; private set; }
         
 
        
@@ -60,6 +61,12 @@ namespace Base
             _inputSystem.Player.Spell.canceled += ctx => SpellInput = false;
             _inputSystem.Player.RMB.performed += ctx => RMBInput = true;
             _inputSystem.Player.RMB.canceled += ctx => RMBInput = false;
+            _inputSystem.Player.Sheath.performed += ctx => IsSheathed = !IsSheathed;
+            //_inputSystem.Player.Sheath.canceled += ctx => SheathInput = false;
+            
+            
+            /*_inputSystem.Player.Newaction.performed += ctx => Debug.Log("New action performed");
+            _inputSystem.Player.Newaction.canceled += ctx => Debug.Log("New action canceled");*/
 
         }
         

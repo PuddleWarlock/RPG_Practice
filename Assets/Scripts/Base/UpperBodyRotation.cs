@@ -9,11 +9,13 @@ namespace Base
         private bool _isInitialized = false;
         private float _currentWeight = 0f;
         public float weightSpeed = 2f;
+        private FightController _fightController;
 
         private float _maxArmLength = 0.8f;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            _fightController = animator.GetComponent<FightController>();
             _isInitialized = false;
             Transform head = animator.GetBoneTransform(HumanBodyBones.Head);
             if (head != null)
@@ -42,7 +44,7 @@ namespace Base
 
             _currentLookAtPoint = Vector3.Lerp(_currentLookAtPoint, targetLookAtPoint, Time.deltaTime * rotationSpeed);
 
-            if (InputManager.Instance.RMBInput)
+            if (InputManager.Instance.RMBInput && _fightController.IsSheathed)
             {
                 if (!_isInitialized)
                 {
@@ -64,7 +66,7 @@ namespace Base
             animator.SetIKPositionWeight(AvatarIKGoal.RightHand, _currentWeight);
 
             animator.SetLookAtPosition(_currentLookAtPoint);
-            animator.SetLookAtWeight(headWeight: _currentWeight, bodyWeight: _currentWeight * 0.15f, weight: _currentWeight);
+            animator.SetLookAtWeight(headWeight: _currentWeight, bodyWeight: _currentWeight * 0.25f, weight: _currentWeight);
             
         }
 

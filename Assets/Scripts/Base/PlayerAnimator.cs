@@ -13,12 +13,23 @@ namespace Base
         private static readonly int Jump = Animator.StringToHash("Jump");
         private static readonly int Falling = Animator.StringToHash("Falling");
         private static readonly int Landed = Animator.StringToHash("Landed");
+        private static readonly int Sheath = Animator.StringToHash("Sheath");
+        private static readonly int Withdraw = Animator.StringToHash("Withdraw");
+        private static readonly int IsRMB = Animator.StringToHash("IsRMB");
+        private static readonly int MoveX = Animator.StringToHash("MoveX");
+        private static readonly int MoveY = Animator.StringToHash("MoveY");
 
         private Animator _animator;
         
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+        }
+
+        private void Update()
+        {
+            SetRMB();
+            SetBlend();
         }
 
         public bool CheckAnimationState(int layerIndex, float time, string stateName) => 
@@ -29,6 +40,16 @@ namespace Base
         public void DoAttack()
         {
             _animator.SetTrigger(Attack);
+        }
+        
+        public void DoSheath()
+        {
+            _animator.SetTrigger(Sheath);
+        }
+        
+        public void DoWithdraw()
+        {
+            _animator.SetTrigger(Withdraw);
         }
 
         public void DoSpell()
@@ -69,6 +90,19 @@ namespace Base
         {
             _animator.SetBool(Falling, false);
             _animator.SetTrigger(Landed);
+        }
+
+        private void SetBlend()
+        {
+            Vector2 moveInput = InputManager.Instance.MoveInput;
+            _animator.SetFloat(MoveX, moveInput.x);
+            _animator.SetFloat(MoveY, moveInput.y);
+        }
+
+        private void SetRMB()
+        {
+            bool isRMB = InputManager.Instance.RMBInput;
+            _animator.SetBool(IsRMB, isRMB);
         }
 
     }

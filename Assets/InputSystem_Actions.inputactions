@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Spell",
+                    "name": "Spellasda",
                     "type": "Button",
                     "id": "d48268e4-f225-46b8-a97d-6a55baaa2256",
                     "expectedControlType": "",
@@ -99,6 +99,24 @@
                     "name": "RMB",
                     "type": "Button",
                     "id": "a30c9dc2-9e57-4b21-9ddd-7691d31ada52",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spell",
+                    "type": "Button",
+                    "id": "5abd6b99-cde9-49b1-a199-de7519303014",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sheath",
+                    "type": "Button",
+                    "id": "c1f79165-9928-4035-916d-9cbb2e65389f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -498,7 +516,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Spell",
+                    "action": "Spellasda",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -509,7 +527,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Spell",
+                    "action": "Spellasda",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -521,6 +539,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "RMB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "05d43a66-769c-4101-af4d-f2cdcaabaf4d",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "1bc309c3-2c66-445c-8a84-a9d0372a6f25",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Spell",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "4499c745-7c1a-413c-a434-7b9bfe675e65",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Spell",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ba657820-5037-46e6-9d84-5c602409961d",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Sheath",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

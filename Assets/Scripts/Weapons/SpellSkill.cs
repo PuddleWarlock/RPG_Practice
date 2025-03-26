@@ -28,7 +28,6 @@ namespace Weapons
             proj.Init(new Damage(DamageType.Magic,20f), _caster.GetComponentInParent<IDamageable>());
             proj.StartCoroutine(proj.Ttl());
             var rb = obj.GetComponent<Rigidbody>();
-            
             rb.AddForce((_caster.forward + new Vector3(0, .1f, 0)) * 1000f);
         }
     }

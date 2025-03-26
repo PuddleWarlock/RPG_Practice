@@ -11,6 +11,7 @@ namespace Fight
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private Transform _castPoint;
         [SerializeField] private Transform _caster;
+        
         public Dictionary<SkillType,Skill> Skills = new ();
 
         public void Awake()

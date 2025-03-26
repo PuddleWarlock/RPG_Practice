@@ -15,6 +15,8 @@ namespace Fight
         public AttackState(FightController fightController, SkillsController skillsController, PlayerAnimator animator) : base(fightController, skillsController, animator)
         {
         }
+        
+        
 
         public override void Enter()
         {

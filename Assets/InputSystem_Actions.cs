@@ -109,7 +109,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Spell"",
+                    ""name"": ""Spellasda"",
                     ""type"": ""Button"",
                     ""id"": ""d48268e4-f225-46b8-a97d-6a55baaa2256"",
                     ""expectedControlType"": """",
@@ -121,6 +121,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""RMB"",
                     ""type"": ""Button"",
                     ""id"": ""a30c9dc2-9e57-4b21-9ddd-7691d31ada52"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell"",
+                    ""type"": ""Button"",
+                    ""id"": ""5abd6b99-cde9-49b1-a199-de7519303014"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sheath"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1f79165-9928-4035-916d-9cbb2e65389f"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -520,7 +538,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Spell"",
+                    ""action"": ""Spellasda"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -531,7 +549,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Spell"",
+                    ""action"": ""Spellasda"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -543,6 +561,50 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""RMB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""05d43a66-769c-4101-af4d-f2cdcaabaf4d"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""1bc309c3-2c66-445c-8a84-a9d0372a6f25"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Spell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""4499c745-7c1a-413c-a434-7b9bfe675e65"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Spell"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba657820-5037-46e6-9d84-5c602409961d"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Sheath"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1139,8 +1201,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        m_Player_Spell = m_Player.FindAction("Spell", throwIfNotFound: true);
+        m_Player_Spellasda = m_Player.FindAction("Spellasda", throwIfNotFound: true);
         m_Player_RMB = m_Player.FindAction("RMB", throwIfNotFound: true);
+        m_Player_Spell = m_Player.FindAction("Spell", throwIfNotFound: true);
+        m_Player_Sheath = m_Player.FindAction("Sheath", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1229,8 +1293,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Previous;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
-    private readonly InputAction m_Player_Spell;
+    private readonly InputAction m_Player_Spellasda;
     private readonly InputAction m_Player_RMB;
+    private readonly InputAction m_Player_Spell;
+    private readonly InputAction m_Player_Sheath;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1244,8 +1310,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Previous => m_Wrapper.m_Player_Previous;
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
-        public InputAction @Spell => m_Wrapper.m_Player_Spell;
+        public InputAction @Spellasda => m_Wrapper.m_Player_Spellasda;
         public InputAction @RMB => m_Wrapper.m_Player_RMB;
+        public InputAction @Spell => m_Wrapper.m_Player_Spell;
+        public InputAction @Sheath => m_Wrapper.m_Player_Sheath;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1282,12 +1350,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @Spell.started += instance.OnSpell;
-            @Spell.performed += instance.OnSpell;
-            @Spell.canceled += instance.OnSpell;
+            @Spellasda.started += instance.OnSpellasda;
+            @Spellasda.performed += instance.OnSpellasda;
+            @Spellasda.canceled += instance.OnSpellasda;
             @RMB.started += instance.OnRMB;
             @RMB.performed += instance.OnRMB;
             @RMB.canceled += instance.OnRMB;
+            @Spell.started += instance.OnSpell;
+            @Spell.performed += instance.OnSpell;
+            @Spell.canceled += instance.OnSpell;
+            @Sheath.started += instance.OnSheath;
+            @Sheath.performed += instance.OnSheath;
+            @Sheath.canceled += instance.OnSheath;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1319,12 +1393,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @Spell.started -= instance.OnSpell;
-            @Spell.performed -= instance.OnSpell;
-            @Spell.canceled -= instance.OnSpell;
+            @Spellasda.started -= instance.OnSpellasda;
+            @Spellasda.performed -= instance.OnSpellasda;
+            @Spellasda.canceled -= instance.OnSpellasda;
             @RMB.started -= instance.OnRMB;
             @RMB.performed -= instance.OnRMB;
             @RMB.canceled -= instance.OnRMB;
+            @Spell.started -= instance.OnSpell;
+            @Spell.performed -= instance.OnSpell;
+            @Spell.canceled -= instance.OnSpell;
+            @Sheath.started -= instance.OnSheath;
+            @Sheath.performed -= instance.OnSheath;
+            @Sheath.canceled -= instance.OnSheath;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1516,8 +1596,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnPrevious(InputAction.CallbackContext context);
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnSpell(InputAction.CallbackContext context);
+        void OnSpellasda(InputAction.CallbackContext context);
         void OnRMB(InputAction.CallbackContext context);
+        void OnSpell(InputAction.CallbackContext context);
+        void OnSheath(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

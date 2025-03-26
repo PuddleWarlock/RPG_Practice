@@ -91,18 +91,20 @@ namespace Base
             forwardDirection.y = 0;
             rightDirection.y = 0;
             Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
-            /*if (_inputManager.RMBInput)
+            if (_inputManager.RMBInput)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(forwardDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
 
-            }*/
-            if (_inputManager.MoveInput != Vector2.zero)
+            }
+            else if (_inputManager.MoveInput != Vector2.zero)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
             }
         }
+
+        
 
 
         public void Move()

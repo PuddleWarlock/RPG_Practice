@@ -16,7 +16,7 @@ namespace Fight
         {
             Debug.Log("Entering Spell");
             PlayerAnimator.DoSpell();
-            FightController.swordGameObject.SetActive(false);
+            //FightController.swordGameObject.SetActive(false);
             PlayerAnimator.StartCoroutine(SpellCast());
 
         }
@@ -28,7 +28,7 @@ namespace Fight
 
         public override void Exit()
         {
-            FightController.swordGameObject.SetActive(true);
+            //FightController.swordGameObject.SetActive(true);
             Debug.Log("Exiting Spell");
         }
 

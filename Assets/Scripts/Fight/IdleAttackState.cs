@@ -1,4 +1,5 @@
-﻿using Base;
+﻿using System.Collections;
+using Base;
 using Move;
 using StateMachines;
 using UnityEngine;
@@ -14,6 +15,10 @@ namespace Fight
         public override void Enter()
         {
             Debug.Log("Entering IdleAttack");
+            if(!FightController.IsSheathed) return;
+            PlayerAnimator.DoWithdraw();
+            FightController.IsSheathed = false;
+            PlayerAnimator.StartCoroutine(Withdraw());
         }
 
         public override void Execute()
@@ -23,6 +28,13 @@ namespace Fight
         public override void Exit()
         {
             Debug.Log("Exiting IdleAttack");
+        }
+        
+        private IEnumerator Withdraw()
+        {
+            yield return new WaitUntil(()=>PlayerAnimator.CheckAnimationState((int)LayerNames.Fight, 0.374f, "Withdraw"));
+            FightController.swordGameObject.SetActive(true);
+            FightController.hipSwordGameObject.SetActive(false);
         }
     }
 }
