@@ -16,7 +16,7 @@ namespace Fight
 
         public void Awake()
         {
-            var spell = new SpellSkill(_skillsArray.skillData[1],_projectilePrefab,_castPoint,_caster);
+            var spell = new SpellSkill(_skillsArray.skillData[1],_projectilePrefab,_castPoint,_caster, Camera.main.transform);
             var melee = new MeleeSkill(_skillsArray.skillData[0]);
             Skills.Add(spell.SkillType,spell);
             Skills.Add(melee.SkillType,melee);

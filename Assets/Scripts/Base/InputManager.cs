@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Base
 {
@@ -69,7 +70,7 @@ namespace Base
             _inputSystem.Player.Newaction.canceled += ctx => Debug.Log("New action canceled");*/
 
         }
-        
+
         private void OnEnable()
         {
             _inputSystem.Enable();

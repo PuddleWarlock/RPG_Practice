@@ -90,15 +90,15 @@ namespace Base
             Vector3 rightDirection = _camera.transform.right;
             forwardDirection.y = 0;
             rightDirection.y = 0;
-            Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
             if (_inputManager.RMBInput)
             {
-                Quaternion desiredRotation = Quaternion.LookRotation(forwardDirection, Vector3.up);
+                Quaternion desiredRotation = Quaternion.LookRotation(forwardDirection, Vector3.up) * Quaternion.Euler(0,30f,0);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
 
             }
             else if (_inputManager.MoveInput != Vector2.zero)
             {
+                Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
                 Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
             }
