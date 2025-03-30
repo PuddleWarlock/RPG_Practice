@@ -14,7 +14,7 @@ namespace Base
         private SkillsController _skillsController;
         private InputManager _inputManager;
 
-        public bool IsSheathed;
+        [HideInInspector] public bool IsSheathed;
 
         [SerializeField] public GameObject swordGameObject;
         [SerializeField] public GameObject hipSwordGameObject;
@@ -24,14 +24,15 @@ namespace Base
 
         private void Awake()
         {
+            _inputManager = FindAnyObjectByType<InputManager>();
             _fightStateMachine = new StateMachine();
             _skillsController = GetComponent<SkillsController>();
             _playerAnimator = GetComponent<PlayerAnimator>();
-            _inputManager = GetComponent<InputManager>();
             Sword = swordGameObject.AddComponent<Sword>();
             Sword.Init(gameObject.GetComponent<HealthSystem>(),new Damage(DamageType.Physic, 10f));
             SwordCollider = swordGameObject.GetComponent<BoxCollider>();
         }
+        
 
         private void Start()
         {
@@ -48,10 +49,10 @@ namespace Base
             var attackState = new AttackState(this,_skillsController, _playerAnimator);
             var spellState = new SpellState(this,_skillsController, _playerAnimator);
             var idleAttackState = new IdleAttackState(this, _skillsController, _playerAnimator);
-            //var focusState = new FocusState(this,_skillsController,_playerAnimator);
             var sheathState = new SheathedSwordState(this,_skillsController,_playerAnimator);
-            
-            
+            //var focusState = new FocusState(this,_skillsController,_playerAnimator);
+
+
             bool MeleeAnimationEnded() => _playerAnimator.CheckAnimationState((int)LayerNames.Fight,0.99f,"Attack");
             bool SpellAnimationEnded() => _playerAnimator.CheckAnimationState((int)LayerNames.Fight,0.99f,"Spell");
             
@@ -70,7 +71,6 @@ namespace Base
             
             _fightStateMachine.AddTransition(idleAttackState,sheathState, () => _inputManager.IsSheathed);
             _fightStateMachine.AddTransition(sheathState,idleAttackState, () => !_inputManager.IsSheathed);
-            
             
             _fightStateMachine.AddTransition(idleAttackState,attackState, () => _inputManager.MeleeInput && _skillsController.Skills[SkillType.Melee]._isReady);
             _fightStateMachine.AddTransition(attackState,idleAttackState, MeleeAnimationEnded);

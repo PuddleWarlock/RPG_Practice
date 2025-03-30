@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using Weapons;
 
 namespace Fight
@@ -22,6 +20,7 @@ namespace Fight
         public float MaxHealth { get; private set; } = 100f;
         
         public UnityEvent<float,float> onHealthChanged;
+        public UnityEvent onDeath;
         private float _health;
 
         private void Start()
@@ -32,10 +31,11 @@ namespace Fight
         public void TakeDamage(Damage damage)
         {   
             Health -= damage.Value;
-            // if (Health <= 0)
-            // {  
-            //     Health = MaxHealth;               
-            // }
+            if (Health - damage.Value <= 0)
+            {
+                Health = 0;
+                onDeath?.Invoke();
+            }
         }
  
     }

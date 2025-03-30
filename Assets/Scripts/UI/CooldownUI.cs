@@ -7,7 +7,7 @@ namespace UI
 {
     public class CooldownUI : MonoBehaviour
     {
-        [SerializeField] private SkillsController _skillsController;
+        private SkillsController _skillsController;
         [SerializeField] private Image MeleeMask;
         [SerializeField] private Image MeleeStatus;
         [SerializeField] private Image SpellMask;
@@ -19,6 +19,11 @@ namespace UI
             SpellStatus.fillAmount = _skillsController.Skills[SkillType.Fireball].GetReadyPercent();
             MeleeMask.enabled = MeleeStatus.fillAmount > 0;
             SpellMask.enabled = SpellStatus.fillAmount > 0;
+        }
+
+        public void Init(SkillsController skillsController)
+        {
+            _skillsController = skillsController;
         }
     }
 }

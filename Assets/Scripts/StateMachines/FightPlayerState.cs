@@ -3,7 +3,7 @@ using Fight;
 
 namespace StateMachines
 {
-    public abstract class FightPlayerState : IPlayerState
+    public abstract class FightPlayerState : IState
     {
         protected FightController FightController;
         protected SkillsController SkillsController;

@@ -84,7 +84,7 @@ namespace Base
             rightDirection.Normalize();
             float angle = Vector3.SignedAngle(rightDirection, shoulderToTarget, animator.transform.up);
 
-            // Ограничиваем угол в диапазоне от -15 до 135 градусов
+            // Ограничиваем угол в диапазоне от -15 до 90 градусов
             float clampedAngle = Mathf.Clamp(angle, -90f, 15f);
             
             Vector3 currentDirection = (targetPosition - shoulderPosition).normalized;

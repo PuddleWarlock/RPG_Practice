@@ -2,7 +2,7 @@
 
 namespace Enemy
 {
-    public abstract class StatesEnemyConst : IPlayerState
+    public abstract class StatesEnemyConst : IState
     {
         protected EnemyController EnemyController;
         protected EnemyAnimator EnemyAnimator;

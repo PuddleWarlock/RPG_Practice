@@ -1,6 +1,6 @@
 ﻿namespace StateMachines
 {
-    public interface IPlayerState
+    public interface IState
     {
         void Enter();
         void Execute();

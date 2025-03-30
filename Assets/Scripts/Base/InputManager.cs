@@ -22,20 +22,30 @@ namespace Base
                 return _instance;
             }
         }
-        
-        public Vector2 MoveInput {get; private set;}
-        public bool JumpInput {get; private set;}
-        public bool SprintInput {get; private set;}
-        public bool MeleeInput {get; private set;}
-        public bool SpellInput { get; private set; }
-        public bool RMBInput { get; private set; }
-        public bool IsSheathed { get; private set; }
-        
 
-       
+        #region PlayerInput
+
+        public Vector2 MoveInput {get; private set;}
+                public bool JumpInput {get; private set;}
+                public bool SprintInput {get; private set;}
+                public bool MeleeInput {get; private set;}
+                public bool SpellInput { get; private set; }
+                public bool RMBInput { get; private set; }
+                public bool IsSheathed { get; private set; }
+
+        #endregion
+
+        #region GameInput
+
+        public bool MenuInput { get; private set; }
+
+        #endregion
+        
         
         private void Awake()
         {
+            _inputSystem = new InputSystem_Actions();
+            
             if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
@@ -45,11 +55,14 @@ namespace Base
                 _instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-            
-            
-            _inputSystem = new InputSystem_Actions();
-            
-            
+
+
+            PlayerActionsInit();
+            GameActionsInit();
+        }
+
+        private void PlayerActionsInit()
+        {
             _inputSystem.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
             _inputSystem.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
             _inputSystem.Player.Jump.performed += ctx => JumpInput = true;
@@ -63,19 +76,17 @@ namespace Base
             _inputSystem.Player.RMB.performed += ctx => RMBInput = true;
             _inputSystem.Player.RMB.canceled += ctx => RMBInput = false;
             _inputSystem.Player.Sheath.performed += ctx => IsSheathed = !IsSheathed;
-            //_inputSystem.Player.Sheath.canceled += ctx => SheathInput = false;
-            
-            
-            /*_inputSystem.Player.Newaction.performed += ctx => Debug.Log("New action performed");
-            _inputSystem.Player.Newaction.canceled += ctx => Debug.Log("New action canceled");*/
-
+        }
+        
+        private void GameActionsInit()
+        {
+            _inputSystem.Game.Menu.performed += ctx => MenuInput = !MenuInput;
         }
 
         private void OnEnable()
         {
             _inputSystem.Enable();
         }
-        
         
     
         private void OnDisable()

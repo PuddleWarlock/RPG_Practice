@@ -11,7 +11,7 @@ namespace Base
         private PlayerAnimator _playerAnimator;
         private CharacterController _controller;
         [SerializeField] private Transform _spine;
-        [SerializeField] private Camera _camera;
+        private Camera _camera;
 
 
         public bool IsGrounded { get; private set;}
@@ -26,10 +26,16 @@ namespace Base
 
         private void Awake()
         {
-            _inputManager = GetComponent<InputManager>();
+            //_camera = Camera.main;
+            _inputManager = FindAnyObjectByType<InputManager>();
             _moveStateMachine = new StateMachine();
             _playerAnimator = GetComponent<PlayerAnimator>();
             _controller = GetComponent<CharacterController>();
+        }
+
+        public void Init(Camera camera)
+        {
+            _camera = camera;
         }
 
         private void Start()

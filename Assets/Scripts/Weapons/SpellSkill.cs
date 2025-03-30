@@ -28,12 +28,12 @@ namespace Weapons
             var obj = Object.Instantiate(_spellProjectile,_castPoint.position, Quaternion.identity);
             var proj = obj.AddComponent<Projectile>();
             proj.Init(new Damage(DamageType.Magic,20f), _castPoint.GetComponentInParent<IDamageable>());
-            proj.StartCoroutine(proj.Ttl());
             var rb = obj.GetComponent<Rigidbody>();
             int layerMask = ~LayerMask.GetMask("Player");
             Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 1000f,layerMask);
             Vector3 castDir =  hit.point - _castPoint.position;
             rb.AddForce(castDir.normalized * 1000f);
+            proj.StartCoroutine(proj.Ttl());
         }
     }
 }
