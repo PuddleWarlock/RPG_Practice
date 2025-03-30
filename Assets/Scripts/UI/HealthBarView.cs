@@ -1,21 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using DG.Tweening;
 using Fight;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class HealthBarUI : MonoBehaviour
+    public class HealthBarView : MonoBehaviour
     {
         [SerializeField] private HealthSystem _healthSystem;
         [SerializeField] private Image _hpFront;
         [SerializeField] private Image _hpMiddle;
 
-        public void Init(HealthSystem healthSystem)
+        public void Init(UnityEvent<float,float> onHealthChanged)
         {
-            _healthSystem = healthSystem;
-            _healthSystem.onHealthChanged.AddListener(ChangeHp);
+            onHealthChanged.AddListener(ChangeHp);
         }
 
         private void Start()

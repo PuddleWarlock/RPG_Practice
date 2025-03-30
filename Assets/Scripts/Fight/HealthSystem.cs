@@ -1,10 +1,11 @@
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Weapons;
 
 namespace Fight
 {
-    public class HealthSystem : MonoBehaviour, IDamageable
+    public class HealthSystem : MonoBehaviour, IDamageable, IHealthChange
     {
         
         public float Health
@@ -18,8 +19,8 @@ namespace Fight
         }
 
         public float MaxHealth { get; private set; } = 100f;
-        
-        public UnityEvent<float,float> onHealthChanged;
+
+        public UnityEvent<float, float> onHealthChanged { get; } = new();
         public UnityEvent onDeath;
         private float _health;
 
@@ -30,11 +31,14 @@ namespace Fight
 
         public void TakeDamage(Damage damage)
         {   
-            Health -= damage.Value;
             if (Health - damage.Value <= 0)
             {
                 Health = 0;
                 onDeath?.Invoke();
+            }
+            else
+            {
+                Health -= damage.Value;
             }
         }
  

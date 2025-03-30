@@ -5,7 +5,7 @@ using Weapons.Base;
 
 namespace UI
 {
-    public class CooldownUI : MonoBehaviour
+    public class CooldownView : MonoBehaviour
     {
         private SkillsController _skillsController;
         [SerializeField] private Image MeleeMask;
