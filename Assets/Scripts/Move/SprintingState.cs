@@ -13,7 +13,7 @@ namespace Move
         public override void Enter()
         {
             PlayerAnimator.DoRun();
-            MovementController.moveSpeed = 5f;
+            MovementController.moveSpeed = MovementController.runSpeed;
             MonoBehaviour.print("Entering Sprinting State");
         }
 

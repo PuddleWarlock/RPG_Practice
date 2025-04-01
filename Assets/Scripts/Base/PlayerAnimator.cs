@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Base
 {
@@ -18,6 +17,8 @@ namespace Base
         private static readonly int IsRMB = Animator.StringToHash("IsRMB");
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
+        
+        private static readonly int Hitted = Animator.StringToHash("Hitted");
 
         private Animator _animator;
         
@@ -57,6 +58,11 @@ namespace Base
         public void DoSpell()
         {
             _animator.SetTrigger(Spell);
+        }
+        
+        public void DoHit()
+        {
+            _animator.SetTrigger(Hitted);
         }
         
         public void DoJump()

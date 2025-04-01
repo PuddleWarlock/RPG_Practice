@@ -6,8 +6,8 @@ namespace Base
     {
         private Vector3 _currentLookAtPoint;
         public float rotationSpeed = 5f;
-        private bool _isInitialized = false;
-        private float _currentWeight = 0f;
+        private bool _isInitialized;
+        private float _currentWeight;
         public float weightSpeed = 2f;
         private FightController _fightController;
         private Transform _camera;
@@ -77,7 +77,7 @@ namespace Base
 
         private Vector3 ConstrainHandPosition(Vector3 shoulderPosition, Vector3 targetPosition, Animator animator)
         {
-            // Ограничение углов (опционально)
+            // Ограничение углов
             Vector3 shoulderToTarget = targetPosition - shoulderPosition;
             shoulderToTarget.Normalize();
             Vector3 rightDirection = animator.transform.right; // Направление персонажа

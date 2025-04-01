@@ -52,8 +52,8 @@ namespace Base
             }
             else
             {
-                _instance = this;
-                DontDestroyOnLoad(gameObject);
+                _instance = this; 
+                //DontDestroyOnLoad(gameObject);
             }
 
 
