@@ -15,11 +15,11 @@ namespace Base
         private float _maxArmLength = 0.8f;
 
 
-        private Transform _enemy;
+        
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _enemy = GameObject.Find("EnemyDoll").transform;
+            
             _fightController = animator.GetComponent<FightController>();
             _isInitialized = false;
             _camera = Camera.main.transform;
