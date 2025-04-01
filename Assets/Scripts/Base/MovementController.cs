@@ -11,7 +11,7 @@ namespace Base
         private PlayerAnimator _playerAnimator;
         private CharacterController _controller;
         [SerializeField] private Transform _spine;
-        [SerializeField] private Camera _camera;
+        private Camera _camera;
 
 
         public bool IsGrounded { get; private set;}
@@ -26,10 +26,16 @@ namespace Base
 
         private void Awake()
         {
-            _inputManager = GetComponent<InputManager>();
+            //_camera = Camera.main;
+            _inputManager = FindAnyObjectByType<InputManager>();
             _moveStateMachine = new StateMachine();
             _playerAnimator = GetComponent<PlayerAnimator>();
             _controller = GetComponent<CharacterController>();
+        }
+
+        public void Init(Camera camera)
+        {
+            _camera = camera;
         }
 
         private void Start()
@@ -90,15 +96,15 @@ namespace Base
             Vector3 rightDirection = _camera.transform.right;
             forwardDirection.y = 0;
             rightDirection.y = 0;
-            Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
             if (_inputManager.RMBInput)
             {
-                Quaternion desiredRotation = Quaternion.LookRotation(forwardDirection, Vector3.up);
+                Quaternion desiredRotation = Quaternion.LookRotation(forwardDirection, Vector3.up) * Quaternion.Euler(0,30f,0);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
 
             }
             else if (_inputManager.MoveInput != Vector2.zero)
             {
+                Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
                 Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
             }

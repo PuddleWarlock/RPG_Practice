@@ -10,13 +10,19 @@ namespace Base
         private float _currentWeight = 0f;
         public float weightSpeed = 2f;
         private FightController _fightController;
+        private Transform _camera;
 
         private float _maxArmLength = 0.8f;
 
+
+        private Transform _enemy;
+
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            _enemy = GameObject.Find("EnemyDoll").transform;
             _fightController = animator.GetComponent<FightController>();
             _isInitialized = false;
+            _camera = Camera.main.transform;
             Transform head = animator.GetBoneTransform(HumanBodyBones.Head);
             if (head != null)
             {
@@ -29,19 +35,18 @@ namespace Base
             Transform head = animator.GetBoneTransform(HumanBodyBones.Head);
             Transform rightShoulder = animator.GetBoneTransform(HumanBodyBones.RightShoulder);
             if (head == null || rightShoulder == null) return;
-            Transform camera = Camera.main.transform;
 
             Vector3 LookDirection()
             {
-                var lookDirection = camera.forward;
-                lookDirection.y = Mathf.Clamp(lookDirection.y, -45f, 60f);
+                var lookDirection = _camera.forward;
+                //lookDirection.y = Mathf.Clamp(lookDirection.y, -45f, 60f);
                 lookDirection.Normalize();
                 return lookDirection;
             }
 
             Vector3 targetLookDirection = LookDirection();
-            Vector3 targetLookAtPoint = head.position + targetLookDirection * 10f;
-
+            Vector3 targetLookAtPoint = _camera.position + targetLookDirection * 100f;
+            
             _currentLookAtPoint = Vector3.Lerp(_currentLookAtPoint, targetLookAtPoint, Time.deltaTime * rotationSpeed);
 
             if (InputManager.Instance.RMBInput && _fightController.IsSheathed)
@@ -79,8 +84,8 @@ namespace Base
             rightDirection.Normalize();
             float angle = Vector3.SignedAngle(rightDirection, shoulderToTarget, animator.transform.up);
 
-            // Ограничиваем угол в диапазоне от -15 до 135 градусов
-            float clampedAngle = Mathf.Clamp(angle, -115f, 15f);
+            // Ограничиваем угол в диапазоне от -15 до 90 градусов
+            float clampedAngle = Mathf.Clamp(angle, -90f, 15f);
             
             Vector3 currentDirection = (targetPosition - shoulderPosition).normalized;
             Vector3 constrainedDirection = Vector3.RotateTowards(rightDirection, -currentDirection, clampedAngle * Mathf.Deg2Rad, 0f);

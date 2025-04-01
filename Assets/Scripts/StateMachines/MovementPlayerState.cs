@@ -2,7 +2,7 @@
 
 namespace StateMachines
 {
-    public abstract class MovementPlayerState : IPlayerState
+    public abstract class MovementPlayerState : IState
     {
         protected MovementController MovementController;
         protected PlayerAnimator PlayerAnimator;

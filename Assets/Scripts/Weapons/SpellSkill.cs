@@ -8,16 +8,18 @@ namespace Weapons
 {
     public class SpellSkill : Skill
     {
-        private Transform _caster;
+        //private readonly Transform _caster;
         private readonly GameObject _spellProjectile;
         private readonly Transform _castPoint;
+        private readonly Transform _camera;
 
 
-        public SpellSkill(SkillData skillData,GameObject spellProjectile, Transform castPoint, Transform caster) : base(skillData)
+        public SpellSkill(SkillData skillData,GameObject spellProjectile, Transform castPoint, Transform caster, Transform camera) : base(skillData)
         {
             _spellProjectile = spellProjectile;
             _castPoint = castPoint;
-            _caster = caster;
+            //_caster = caster;
+            _camera = camera;
         }
 
         public override void Cast()
@@ -25,10 +27,13 @@ namespace Weapons
             base.Cast();
             var obj = Object.Instantiate(_spellProjectile,_castPoint.position, Quaternion.identity);
             var proj = obj.AddComponent<Projectile>();
-            proj.Init(new Damage(DamageType.Magic,20f), _caster.GetComponentInParent<IDamageable>());
-            proj.StartCoroutine(proj.Ttl());
+            proj.Init(new Damage(DamageType.Magic,20f), _castPoint.GetComponentInParent<IDamageable>());
             var rb = obj.GetComponent<Rigidbody>();
-            rb.AddForce((_caster.forward + new Vector3(0, .1f, 0)) * 1000f);
+            int layerMask = ~LayerMask.GetMask("Player");
+            Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 1000f,layerMask);
+            Vector3 castDir =  hit.point - _castPoint.position;
+            rb.AddForce(castDir.normalized * 1000f);
+            proj.StartCoroutine(proj.Ttl());
         }
     }
 }
