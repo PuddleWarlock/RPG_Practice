@@ -500,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 38503d5d756fbf047a08b5eccb1ed762, type: 3}
       propertyPath: m_Name
-      value: test1 1
+      value: Warrior1Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 38503d5d756fbf047a08b5eccb1ed762, type: 3}
       propertyPath: m_IsActive
@@ -550,6 +550,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 38503d5d756fbf047a08b5eccb1ed762, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1458955062392892736}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 38503d5d756fbf047a08b5eccb1ed762, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -644272708357399473}
   m_SourcePrefab: {fileID: 100100000, guid: 38503d5d756fbf047a08b5eccb1ed762, type: 3}
 --- !u!4 &2774826628250056176 stripped
 Transform:
@@ -658,6 +661,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c3db853b931f94bb58ff73e39a2b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-644272708357399473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299443842164715338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08550100ef4495b94a7cf05e6dff615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillsArray: {fileID: 0}
+  _castPoint: {fileID: 0}
+  _caster: {fileID: 0}
 --- !u!4 &8236285126182374686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6000407479487422213, guid: 38503d5d756fbf047a08b5eccb1ed762, type: 3}

@@ -7,6 +7,8 @@ using Weapons;
 using Weapons.Colliding;
 using StateMachine = StateMachines.StateMachine;
 using Base;
+using Weapons.Base;
+
 namespace Enemy
 {
     public class EnemyController : MonoBehaviour
@@ -17,11 +19,9 @@ namespace Enemy
         private HealthSystem healthSystem;
         private NavMeshAgent _agent;
         private GameObject _player;
+        private SkillsController _skillsController;
         private float searchRadius;
         private float attackRange;
-        private float attackCooldown = 3f; // Задержка в 1 секунду
-        public float lastAttackTime = 0f;
-        
         public bool IsChasing { get; private set;}
 
         public bool IsInAttackRange { get; private set;}
@@ -32,6 +32,7 @@ namespace Enemy
         {   
             _sword.Init(healthSystem, new Damage(DamageType.Physic, 20f));
             enemyStateMachine = new StateMachine();
+            _skillsController = GetComponent<SkillsController>();
             enemyAnimator = GetComponent<EnemyAnimator>();
             healthSystem = GetComponent<HealthSystem>();
             gameObject.GetComponent<IHittable>().onHit.AddListener(enemyAnimator.DoHitEvent);
@@ -61,7 +62,7 @@ namespace Enemy
             var idleState = new IdleState(this,enemyAnimator, _agent);
             var walkState =  new WalkState(this,enemyAnimator,_agent);
             var deathState = new DeathState(this,enemyAnimator,_agent);
-            var attackState = new AttackState(this,enemyAnimator,_agent);
+            var attackState = new AttackState(this,enemyAnimator,_agent, _skillsController);
             // var spellState = new RangeAttackState(this,enemyAnimator,_agent);
             
             bool MeleeAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
@@ -76,7 +77,7 @@ namespace Enemy
             enemyStateMachine.AddTransition(attackState, walkState,
                 () => !IsInAttackRange && MeleeAnimationEnded());
             enemyStateMachine.AddTransition(idleState, attackState,
-                () => IsInAttackRange && (Time.time - lastAttackTime >= attackCooldown));
+                () => IsInAttackRange && (_skillsController.Skills[SkillType.Melee]._isReady));
             
             
             // enemyStateMachine.AddTransition(idleState, spellState, () => IsInCastRange && (Time.time - lastAttackTime >= attackCooldown));

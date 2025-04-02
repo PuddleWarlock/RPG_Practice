@@ -8,14 +8,12 @@ namespace Enemy
 {
     public class RangeAttackState : StatesEnemyConst
     {
-        public RangeAttackState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent) : base(enemyController, animator, navMeshAgent)
+        public RangeAttackState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent ) : base(enemyController, animator, navMeshAgent)
         {
-            
         }
 
         public override void Enter()
         {
-            EnemyController.lastAttackTime = Time.time;
             EnemyController._sword.ClearEnemiesList();
             Debug.Log("Entering ENEMY RANGE ATTACK");
             EnemyAnimator.DoSpellEvent();

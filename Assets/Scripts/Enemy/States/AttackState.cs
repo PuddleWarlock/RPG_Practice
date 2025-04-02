@@ -1,18 +1,21 @@
-﻿using UnityEngine;
+﻿using Fight;
+using UnityEngine;
 using UnityEngine.AI;
+using Weapons.Base;
 
 namespace Enemy
 {
     public class AttackState : StatesEnemyConst
     {
-        public AttackState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent) : base(enemyController, animator, navMeshAgent)
+        private SkillsController _skillsController;
+        public AttackState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent, SkillsController skillsController) : base(enemyController, animator, navMeshAgent)
         {
-            
+            _skillsController = skillsController;
         }
 
         public override void Enter()
         {
-            EnemyController.lastAttackTime = Time.time;
+            _skillsController.Skills[SkillType.Melee].Cast();
             EnemyController._sword.ClearEnemiesList();
             Debug.Log("Entering ENEMY ATTACK");
             EnemyAnimator.DoAttack();

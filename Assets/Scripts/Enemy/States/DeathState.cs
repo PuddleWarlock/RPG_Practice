@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Fight;
+using UnityEngine;
 using UnityEngine.AI;
 namespace Enemy
 {

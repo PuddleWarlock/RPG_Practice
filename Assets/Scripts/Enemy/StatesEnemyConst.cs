@@ -1,4 +1,5 @@
-﻿using StateMachines;
+﻿using Fight;
+using StateMachines;
 using UnityEngine.AI;
 
 namespace Enemy
