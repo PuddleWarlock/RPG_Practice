@@ -1030,6 +1030,7 @@ MonoBehaviour:
   _skillsArray: {fileID: 11400000, guid: 8024b18a6db960b4895c6dcbee2037d6, type: 2}
   _castPoint: {fileID: 1307747851880347824}
   _caster: {fileID: 6518268860083745296}
+  _sword: {fileID: 9006214082730677087}
 --- !u!114 &5003377626937286102
 MonoBehaviour:
   m_ObjectHideFlags: 0

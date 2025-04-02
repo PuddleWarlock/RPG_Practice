@@ -20,7 +20,6 @@ namespace Fight
 
         public override void Enter()
         {
-            FightController.Sword.ClearEnemiesList();
             Debug.Log("Entering Melee");
             PlayerAnimator.StartCoroutine(SwordColliderSwitch());
             PlayerAnimator.DoAttack();
