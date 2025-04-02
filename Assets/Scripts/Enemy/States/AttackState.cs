@@ -16,7 +16,6 @@ namespace Enemy
         public override void Enter()
         {
             _skillsController.Skills[SkillType.Melee].Cast();
-            EnemyController._sword.ClearEnemiesList();
             Debug.Log("Entering ENEMY ATTACK");
             EnemyAnimator.DoAttack();
             NavMeshAgent.isStopped = true;
