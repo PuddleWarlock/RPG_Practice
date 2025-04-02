@@ -1,42 +1,104 @@
 ﻿using Fight;
-using StateMachines;
+using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine;
+using UnityEngine.AI;
+using Weapons;
+using Weapons.Colliding;
+using StateMachine = StateMachines.StateMachine;
+using Base;
 namespace Enemy
 {
     public class EnemyController : MonoBehaviour
     {
+        [SerializeField] public Sword _sword;
         private StateMachine enemyStateMachine;
         private EnemyAnimator enemyAnimator;
         private HealthSystem healthSystem;
+        private NavMeshAgent _agent;
+        private GameObject _player;
+        private float searchRadius;
+        private float attackRange;
+        private float attackCooldown = 3f; // Задержка в 1 секунду
+        public float lastAttackTime = 0f;
+        
+        public bool IsChasing { get; private set;}
+
+        public bool IsInAttackRange { get; private set;}
+
         private void Awake()
-        {
+        {   
+            _sword.Init(healthSystem, new Damage(DamageType.Physic, 20f));
             enemyStateMachine = new StateMachine();
             enemyAnimator = GetComponent<EnemyAnimator>();
             healthSystem = GetComponent<HealthSystem>();
+            
+            searchRadius = 50f;
+            attackRange = 2f;
         }
 
         private void Start()
-        {
+        {   
+            
+            _agent = GetComponent<NavMeshAgent>();
             EnemyStatesInit();
+            _player = FindFirstObjectByType<CharacterController>().gameObject;
+
         }
 
         private void Update()
-        {
+        {   
+            _agent.SetDestination(_player.transform.position);
+            ChasingChecker();
             enemyStateMachine.Tick();
         }
 
         private void EnemyStatesInit()
         {
-            var idleState = new IdleState(this,enemyAnimator);
-            // var walkState =  new WalkState(this,enemyAnimator);
-            var deathState = new DeathState(this,enemyAnimator);
+            var idleState = new IdleState(this,enemyAnimator, _agent);
+            var walkState =  new WalkState(this,enemyAnimator,_agent);
+            var deathState = new DeathState(this,enemyAnimator,_agent);
+            var attackState = new AttackState(this,enemyAnimator,_agent);
             
-            // bool death() => enemyAnimator._animator.GetCurrentAnimatorStateInfo(0).IsName("Death");
+            bool MeleeAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"WarriorAttack");
             
-            enemyStateMachine.AddTransition(idleState, deathState, () => healthSystem.Health <= 0f);
+            
+            enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
+            enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing);
+            enemyStateMachine.AddAnyTransition(deathState, () => healthSystem.Health <= 0f);
+            enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange);
+            enemyStateMachine.AddTransition(attackState, idleState,
+                () => IsInAttackRange && MeleeAnimationEnded());
+            enemyStateMachine.AddTransition(attackState, walkState,
+                () => !IsInAttackRange && MeleeAnimationEnded());
+            enemyStateMachine.AddTransition(idleState, attackState,
+                () => IsInAttackRange && (Time.time - lastAttackTime >= attackCooldown));
             enemyStateMachine.SetState(idleState);
+            
+            
         }
+
+        
+        private void ChasingChecker()
+        {
+            if (Vector3.Distance(_agent.transform.position, _player.transform.position) <= searchRadius)
+            {   
+                IsChasing = true;
+                if (Vector3.Distance(_agent.transform.position, _player.transform.position) <= attackRange)
+                {
+                    IsInAttackRange = true;
+                }
+                else
+                {   
+                    IsInAttackRange = false;
+                }
+            }
+            else
+            {   
+                IsChasing = false;
+            }
+        }
+        
         
 }
 }

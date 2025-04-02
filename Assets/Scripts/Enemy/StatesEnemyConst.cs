@@ -1,4 +1,5 @@
 ﻿using StateMachines;
+using UnityEngine.AI;
 
 namespace Enemy
 {
@@ -6,11 +7,13 @@ namespace Enemy
     {
         protected EnemyController EnemyController;
         protected EnemyAnimator EnemyAnimator;
+        protected NavMeshAgent NavMeshAgent;
         
-        protected StatesEnemyConst(EnemyController enemyController, EnemyAnimator animator)
+        protected StatesEnemyConst(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent)
         {
             EnemyController = enemyController;
             EnemyAnimator = animator;
+            NavMeshAgent = navMeshAgent;
         }
         
         public virtual void Enter()

@@ -31,7 +31,7 @@ namespace Weapons.Colliding
 
         public IEnumerator Ttl()
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(3f);
             Destroy(gameObject);
         }
         
