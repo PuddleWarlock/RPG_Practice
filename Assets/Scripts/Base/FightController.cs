@@ -28,9 +28,7 @@ namespace Base
             _fightStateMachine = new StateMachine();
             _skillsController = GetComponent<SkillsController>();
             _playerAnimator = GetComponent<PlayerAnimator>();
-            Sword = swordGameObject.AddComponent<Sword>();
             gameObject.GetComponent<IHittable>().onHit.AddListener(_playerAnimator.DoHit);
-            Sword.Init(gameObject.GetComponent<HealthSystem>(),new Damage(DamageType.Physic, 10f));
             SwordCollider = swordGameObject.GetComponent<BoxCollider>();
         }
         

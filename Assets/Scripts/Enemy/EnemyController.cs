@@ -1,12 +1,9 @@
 ﻿using Fight;
-using Unity.VisualScripting;
-using UnityEngine;
 using UnityEngine;
 using UnityEngine.AI;
 using Weapons;
 using Weapons.Colliding;
 using StateMachine = StateMachines.StateMachine;
-using Base;
 using Weapons.Base;
 
 namespace Enemy

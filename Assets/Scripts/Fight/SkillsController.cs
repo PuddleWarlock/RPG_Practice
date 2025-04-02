@@ -12,6 +12,7 @@ namespace Fight
         [SerializeField] private SkillsArray _skillsArray;
         [SerializeField] private Transform _castPoint;
         [SerializeField] private Transform _caster;
+        [SerializeField] public GameObject _sword;
         
         public Dictionary<SkillType,ISkill> Skills = new ();
 
@@ -25,12 +26,12 @@ namespace Fight
             if (TryGetComponent<CharacterController>(out var x)) _caster = Camera.main.transform;
             foreach (var skillEntry in _skillsArray.skillEntries)
             {
-                var skill = CreateSkill(skillEntry.SkillClass, skillEntry.SkillData,_castPoint,_caster);
+                var skill = CreateSkill(skillEntry.SkillClass, skillEntry.SkillData,_castPoint,_caster, _sword, gameObject.GetComponent<IDamageable>());
                 Skills.Add(skillEntry.SkillData.skillType,skill);
             }
         }
         
-        private ISkill CreateSkill(Type skillType, SkillData skillData, Transform castPoint, Transform caster)
+        private ISkill CreateSkill(Type skillType, SkillData skillData, Transform castPoint, Transform caster, GameObject sword, IDamageable damageable)
         {
             if (!typeof(ISkill).IsAssignableFrom(skillType) || !typeof(Skill).IsAssignableFrom(skillType))
             {
@@ -38,7 +39,7 @@ namespace Fight
             }
 
             // Создаём экземпляр через Activator
-            return (ISkill)Activator.CreateInstance(skillType, skillData, castPoint, caster);
+            return (ISkill)Activator.CreateInstance(skillType, skillData, castPoint, caster, sword, damageable);
         }
 
         private void Update()
