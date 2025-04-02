@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1030e336e1814cbb89d635d5b3c97c71, type: 3}
-  m_Name: MeleeData
+  m_Script: {fileID: 11500000, guid: 4cff712e1a5145a6939b44bf143348d9, type: 3}
+  m_Name: WizardSpell
   m_EditorClassIdentifier: 
-  skillType: 0
-  skillName: Swing
-  cooldownTime: 1
+  skillType: 1
+  skillName: asda
+  cooldownTime: 5
   sprite: {fileID: 0}
   damage:
-    Value: 50
-    Type: 0
+    Value: 30
+    Type: 1
+  _projectilePrefab: {fileID: 8396076092210822337, guid: fc2f11a48f7838f48bb41217a815b342, type: 3}

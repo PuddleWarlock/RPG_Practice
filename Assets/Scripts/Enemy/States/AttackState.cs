@@ -1,7 +1,9 @@
-﻿using Fight;
+﻿using System.Collections;
+using Fight;
 using UnityEngine;
 using UnityEngine.AI;
 using Weapons.Base;
+using DG.Tweening;
 
 namespace Enemy
 {
@@ -16,6 +18,7 @@ namespace Enemy
         public override void Enter()
         {
             _skillsController.Skills[SkillType.Melee].Cast();
+            EnemyAnimator.StartCoroutine(SwordColliderSwitch());
             Debug.Log("Entering ENEMY ATTACK");
             EnemyAnimator.DoAttack();
             NavMeshAgent.isStopped = true;
@@ -23,12 +26,20 @@ namespace Enemy
 
         public override void Execute()
         {
-            
+            EnemyController.RotateToPlayer();
         }
 
         public override void Exit()
         {
             
+        }
+        
+        private IEnumerator SwordColliderSwitch()
+        {
+            yield return new WaitUntil(()=>EnemyAnimator.CheckAnimationState(0, 0.3f, "attackTest"));
+            EnemyController.SwordCollider.enabled = true;
+            yield return new WaitUntil(()=>EnemyAnimator.CheckAnimationState(0, 0.53f, "attackTest"));
+            EnemyController.SwordCollider.enabled = false;
         }
     }
 }

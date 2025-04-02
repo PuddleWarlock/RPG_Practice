@@ -8,21 +8,23 @@ namespace Enemy
 {
     public class RangeAttackState : StatesEnemyConst
     {
-        public RangeAttackState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent ) : base(enemyController, animator, navMeshAgent)
+        private SkillsController _skillsController;
+        public RangeAttackState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent, SkillsController skillsController ) : base(enemyController, animator, navMeshAgent)
         {
+            _skillsController = skillsController;
         }
 
         public override void Enter()
         {
-            EnemyController._sword.ClearEnemiesList();
             Debug.Log("Entering ENEMY RANGE ATTACK");
-            EnemyAnimator.DoSpellEvent();
+            EnemyAnimator.DoAttack();
             NavMeshAgent.isStopped = true;
+            EnemyAnimator.StartCoroutine(SpellCast());
         }
 
         public override void Execute()
         {
-            
+            EnemyController.RotateToPlayer();
         }
 
         public override void Exit()
@@ -30,10 +32,10 @@ namespace Enemy
             
         }
         
-        // private IEnumerator SpellCast()
-        // {
-        //     yield return new WaitUntil(()=>EnemyAnimator.CheckAnimationState(0, 0.425f, "Spell"));
-        //     SkillsController.Skills[SkillType.Fireball].Cast();
-        // }
+        private IEnumerator SpellCast()
+        {
+            yield return new WaitUntil(()=>EnemyAnimator.CheckAnimationState(0, 0.425f, "attackTest"));
+            _skillsController.Skills[SkillType.Fireball].Cast();
+        }
     }
 }

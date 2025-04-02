@@ -23,10 +23,13 @@ namespace Weapons.Colliding
 
         private void OnTriggerEnter(Collider other)
         {
+            print($"Hit made by {_self}");
             IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
             if (damageable == null) return;
             if (damageable == _self) return;
+            print($"Hit Happened on {damageable}");
             if (_enemies.Contains(damageable)) return;
+            print("Does Damage");
             DoDamage(damageable);
             _enemies.Add(damageable);
         }

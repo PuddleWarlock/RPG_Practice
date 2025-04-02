@@ -1,8 +1,7 @@
 ﻿using Fight;
+using StateMachines;
 using UnityEngine;
 using UnityEngine.AI;
-using Weapons;
-using Weapons.Colliding;
 using StateMachine = StateMachines.StateMachine;
 using Weapons.Base;
 
@@ -10,40 +9,39 @@ namespace Enemy
 {
     public class EnemyController : MonoBehaviour
     {
-        [SerializeField] public Sword _sword;
+        [SerializeField] private GameObject _sword;
+        
+        public Collider SwordCollider { get; private set; }
+
+        
         private StateMachine enemyStateMachine;
         private EnemyAnimator enemyAnimator;
         private HealthSystem healthSystem;
         private NavMeshAgent _agent;
-        private GameObject _player;
+        private Transform _playerTransform;
         private SkillsController _skillsController;
-        private float searchRadius;
-        private float attackRange;
+        [SerializeField] private float _rotationSpeed;
+        [SerializeField] private float searchRadius;
+        [SerializeField] private float attackRange;
         public bool IsChasing { get; private set;}
 
         public bool IsInAttackRange { get; private set;}
         
-        public bool IsInCastRange { get; private set;}
-
         private void Awake()
-        {   
-            
-            _sword.Init(healthSystem, new Damage(DamageType.Physic, 20f));
+        {
+            SwordCollider = _sword.GetComponent<BoxCollider>();
             enemyStateMachine = new StateMachine();
             _skillsController = GetComponent<SkillsController>();
             enemyAnimator = GetComponent<EnemyAnimator>();
             healthSystem = GetComponent<HealthSystem>();
             gameObject.GetComponent<IHittable>().onHit.AddListener(enemyAnimator.DoHitEvent);
-            searchRadius = 10f;
-            attackRange = 2f;
+            _agent = GetComponent<NavMeshAgent>();
         }
 
         private void Start()
         {   
-            
-            _agent = GetComponent<NavMeshAgent>();
+            _playerTransform = FindFirstObjectByType<CharacterController>().transform;
             EnemyStatesInit();
-            _player = FindFirstObjectByType<CharacterController>().gameObject;
 
         }
 
@@ -51,31 +49,52 @@ namespace Enemy
         {   
             
             ChasingChecker();
-            _agent.SetDestination(_player.transform.position);
+            _agent.SetDestination(_playerTransform.position);
             enemyStateMachine.Tick();
+        }
+
+        public void RotateToPlayer()
+        {
+            Vector3 direction = _playerTransform.position - transform.position;
+            Quaternion desiredRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
         }
 
         private void EnemyStatesInit()
         {
+            IState attackState;
+            SkillType type;
+            if (CompareTag("Wizard"))
+            {
+                attackState = new RangeAttackState(this, enemyAnimator, _agent, _skillsController);
+                type = SkillType.Fireball;
+            }
+            else
+            {
+                attackState = new AttackState(this, enemyAnimator, _agent, _skillsController);
+                type = SkillType.Melee;
+            }
+            bool AttackReady() => _skillsController.Skills[type]._isReady;
+            
+            
+            
             var idleState = new IdleState(this,enemyAnimator, _agent);
             var walkState =  new WalkState(this,enemyAnimator,_agent);
             var deathState = new DeathState(this,enemyAnimator,_agent);
-            var attackState = new AttackState(this,enemyAnimator,_agent, _skillsController);
-            // var spellState = new RangeAttackState(this,enemyAnimator,_agent);
             
-            bool MeleeAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
-            // bool RangeAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
+            bool AttackAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
+
             
             enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
             enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing);
             enemyStateMachine.AddAnyTransition(deathState, () => healthSystem.Health <= 0f);
             enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange);
             enemyStateMachine.AddTransition(attackState, idleState,
-                () => IsInAttackRange && MeleeAnimationEnded());
+                () => IsInAttackRange && AttackAnimationEnded());
             enemyStateMachine.AddTransition(attackState, walkState,
-                () => !IsInAttackRange && MeleeAnimationEnded());
+                () => !IsInAttackRange && AttackAnimationEnded());
             enemyStateMachine.AddTransition(idleState, attackState,
-                () => IsInAttackRange && (_skillsController.Skills[SkillType.Melee]._isReady));
+                () => IsInAttackRange && AttackReady());
             
             
             // enemyStateMachine.AddTransition(idleState, spellState, () => IsInCastRange && (Time.time - lastAttackTime >= attackCooldown));
@@ -92,10 +111,10 @@ namespace Enemy
         
         private void ChasingChecker()
         {
-            if (Vector3.Distance(_agent.transform.position, _player.transform.position) <= searchRadius)
+            if (Vector3.Distance(_agent.transform.position, _playerTransform.position) <= searchRadius)
             {   
                 IsChasing = true;
-                if (Vector3.Distance(_agent.transform.position, _player.transform.position) <= attackRange)
+                if (Vector3.Distance(_agent.transform.position, _playerTransform.position) <= attackRange)
                 {
                     IsInAttackRange = true;
                 }
