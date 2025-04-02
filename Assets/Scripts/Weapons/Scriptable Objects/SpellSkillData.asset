@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1030e336e1814cbb89d635d5b3c97c71, type: 3}
-  m_Name: FireBallData
+  m_Script: {fileID: 11500000, guid: 4cff712e1a5145a6939b44bf143348d9, type: 3}
+  m_Name: SpellSkillData
   m_EditorClassIdentifier: 
   skillType: 1
-  skillName: Fireball
-  cooldownTime: 2
+  skillName: FireBall
+  cooldownTime: 3
   sprite: {fileID: 0}
+  damage:
+    Value: 20
+    Type: 1
+  _projectilePrefab: {fileID: 8396076092210822337, guid: fc2f11a48f7838f48bb41217a815b342, type: 3}

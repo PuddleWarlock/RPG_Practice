@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a74b43d04a4c4698870ec333f60aeed8, type: 3}
-  m_Name: SkillsArray
+  m_Name: SkillsArray 1
   m_EditorClassIdentifier: 
   skillEntries:
-  - _skillClass: {fileID: 11500000, guid: 333a5c3416e54703ad3ffbac26ba69d1, type: 3}
-    _skillData: {fileID: 11400000, guid: 3f97faa1c2e293d45819d28a720ac9f1, type: 2}
-  - _skillClass: {fileID: 11500000, guid: d8469dcb2db5454983d84fbcb712864c, type: 3}
-    _skillData: {fileID: 11400000, guid: f459929a32906244bada59b5ed15a8cb, type: 2}
+  - _skillClass: {fileID: 0}
+    _skillData: {fileID: 0}

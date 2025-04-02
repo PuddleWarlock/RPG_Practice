@@ -16,3 +16,6 @@ MonoBehaviour:
   skillName: Swing
   cooldownTime: 1
   sprite: {fileID: 0}
+  damage:
+    Value: 10
+    Type: 0
