@@ -1,6 +1,6 @@
 ﻿using Move;
-using StateMachines;
 using UnityEngine;
+using StateMachine = StateMachines.StateMachine;
 
 namespace Base
 {
@@ -17,16 +17,16 @@ namespace Base
         public bool IsGrounded { get; private set;}
 
         [SerializeField] public float moveSpeed = 2f;
+        [SerializeField] public float runSpeed = 2f;
         [SerializeField] private float _velocityVertical = 0f;
         [SerializeField] private float _jumpForce;
-
+        [SerializeField] private float _rotationSpeed = 1f;
         private float _groundCheckDistance;
         
         private Vector3 _inertialMoveDirection;
 
         private void Awake()
         {
-            //_camera = Camera.main;
             _inputManager = FindAnyObjectByType<InputManager>();
             _moveStateMachine = new StateMachine();
             _playerAnimator = GetComponent<PlayerAnimator>();
@@ -99,14 +99,14 @@ namespace Base
             if (_inputManager.RMBInput)
             {
                 Quaternion desiredRotation = Quaternion.LookRotation(forwardDirection, Vector3.up) * Quaternion.Euler(0,30f,0);
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
 
             }
             else if (_inputManager.MoveInput != Vector2.zero)
             {
                 Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
                 Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
             }
         }
 
@@ -121,11 +121,6 @@ namespace Base
             rightDirection.y = 0;
             Vector3 moveDirection = forwardDirection.normalized * _inputManager.MoveInput.y + rightDirection.normalized * _inputManager.MoveInput.x;
             _inertialMoveDirection = moveDirection;
-            /*if (_inputManager.MoveInput != Vector2.zero)
-            {
-                Quaternion desiredRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, 0.025f);
-            }*/
         
             _controller.Move(moveDirection * (Time.deltaTime * moveSpeed));
         }
