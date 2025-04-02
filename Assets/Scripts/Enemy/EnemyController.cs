@@ -30,6 +30,7 @@ namespace Enemy
 
         private void Awake()
         {   
+            
             _sword.Init(healthSystem, new Damage(DamageType.Physic, 20f));
             enemyStateMachine = new StateMachine();
             _skillsController = GetComponent<SkillsController>();
