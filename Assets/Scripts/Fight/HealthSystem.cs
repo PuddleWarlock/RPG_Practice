@@ -5,7 +5,7 @@ using Weapons;
 
 namespace Fight
 {
-    public class HealthSystem : MonoBehaviour, IDamageable, IHealthChange
+    public class HealthSystem : MonoBehaviour, IDamageable, IHealthChange, IHittable, IKillable
     {
         
         public float Health
@@ -21,7 +21,8 @@ namespace Fight
         public float MaxHealth { get; private set; } = 100f;
 
         public UnityEvent<float, float> onHealthChanged { get; } = new();
-        public UnityEvent onDeath;
+        public UnityEvent<bool> onDeath { get; } = new();
+        public UnityEvent onHit { get; } = new();
         private float _health;
 
         private void Start()
@@ -34,13 +35,19 @@ namespace Fight
             if (Health - damage.Value <= 0)
             {
                 Health = 0;
-                onDeath?.Invoke();
+                onDeath?.Invoke(true);
             }
             else
             {
                 Health -= damage.Value;
+                onHit?.Invoke();
             }
         }
  
+    }
+
+    public interface IKillable
+    {
+        public UnityEvent<bool> onDeath { get; }
     }
 }

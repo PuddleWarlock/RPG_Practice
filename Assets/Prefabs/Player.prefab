@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5271403435776782082}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11195789, y: 0.058590006, z: -0.006612765, w: 0.9919622}
+  m_LocalRotation: {x: 0.11196596, y: 0.057366155, z: -0.006474636, w: 0.9920337}
   m_LocalPosition: {x: 0, y: 2.7844179, z: -4.348493}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -964,7 +964,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.32
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1013,6 +1013,7 @@ MonoBehaviour:
   moveSpeed: 5
   _velocityVertical: 0
   _jumpForce: 7
+  _rotationSpeed: 5
 --- !u!114 &7730957177220686900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,6 +1068,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+
 --- !u!4 &871754430356988051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}

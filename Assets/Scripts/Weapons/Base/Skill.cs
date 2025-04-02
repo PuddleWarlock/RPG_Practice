@@ -4,9 +4,9 @@ namespace Weapons.Base
 {
     public abstract class Skill : ISkill
     {
-        protected SkillData SkillData;
+        private SkillData SkillData;
         public SkillType SkillType { get; private set; }
-        protected float _cooldownTime;
+        private float _cooldownTime;
         private float timeUntilReady { get; set; } = 0f;
         public bool _isReady { get; private set; }
 

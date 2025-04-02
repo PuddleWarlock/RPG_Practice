@@ -27,7 +27,8 @@ namespace GlobalStateMachine
             
             _viewManager.GetView<EndGameView>().AddRestartButtonListener(RestartGame);
             
-            _healthSystem.onDeath.AddListener(() => _isGameOver = true);
+            _healthSystem.onDeath.AddListener((value) => _isGameOver =  value);
+            
             GameStatesInit();
         }
         private void Update()
@@ -41,6 +42,8 @@ namespace GlobalStateMachine
             var firstSceneState = new FirstSceneState(this,_viewManager);
             var pauseState = new PauseState(this,_viewManager);
             var gameOverState = new GameOverState(this,_viewManager);
+
+            
             
             _globalStateMachine.AddTransition(pauseState, firstSceneState, () => !_inputManager.MenuInput);
             _globalStateMachine.AddAnyTransition(pauseState, () => _inputManager.MenuInput);
