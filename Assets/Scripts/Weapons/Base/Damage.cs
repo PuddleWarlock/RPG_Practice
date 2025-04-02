@@ -1,9 +1,11 @@
-﻿namespace Weapons
+﻿using System;
+
+namespace Weapons
 {
-    public struct Damage
+    [Serializable] public struct Damage
     {
-        public float Value { get;}
-        public DamageType Type { get; }
+        public float Value;
+        public DamageType Type;
 
 
         public Damage(DamageType type, float value)
@@ -12,8 +14,8 @@
             Value = value;
         }
     }
-
-    public enum DamageType
+    
+    [Serializable] public enum DamageType
     {
         Physic,
         Magic

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Weapons.Scriptable_Objects;
 
 namespace Weapons.Base
 {
@@ -6,12 +7,14 @@ namespace Weapons.Base
     {
         private SkillData SkillData;
         public SkillType SkillType { get; private set; }
+        public Damage Damage { get; private set; }
         private float _cooldownTime;
         private float timeUntilReady { get; set; } = 0f;
         public bool _isReady { get; private set; }
 
         protected Skill(SkillData skillData)
         {
+            Damage = skillData.damage;
             SkillData = skillData;
             SkillType = SkillData.skillType;
             _cooldownTime = SkillData.cooldownTime;

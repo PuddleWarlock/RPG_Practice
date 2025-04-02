@@ -51,24 +51,12 @@ namespace Base
             var spellState = new SpellState(this,_skillsController, _playerAnimator);
             var idleAttackState = new IdleAttackState(this, _skillsController, _playerAnimator);
             var sheathState = new SheathedSwordState(this,_skillsController,_playerAnimator);
-            //var focusState = new FocusState(this,_skillsController,_playerAnimator);
 
 
             bool MeleeAnimationEnded() => _playerAnimator.CheckAnimationState((int)LayerNames.Fight,0.99f,"Attack");
             bool SpellAnimationEnded() => _playerAnimator.CheckAnimationState((int)LayerNames.Fight,0.99f,"Spell");
-            
-            /*_fightStateMachine.AddTransition(idleAttackState,sheathState, () => _inputManager.SheathInput);
-            _fightStateMachine.AddTransition(sheathState,idleAttackState, () => !_inputManager.SheathInput);
-            //_fightStateMachine.AddTransition(sheathState,focusState, () => _inputManager.RMBInput);
-            
-            _fightStateMachine.AddTransition(idleAttackState,attackState, () => _inputManager.MeleeInput && _skillsController.Skills[SkillType.Melee]._isReady);
-            _fightStateMachine.AddTransition(attackState,idleAttackState, MeleeAnimationEnded);
-            //_fightStateMachine.AddTransition(idleAttackState,focusState, () => _inputManager.RMBInput);
-            //_fightStateMachine.AddTransition(focusState,idleAttackState, () => !_inputManager.RMBInput && !_inputManager.SheathInput);
-            //_fightStateMachine.AddTransition(focusState,spellState, () => _inputManager.SpellInput && _skillsController.Skills[SkillType.Fireball]._isReady);
-            _fightStateMachine.AddTransition(spellState,idleAttackState, SpellAnimationEnded);*/
-            
-            // 2 вариант
+            bool SheathAnimationEnded() => _playerAnimator.CheckAnimationState((int)LayerNames.Fight,0.99f,"Sheath");
+
             
             _fightStateMachine.AddTransition(idleAttackState,sheathState, () => _inputManager.IsSheathed);
             _fightStateMachine.AddTransition(sheathState,idleAttackState, () => !_inputManager.IsSheathed);

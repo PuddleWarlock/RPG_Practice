@@ -3,23 +3,23 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Weapons.Base;
 using Weapons.Colliding;
+using Weapons.Scriptable_Objects;
 
 namespace Weapons
 {
     public class SpellSkill : Skill
     {
-        //private readonly Transform _caster;
         private readonly GameObject _spellProjectile;
         private readonly Transform _castPoint;
-        private readonly Transform _camera;
+        private readonly Transform _caster;
 
 
-        public SpellSkill(SkillData skillData,GameObject spellProjectile, Transform castPoint, Transform caster, Transform camera) : base(skillData)
+        public SpellSkill(SkillData skillData,Transform castPoint, Transform caster) : base(skillData)
         {
-            _spellProjectile = spellProjectile;
+            var _skillData = (SpellSkillData)skillData;
+            _spellProjectile = _skillData._projectilePrefab;
             _castPoint = castPoint;
-            //_caster = caster;
-            _camera = camera;
+            _caster = caster;
         }
 
         public override void Cast()
@@ -27,10 +27,10 @@ namespace Weapons
             base.Cast();
             var obj = Object.Instantiate(_spellProjectile,_castPoint.position, Quaternion.identity);
             var proj = obj.AddComponent<Projectile>();
-            proj.Init(new Damage(DamageType.Magic,1000f), _castPoint.GetComponentInParent<IDamageable>());
+            proj.Init(Damage, _castPoint.GetComponentInParent<IDamageable>());
             var rb = obj.GetComponent<Rigidbody>();
-            int layerMask = ~LayerMask.GetMask("Player");
-            Physics.Raycast(_camera.position, _camera.forward, out RaycastHit hit, 1000f,layerMask);
+            int layerMask = ~LayerMask.GetMask(_castPoint.gameObject.tag);
+            Physics.Raycast(_caster.position, _caster.forward, out RaycastHit hit, 1000f,layerMask);
             Vector3 castDir =  hit.point - _castPoint.position;
             rb.AddForce(castDir.normalized * 1000f);
             proj.StartCoroutine(proj.Ttl());
