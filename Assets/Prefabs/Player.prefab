@@ -1010,7 +1010,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spine: {fileID: 4909401960891364244}
-  moveSpeed: 5
+  moveSpeed: 2
+  runSpeed: 5
   _velocityVertical: 0
   _jumpForce: 7
   _rotationSpeed: 5
@@ -1027,7 +1028,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillsArray: {fileID: 11400000, guid: 8024b18a6db960b4895c6dcbee2037d6, type: 2}
-  _projectilePrefab: {fileID: 8396076092210822337, guid: fc2f11a48f7838f48bb41217a815b342, type: 3}
   _castPoint: {fileID: 1307747851880347824}
   _caster: {fileID: 6518268860083745296}
 --- !u!114 &5003377626937286102
@@ -1042,9 +1042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c3db853b931f94bb58ff73e39a2b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!136 &4342629304264627729
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1068,7 +1065,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
-
 --- !u!4 &871754430356988051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d7417f0d57ca3142809d72f70077c28, type: 3}

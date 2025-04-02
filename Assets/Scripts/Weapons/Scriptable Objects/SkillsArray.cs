@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Weapons
+namespace Weapons.Scriptable_Objects
 {
     [CreateAssetMenu(menuName = "Skills/SkillsArray", fileName = "SkillsArray")]
     public class SkillsArray : ScriptableObject
     {
-        public SkillData[] skillData;
+        public SkillEntry[] skillEntries;
     }
 }
