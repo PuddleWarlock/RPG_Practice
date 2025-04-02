@@ -7,8 +7,8 @@ namespace Enemy
         private static readonly int Death = Animator.StringToHash("Death");
         private static readonly int Walk = Animator.StringToHash("Walk");
         private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Hitted = Animator.StringToHash("Hitted");
         private static readonly int Spell = Animator.StringToHash("Spell");
-        // private static readonly int Run = Animator.StringToHash("Run");
         
         public Animator _animator { get; private set; }
         
@@ -42,7 +42,12 @@ namespace Enemy
             _animator.SetTrigger(Attack);
         }
         
-        public void DoSpell()
+        public void DoHitEvent()
+        {
+            _animator.SetTrigger(Hitted);
+        }
+
+        public void DoSpellEvent()
         {
             _animator.SetTrigger(Spell);
         }

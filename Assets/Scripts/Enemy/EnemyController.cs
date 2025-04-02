@@ -25,6 +25,8 @@ namespace Enemy
         public bool IsChasing { get; private set;}
 
         public bool IsInAttackRange { get; private set;}
+        
+        public bool IsInCastRange { get; private set;}
 
         private void Awake()
         {   
@@ -32,8 +34,8 @@ namespace Enemy
             enemyStateMachine = new StateMachine();
             enemyAnimator = GetComponent<EnemyAnimator>();
             healthSystem = GetComponent<HealthSystem>();
-            
-            searchRadius = 50f;
+            gameObject.GetComponent<IHittable>().onHit.AddListener(enemyAnimator.DoHitEvent);
+            searchRadius = 10f;
             attackRange = 2f;
         }
 
@@ -48,8 +50,9 @@ namespace Enemy
 
         private void Update()
         {   
-            _agent.SetDestination(_player.transform.position);
+            
             ChasingChecker();
+            _agent.SetDestination(_player.transform.position);
             enemyStateMachine.Tick();
         }
 
@@ -59,9 +62,10 @@ namespace Enemy
             var walkState =  new WalkState(this,enemyAnimator,_agent);
             var deathState = new DeathState(this,enemyAnimator,_agent);
             var attackState = new AttackState(this,enemyAnimator,_agent);
+            // var spellState = new RangeAttackState(this,enemyAnimator,_agent);
             
-            bool MeleeAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"WarriorAttack");
-            
+            bool MeleeAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
+            // bool RangeAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
             
             enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
             enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing);
@@ -73,9 +77,17 @@ namespace Enemy
                 () => !IsInAttackRange && MeleeAnimationEnded());
             enemyStateMachine.AddTransition(idleState, attackState,
                 () => IsInAttackRange && (Time.time - lastAttackTime >= attackCooldown));
+            
+            
+            // enemyStateMachine.AddTransition(idleState, spellState, () => IsInCastRange && (Time.time - lastAttackTime >= attackCooldown));
+            // enemyStateMachine.AddTransition(spellState, idleState, () => IsInCastRange && RangeAnimationEnded());
+            // enemyStateMachine.AddTransition(walkState, spellState, () => IsInCastRange);
+            // enemyStateMachine.AddTransition(spellState, walkState, () => !IsInCastRange && RangeAnimationEnded());
+            
+            
+            
+            
             enemyStateMachine.SetState(idleState);
-            
-            
         }
 
         
