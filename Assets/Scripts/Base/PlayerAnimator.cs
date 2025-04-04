@@ -17,6 +17,7 @@ namespace Base
         private static readonly int IsRMB = Animator.StringToHash("IsRMB");
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
+        private static readonly int Death = Animator.StringToHash("Death");
         
         private static readonly int Hitted = Animator.StringToHash("Hitted");
 
@@ -123,6 +124,11 @@ namespace Base
             bool isRMB = InputManager.Instance.RMBInput;
             _animator.SetBool(IsRMB, isRMB);
         }
+        public void DoDeath()
+        {
+            _animator.SetTrigger(Death);
+        }
+        
 
     }
     public enum LayerNames

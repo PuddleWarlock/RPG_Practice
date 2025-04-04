@@ -1,4 +1,5 @@
-﻿using Move;
+﻿using Fight;
+using Move;
 using UnityEngine;
 using StateMachine = StateMachines.StateMachine;
 
@@ -12,7 +13,7 @@ namespace Base
         private CharacterController _controller;
         [SerializeField] private Transform _spine;
         private Camera _camera;
-
+        
 
         public bool IsGrounded { get; private set;}
 
@@ -22,8 +23,10 @@ namespace Base
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _rotationSpeed = 1f;
         private float _groundCheckDistance;
-        
+        private bool _death;
         private Vector3 _inertialMoveDirection;
+        
+        
 
         private void Awake()
         {
@@ -61,7 +64,8 @@ namespace Base
             var walkingState = new WalkingState(this,_playerAnimator);
             var sprintingState = new SprintingState(this,_playerAnimator);
             var fallingState = new FallingState(this,_playerAnimator);
-
+            var deathState = new DeathState(this,_playerAnimator);
+            gameObject.GetComponent<IKillable>().onDeath.AddListener(value => _death = value);
 
             _moveStateMachine.AddTransition(idleState, walkingState, () => _inputManager.MoveInput != Vector2.zero);
             _moveStateMachine.AddTransition(idleState, sprintingState, () => _inputManager.SprintInput);
@@ -73,6 +77,8 @@ namespace Base
             _moveStateMachine.AddTransition(jumpingState, fallingState, () => !IsGrounded);
             _moveStateMachine.AddTransition(fallingState, idleState, () => IsGrounded);
             _moveStateMachine.AddAnyTransition(jumpingState, () => _inputManager.JumpInput);
+            _moveStateMachine.AddAnyTransition(deathState, () => _death);
+            
             
             _moveStateMachine.SetState(idleState);
         }

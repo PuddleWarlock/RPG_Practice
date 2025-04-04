@@ -12,8 +12,8 @@ namespace Enemy
         [SerializeField] private GameObject _sword;
         
         public Collider SwordCollider { get; private set; }
-
         
+        private Canvas hpCanvas;
         private StateMachine enemyStateMachine;
         private EnemyAnimator enemyAnimator;
         private HealthSystem healthSystem;
@@ -36,6 +36,7 @@ namespace Enemy
             healthSystem = GetComponent<HealthSystem>();
             gameObject.GetComponent<IHittable>().onHit.AddListener(enemyAnimator.DoHitEvent);
             _agent = GetComponent<NavMeshAgent>();
+            hpCanvas = GetComponentInChildren<Canvas>();
         }
 
         private void Start()
@@ -80,15 +81,15 @@ namespace Enemy
             
             var idleState = new IdleState(this,enemyAnimator, _agent);
             var walkState =  new WalkState(this,enemyAnimator,_agent);
-            var deathState = new DeathState(this,enemyAnimator,_agent);
+            var deathState = new DeathState(this,enemyAnimator,_agent, hpCanvas);
             
             bool AttackAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
 
             
             enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
-            enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing);
+            enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing || IsInAttackRange);
             enemyStateMachine.AddAnyTransition(deathState, () => healthSystem.Health <= 0f);
-            enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange);
+            enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange && AttackReady());
             enemyStateMachine.AddTransition(attackState, idleState,
                 () => IsInAttackRange && AttackAnimationEnded());
             enemyStateMachine.AddTransition(attackState, walkState,

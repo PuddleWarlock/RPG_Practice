@@ -20,7 +20,7 @@ namespace GlobalStateMachine
             _globalStateMachine = new StateMachine();
         }
         public void Init(InputManager inputManager, HealthSystem playerHealthSystem, ViewManager viewManager)
-        {
+        { 
             _inputManager = inputManager;
             _healthSystem = playerHealthSystem;
             _viewManager = viewManager;
@@ -55,6 +55,11 @@ namespace GlobalStateMachine
         public void RestartGame()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        public void InputManagerDisable()
+        {
+            _inputManager.gameObject.SetActive(false);
         }
     }
 }
