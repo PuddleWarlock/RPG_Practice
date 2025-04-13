@@ -30,7 +30,7 @@ namespace Weapons
             proj.Init(Damage, _castPoint.GetComponentInParent<IDamageable>());
             var rb = obj.GetComponent<Rigidbody>();
             int layerMask = ~LayerMask.GetMask(_castPoint.gameObject.tag);
-            Physics.Raycast(_caster.position, _caster.forward, out RaycastHit hit, 1000f,layerMask);
+            Physics.Raycast(_castPoint.position, _caster.forward, out RaycastHit hit, 1000f,layerMask);
             Vector3 castDir =  hit.point - _castPoint.position;
             rb.AddForce(castDir.normalized * 1000f);
             proj.StartCoroutine(proj.Ttl());

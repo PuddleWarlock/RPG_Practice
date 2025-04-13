@@ -206,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49219023}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11196596, y: 0.057366155, z: -0.006474636, w: 0.9920337}
+  m_LocalRotation: {x: 0.11175723, y: 0.0834092, z: -0.009413986, w: 0.9901841}
   m_LocalPosition: {x: 0, y: 3.6228595, z: -4.7833424}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -424,11 +424,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &635405283 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7361847629952758042, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
-  m_PrefabInstance: {fileID: 778095382077883979}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &711569242 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2815179225560464999, guid: ca30be5f2eb9c3b408b30effe7e3236c, type: 3}
@@ -999,6 +994,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7889239431355322317, guid: be470e06349199348af40fcdc5150367, type: 3}
+      propertyPath: m_Speed
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9161367815140019086, guid: be470e06349199348af40fcdc5150367, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9161367815140019086, guid: be470e06349199348af40fcdc5150367, type: 3}
+      propertyPath: m_TagString
+      value: HP UI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1083,6 +1090,10 @@ PrefabInstance:
     - target: {fileID: 6263455894815690347, guid: 09bb35136ddd8d043bffb57b26f13974, type: 3}
       propertyPath: m_Name
       value: EnemyDoll
+      objectReference: {fileID: 0}
+    - target: {fileID: 6263455894815690347, guid: 09bb35136ddd8d043bffb57b26f13974, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6263455894815690347, guid: 09bb35136ddd8d043bffb57b26f13974, type: 3}
       propertyPath: m_TagString
@@ -9637,21 +9648,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 907902803933294386, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
-      propertyPath: _sword
-      value: 
-      objectReference: {fileID: 635405283}
-    - target: {fileID: 1297744145040347617, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
-      propertyPath: _sword
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7361847629952758042, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
       propertyPath: m_Name
       value: WizardEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 7361847629952758042, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864134941946347011, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
+      propertyPath: m_TagString
+      value: HP UI
       objectReference: {fileID: 0}
     - target: {fileID: 7881679532822031264, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
       propertyPath: m_LocalPosition.x

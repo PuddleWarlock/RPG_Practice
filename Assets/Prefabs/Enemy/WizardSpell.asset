@@ -19,4 +19,4 @@ MonoBehaviour:
   damage:
     Value: 30
     Type: 1
-  _projectilePrefab: {fileID: 8396076092210822337, guid: fc2f11a48f7838f48bb41217a815b342, type: 3}
+  _projectilePrefab: {fileID: 100004, guid: c7feba82aab23de49ac712663c274af3, type: 3}

@@ -17,5 +17,5 @@ MonoBehaviour:
   cooldownTime: 1
   sprite: {fileID: 0}
   damage:
-    Value: 50
+    Value: 34
     Type: 0

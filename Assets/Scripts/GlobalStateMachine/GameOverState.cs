@@ -1,4 +1,5 @@
-﻿using UI;
+﻿using System.Collections;
+using UI;
 using UnityEngine;
 
 namespace GlobalStateMachine
@@ -15,11 +16,10 @@ namespace GlobalStateMachine
 
         public override void Enter()
         {
+            _gameManager.InputManagerDisable();
+            _gameManager.StartCoroutine(EndGameOver());
             Debug.Log("Entering GAME OVER");
-            Time.timeScale = 0f;
-            _viewManager.GetView<EndGameView>().Show();
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            
         }
 
         public override void Execute()
@@ -30,6 +30,15 @@ namespace GlobalStateMachine
         public override void Exit()
         {
             Debug.Log("Exiting GAME OVER");
+        }
+
+        private IEnumerator EndGameOver()
+        {
+            yield return new WaitForSecondsRealtime(3.6f);
+            Time.timeScale = 0f;
+            _viewManager.GetView<EndGameView>().Show();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }
