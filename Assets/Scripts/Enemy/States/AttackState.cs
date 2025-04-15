@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using Fight;
+using Controllers.Entities;
 using UnityEngine;
 using UnityEngine.AI;
 using Weapons.Base;
-using DG.Tweening;
 
-namespace Enemy
+namespace Enemy.States
 {
     public class AttackState : StatesEnemyConst
     {

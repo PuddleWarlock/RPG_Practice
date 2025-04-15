@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Enemy
+namespace Enemy.States
 {
     public class WalkState : StatesEnemyConst
     {

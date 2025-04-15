@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Weapons.Scriptable_Objects;
+using Weapons.ScriptableObjects;
 
 namespace Weapons.Base
 {

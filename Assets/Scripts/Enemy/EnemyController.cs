@@ -1,9 +1,13 @@
-﻿using Fight;
+﻿using Controllers.Entities;
+using Controllers.Entities.HealthController;
+using Controllers.Entities.HealthController.Interfaces;
+using Enemy.States;
 using StateMachines;
 using UnityEngine;
 using UnityEngine.AI;
 using StateMachine = StateMachines.StateMachine;
 using Weapons.Base;
+using AttackState = Enemy.States.AttackState;
 
 namespace Enemy
 {

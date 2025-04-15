@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using Fight;
+using Controllers.Entities;
 using UnityEngine;
 using UnityEngine.AI;
 using Weapons.Base;
 
-namespace Enemy
+namespace Enemy.States
 {
     public class RangeAttackState : StatesEnemyConst
     {

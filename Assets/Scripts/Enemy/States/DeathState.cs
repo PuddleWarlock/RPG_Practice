@@ -1,7 +1,7 @@
-﻿using Fight;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-namespace Enemy
+
+namespace Enemy.States
 
 {
     public class DeathState : StatesEnemyConst
