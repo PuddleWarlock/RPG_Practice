@@ -6,7 +6,8 @@ namespace Views.MainMenu
 {
     public class MainMenuView : View
     {
-        [SerializeField] private Button _startButton;
+        [SerializeField] private Button _resumeButton;
+        [SerializeField] private Button _newGameButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _loadButton;
         [SerializeField] private Button _exitButton;
@@ -16,9 +17,14 @@ namespace Views.MainMenu
             _exitButton.onClick.AddListener(Application.Quit);
         }
 
-        public void SetStartAction(Action callback)
+        public void SetResumeAction(Action callback)
         {
-            _startButton.onClick.AddListener(callback.Invoke);
+            _resumeButton.onClick.AddListener(callback.Invoke);
+        }
+        
+        public void SetNewGameAction(Action callback)
+        {
+            _newGameButton.onClick.AddListener(callback.Invoke);
         }
 
         public void SetLoadAction(Action callback)

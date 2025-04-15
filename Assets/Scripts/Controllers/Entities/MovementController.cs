@@ -99,6 +99,7 @@ namespace Controllers.Entities
 
         private void Rotate()
         {
+            if(!_camera) return;
             Vector3 forwardDirection = _camera.transform.forward;
             Vector3 rightDirection = _camera.transform.right;
             forwardDirection.y = 0;

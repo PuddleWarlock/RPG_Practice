@@ -1,5 +1,6 @@
 ﻿using System;
-using Controllers.Settings;
+using Controllers.SaveLoad.PlayerSaves;
+using Controllers.SaveLoad.Settings;
 using UnityEngine;
 
 namespace Controllers
@@ -24,12 +25,15 @@ namespace Controllers
 
 
         private SettingsInteractor _settingsInteractor;
-
+        private PlayerDataInteractor _playerDataInteractor;
+        
+        public PlayerDataInteractor GetPlayerDataInteractor() => _playerDataInteractor;
         public SettingsInteractor GetSettingsInteractor() => _settingsInteractor;
 
-        public void Init(SettingsInteractor settingsInteractor)
+        public void Init(SettingsInteractor settingsInteractor, PlayerDataInteractor playerDataInteractor)
         {
             _settingsInteractor = settingsInteractor;
+            _playerDataInteractor = playerDataInteractor;
         }
         
 

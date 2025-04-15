@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Controllers.Entities.HealthController;
-using Controllers.Settings;
+using Controllers.SaveLoad.Settings;
 using UnityEngine;
 
 namespace Enemy

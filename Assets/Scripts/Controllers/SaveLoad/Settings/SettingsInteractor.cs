@@ -1,7 +1,6 @@
-﻿using Controllers.SaveLoad;
-using Controllers.SaveLoad.Saveables;
+﻿using Controllers.SaveLoad.Saveables;
 
-namespace Controllers.Settings
+namespace Controllers.SaveLoad.Settings
 {
     public class SettingsInteractor
     {

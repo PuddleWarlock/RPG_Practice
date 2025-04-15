@@ -1,6 +1,9 @@
-﻿using Controllers.SaveLoad.Saveables;
-using Controllers.Settings;
+﻿using System.Collections.Generic;
+using Controllers.SaveLoad.PlayerSaves;
+using Controllers.SaveLoad.Saveables;
+using Controllers.SaveLoad.Settings;
 using Controllers.UI;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using Views.MainMenu;
 
@@ -10,11 +13,13 @@ namespace Controllers.Scenes
     {
         private readonly ViewManager _viewManager;
         private readonly SettingsInteractor _settingsInteractor;
+        private readonly PlayerDataInteractor _playerDataInteractor;
 
-        public MainMenuManager(ViewManager viewManager, SettingsInteractor settingsInteractor)
+        public MainMenuManager(ViewManager viewManager, SettingsInteractor settingsInteractor, PlayerDataInteractor playerDataInteractor)
         {
             _viewManager = viewManager;
             _settingsInteractor = settingsInteractor;
+            _playerDataInteractor = playerDataInteractor;
             LoadingSceneManager.NextSceneName = "GameScene";
             SetListeners();
             HasSettings();
@@ -40,15 +45,55 @@ namespace Controllers.Scenes
             settings.EnemiesPower = value;
             _settingsInteractor.SaveSettings(settings);
         }
+
+        private void NewGame()
+        {
+            _playerDataInteractor.StartNewGame();
+            SceneManager.LoadScene("LoadingScene");
+        }
+
+        private void ContinueGame()
+        {
+            if (_playerDataInteractor.HasPlayerData())
+            {
+                _playerDataInteractor.LoadLatestPlayerData();
+                SceneManager.LoadScene("LoadingScene");
+            }
+            else
+            {
+                Debug.Log("No save data found. Starting new game."); 
+                NewGame();
+            }
+        }
+
+        private List<string> GetTimestamps() => _playerDataInteractor.GetAllSaves();
+
+        private void LoadSelected(string timestamp)
+        {
+            _playerDataInteractor.LoadByTimestamp(timestamp);
+            SceneManager.LoadScene("LoadingScene");
+        }
+        
+        
         private void SetListeners()
         {
             var mainMenuView = _viewManager.GetView<MainMenuView>();
-            mainMenuView.SetStartAction(() => SceneManager.LoadScene("LoadingScene"));
             var settingsView = _viewManager.GetView<SettingsView>();
+            var loadView = _viewManager.GetView<LoadGameView>();
+            
+            mainMenuView.SetNewGameAction(NewGame);
+            mainMenuView.SetResumeAction(ContinueGame);
             mainMenuView.SetSettingsAction(()=>_viewManager.SwitchViews(mainMenuView, settingsView));
+            mainMenuView.SetLoadAction(() => loadView.ShowLoadGameMenu(GetTimestamps(),LoadSelected));
+            mainMenuView.SetLoadAction(()=>_viewManager.SwitchViews(mainMenuView,loadView));
+            
             settingsView.SetSliderListener(UpdateSettings);
             settingsView.SetBackButtonListener(()=>_viewManager.SwitchViews(settingsView, mainMenuView));
-            
+
+
+            loadView.SetBackButtonListener(()=>_viewManager.SwitchViews(loadView,mainMenuView));
         }
+        
+        
     }
 }

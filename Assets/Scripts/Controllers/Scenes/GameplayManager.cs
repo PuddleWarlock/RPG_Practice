@@ -1,5 +1,7 @@
 ﻿using Controllers.Entities;
 using Controllers.Entities.HealthController;
+using Controllers.SaveLoad.PlayerSaves;
+using Controllers.SaveLoad.Saveables;
 using Controllers.UI;
 using StateMachines;
 using StateMachines.SceneStates;
@@ -16,18 +18,20 @@ namespace Controllers.Scenes
         private InputManager _inputManager;
         private HealthSystem _healthSystem;
         private ViewManager _viewManager;
+        private PlayerDataInteractor _playerDataInteractor;
         private bool _isGameOver;
         private void Awake()
         {
             _sceneStateMachine = new StateMachine();
         }
-        public void Init(InputManager inputManager, HealthSystem playerHealthSystem, ViewManager viewManager)
+        public void Init(InputManager inputManager, HealthSystem playerHealthSystem, ViewManager viewManager, PlayerDataInteractor playerDataInteractor)
         { 
             _inputManager = inputManager;
             _healthSystem = playerHealthSystem;
             _viewManager = viewManager;
+            _playerDataInteractor = playerDataInteractor;
             
-            _viewManager.GetView<EndGameView>().AddRestartButtonListener(RestartGame);
+            SetListeners();
             
             _healthSystem.onDeath.AddListener((value) => _isGameOver =  value);
             
@@ -37,6 +41,26 @@ namespace Controllers.Scenes
         {
             _sceneStateMachine.Tick();
             if(Input.GetKeyDown(KeyCode.K)) _healthSystem.TakeDamage(new Damage(DamageType.Physic,20f));
+        }
+        
+        private void SetListeners()
+        {
+            if (!_viewManager)
+            {
+                print("ya yeblan");
+            }
+            _viewManager.GetView<PauseView>().SetSaveButtonListener(SavePlayerData);
+            _viewManager.GetView<EndGameView>().AddRestartButtonListener(RestartGame);
+        }
+
+        private void SavePlayerData()
+        {
+            var playerData = new PlayerData()
+            {
+                Health = _healthSystem.Health,
+                Position = _healthSystem.transform.position
+            };
+            _playerDataInteractor.SavePlayerData(playerData);
         }
 
         private void GameStatesInit()
@@ -56,7 +80,8 @@ namespace Controllers.Scenes
 
         private void RestartGame()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            LoadingSceneManager.NextSceneName = "GameScene";
+            SceneManager.LoadScene("LoadingScene");
         }
 
         public void InputManagerDisable()

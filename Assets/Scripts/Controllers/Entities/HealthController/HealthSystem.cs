@@ -29,17 +29,17 @@ namespace Controllers.Entities.HealthController
         public void Init(float healthMultiplier)
         {
             MaxHealth *= healthMultiplier;
-            SetHealth();
+            SetHealthToMax();
         }
 
-        private void Start()
-        {
-            
-        }
-
-        private void SetHealth()
+        private void SetHealthToMax()
         {
             Health = MaxHealth;
+        }
+        
+        public void SetHealth(float health)
+        {
+            Health = health;
         }
 
         public void TakeDamage(Damage damage)

@@ -10,7 +10,8 @@ namespace Bootstraps
         private void Awake()
         {
             var viewManager = GetComponent<ViewManager>();
-            MainMenuManager menuManager = new(viewManager, GameManager.Instance.GetSettingsInteractor());
+            MainMenuManager menuManager = new(viewManager, GameManager.Instance.GetSettingsInteractor(),
+                GameManager.Instance.GetPlayerDataInteractor());
            
             InvokeRepeating(nameof(Do),0f,1f);
         }
