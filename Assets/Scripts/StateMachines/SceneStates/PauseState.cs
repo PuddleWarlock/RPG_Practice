@@ -22,6 +22,8 @@ namespace StateMachines.SceneStates
             Debug.Log("Entering PAUSE STATE");
             Time.timeScale = 0f;
             _viewManager.GetView<PauseView>().Show();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         public override void Execute()
@@ -34,6 +36,8 @@ namespace StateMachines.SceneStates
             _viewManager.GetView<PauseView>().Hide();
             Debug.Log("Exiting PAUSE STATE");
             Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

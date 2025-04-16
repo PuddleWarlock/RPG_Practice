@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
 namespace Controllers.Entities
-{
+{   
     public class InputManager : MonoBehaviour
-    {
+    {   
+        // private bool _isPaused;
         private InputSystem_Actions _inputSystem;
         
         private static InputManager _instance;
@@ -40,6 +41,28 @@ namespace Controllers.Entities
 
         #endregion
         
+        // // Метод для установки состояния паузы
+        // public void SetPaused(bool isPaused)
+        // {
+        //     _isPaused = isPaused;
+        //     // Сбрасываем игровой ввод при паузе
+        //     if (_isPaused)
+        //     {
+        //         MoveInput = Vector2.zero;
+        //         JumpInput = false;
+        //         SprintInput = false;
+        //         MeleeInput = false;
+        //         SpellInput = false;
+        //         RMBInput = false;
+        //         
+        //     }
+        // }
+        
+        // // Метод для явного сброса MenuInput
+        // public void ResetMenuInput()
+        // {
+        //     MenuInput = false;
+        // }
         
         private void Awake()
         {
@@ -60,6 +83,8 @@ namespace Controllers.Entities
             GameActionsInit();
         }
 
+
+
         private void PlayerActionsInit()
         {
             _inputSystem.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
@@ -77,10 +102,35 @@ namespace Controllers.Entities
             _inputSystem.Player.Sheath.performed += ctx => IsSheathed = !IsSheathed;
         }
         
+        // private void PlayerActionsInit()
+        // {
+        //     _inputSystem.Player.Move.performed += ctx =>
+        //     {
+        //         if (!_isPaused) MoveInput = ctx.ReadValue<Vector2>(); };
+        //     _inputSystem.Player.Move.canceled += ctx => { if (!_isPaused) MoveInput = Vector2.zero; };
+        //     _inputSystem.Player.Jump.performed += ctx => { if (!_isPaused) JumpInput = true; };
+        //     _inputSystem.Player.Jump.canceled += ctx => { if (!_isPaused) JumpInput = false; };
+        //     _inputSystem.Player.Sprint.performed += ctx => { if (!_isPaused) SprintInput = true; };
+        //     _inputSystem.Player.Sprint.canceled += ctx => { if (!_isPaused) SprintInput = false; };
+        //     _inputSystem.Player.Attack.performed += ctx => { if (!_isPaused) MeleeInput = true; };
+        //     _inputSystem.Player.Attack.canceled += ctx => { if (!_isPaused) MeleeInput = false; };
+        //     _inputSystem.Player.Spell.performed += ctx => { if (!_isPaused) SpellInput = true; };
+        //     _inputSystem.Player.Spell.canceled += ctx => { if (!_isPaused) SpellInput = false; };
+        //     _inputSystem.Player.RMB.performed += ctx =>{ if (!_isPaused)  RMBInput = true; };
+        //     _inputSystem.Player.RMB.canceled += ctx => { if (!_isPaused) RMBInput = false; };
+        //     _inputSystem.Player.Sheath.performed += ctx => { if (!_isPaused) IsSheathed = !IsSheathed; };
+        // }
+        
         private void GameActionsInit()
         {
             _inputSystem.Game.Menu.performed += ctx => MenuInput = !MenuInput;
         }
+        
+        // private void GameActionsInit()
+        // {
+        //     _inputSystem.Game.Menu.performed += ctx => MenuInput = true;
+        //     _inputSystem.Game.Menu.canceled += ctx => MenuInput = false;
+        // }
 
         private void OnEnable()
         {
