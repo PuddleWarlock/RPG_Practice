@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using Controllers.Entities;
 using UnityEngine;
 
@@ -14,13 +16,11 @@ namespace Anims
         private Transform _camera;
 
         private float _maxArmLength = 0.8f;
-
-
         
-
-        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        
+        
+        public override async void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            
             _fightController = animator.GetComponent<FightController>();
             _isInitialized = false;
             _camera = Camera.main.transform;
@@ -29,6 +29,8 @@ namespace Anims
             {
                 _currentLookAtPoint = head.position + head.forward * 10f;
             }
+
+            animator.GetBehaviour<UpperBodyRotation>();
         }
 
         public override void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -1,4 +1,5 @@
-﻿using Controllers.Entities;
+﻿using System.Collections.Generic;
+using Controllers.Entities;
 using Controllers.Entities.HealthController;
 using Controllers.SaveLoad.PlayerSaves;
 using Controllers.SaveLoad.Saveables;
@@ -8,6 +9,7 @@ using StateMachines.SceneStates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Views.Gameplay;
+using Views.MainMenu;
 using Weapons.Base;
 
 namespace Controllers.Scenes
@@ -20,8 +22,7 @@ namespace Controllers.Scenes
         private ViewManager _viewManager;
         private PlayerDataInteractor _playerDataInteractor;
         private bool _isGameOver;
-        // private bool _isPaused;
-        // public bool IsPaused => _isPaused;
+        
         private void Awake()
         {
             _sceneStateMachine = new StateMachine();
@@ -51,8 +52,36 @@ namespace Controllers.Scenes
             {
                 print("ya yeblan");
             }
-            _viewManager.GetView<PauseView>().SetSaveButtonListener(SavePlayerData);
+
+            var pauseView = _viewManager.GetView<PauseView>();
+            var loadView = _viewManager.GetView<LoadGameView>();
+            pauseView.SetToLoadChooseButtonListener(() => _viewManager.SwitchViews(pauseView,loadView));
+            pauseView.SetToLoadChooseButtonListener(() => loadView.ShowLoadGameMenu(GetTimestamps(),LoadSelected));
+            pauseView.SetSaveButtonListener(SavePlayerData);
+            pauseView.SetMainMenuButtonListener(() =>
+            {
+                LoadingSceneManager.NextSceneName = "MainMenu";
+                SceneManager.LoadScene("LoadingScene");
+            });
+            pauseView.SetLoadLastButtonListener(LoadLast);
+            
+            loadView.SetBackButtonListener(()=>_viewManager.SwitchViews(loadView,pauseView));
             _viewManager.GetView<EndGameView>().AddRestartButtonListener(RestartGame);
+        }
+        
+        private List<string> GetTimestamps() => _playerDataInteractor.GetAllSaves();
+
+        private void LoadSelected(string timestamp)
+        {
+            _playerDataInteractor.LoadByTimestamp(timestamp);
+            LoadingSceneManager.NextSceneName = "GameScene";
+            SceneManager.LoadScene("LoadingScene");
+        }
+
+        private void LoadLast()
+        {
+            _playerDataInteractor.LoadLatestPlayerData();
+            SceneManager.LoadScene("LoadingScene");
         }
 
         
@@ -89,7 +118,6 @@ namespace Controllers.Scenes
             _playerDataInteractor.LoadLatestPlayerData();
             LoadingSceneManager.NextSceneName = "GameScene";
             SceneManager.LoadScene("LoadingScene");
-            
         }
         
         

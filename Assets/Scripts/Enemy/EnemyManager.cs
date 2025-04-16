@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Controllers.Entities;
 using Controllers.Entities.HealthController;
 using Controllers.SaveLoad.Settings;
 using UnityEngine;
@@ -35,6 +36,7 @@ namespace Enemy
                 var enemyPrefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
                 var enemy = Object.Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity).GetComponent<EnemyController>();
                 enemy.GetComponent<HealthSystem>().Init(enemiesPower);
+                enemy.GetComponent<SkillsController>().Init(null);
                 _enemies.Add(enemy);
             }
         }

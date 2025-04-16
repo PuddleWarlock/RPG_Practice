@@ -13,7 +13,8 @@ namespace Controllers.Entities
         [SerializeField] private Transform _castPoint;
         [SerializeField] private Transform _caster;
         [SerializeField] public GameObject _sword;
-        
+
+        private Camera _camera;
         public Dictionary<SkillType,ISkill> Skills = new ();
 
         public void Awake()
@@ -23,14 +24,23 @@ namespace Controllers.Entities
             Skills.Add(spell.SkillType,spell);
             Skills.Add(melee.SkillType,melee);*/
 
-            if (TryGetComponent<CharacterController>(out var x)) _caster = Camera.main.transform;
+            
+        }
+
+        public void Init(Camera camera)
+        {
+            if (camera)
+            {
+                _camera = camera;
+                _caster = _camera.transform;
+            }
             foreach (var skillEntry in _skillsArray.skillEntries)
             {
                 var skill = CreateSkill(skillEntry.SkillClass, skillEntry.SkillData,_castPoint,_caster, _sword, gameObject.GetComponent<IDamageable>());
                 Skills.Add(skillEntry.SkillData.skillType,skill);
             }
         }
-        
+
         private ISkill CreateSkill(Type skillType, SkillData skillData, Transform castPoint, Transform caster, GameObject sword, IDamageable damageable)
         {
             if (!typeof(ISkill).IsAssignableFrom(skillType) || !typeof(Skill).IsAssignableFrom(skillType))

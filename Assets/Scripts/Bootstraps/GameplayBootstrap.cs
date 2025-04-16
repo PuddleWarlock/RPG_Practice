@@ -1,4 +1,5 @@
 ﻿using System;
+using Anims;
 using Controllers;
 using Controllers.Entities;
 using Controllers.Entities.HealthController;
@@ -7,6 +8,7 @@ using Controllers.SaveLoad.Saveables;
 using Controllers.Scenes;
 using Controllers.UI;
 using Enemy;
+using Unity.VisualScripting;
 using UnityEngine;
 using Views.Gameplay;
 using Weapons.Base;
@@ -44,10 +46,10 @@ namespace Bootstraps
             //var uiManager = new GameplayUIManager(_playerDataInteractor, viewManager);
             SetUpPlayer();
             var skillsController = _player.GetComponent<SkillsController>();
+            skillsController.Init(_camera);
             cooldownView.SetMeleeListener(()=>cooldownView.SetMeleeFillAmount(skillsController.Skills[SkillType.Melee].GetReadyPercent()));
             cooldownView.SetSpellListener(()=>cooldownView.SetSpellFillAmount(skillsController.Skills[SkillType.Fireball].GetReadyPercent()));
             gameplayManager.Init(_inputManager,_playerHealthSystem, viewManager, _playerDataInteractor);
-            
 
             var enemyManager = new EnemyManager(settngsInteractor,
                 _enemiesSpawnAreaExtents,
@@ -68,18 +70,23 @@ namespace Bootstraps
             _playerHealthSystem.SetHealth(_playerDataInteractor.CurrentSave.Health);
       
             if (_playerDataInteractor.CurrentSave.Position == default) return;
-            _player.transform.position = _playerDataInteractor.CurrentSave.Position;
-           
-            // Vector3 position = _playerDataInteractor.CurrentSave.Position;
-            // position.y += 3f;
-            // _player.transform.position = position;
+            //_player.transform.position = _playerDataInteractor.CurrentSave.Position;
+            /*Vector3 position = _playerDataInteractor.CurrentSave.Position;
+            position.y += 3f;
+            _player.transform.position = position;*/
             Debug.Log(_player.transform.position);
-            Invoke("LogPos", 1f);
+            Invoke(nameof(SetPos),.05f);
+            Invoke(nameof(LogPos), 1f);
         }
 
         private void LogPos()
         {
             Debug.Log(_player.transform.position);
+        }
+        
+        private void SetPos()
+        {
+            _player.transform.position = _playerDataInteractor.CurrentSave.Position;
         }
     }
 }
