@@ -20,6 +20,8 @@ namespace Controllers.Scenes
         private ViewManager _viewManager;
         private PlayerDataInteractor _playerDataInteractor;
         private bool _isGameOver;
+        // private bool _isPaused;
+        // public bool IsPaused => _isPaused;
         private void Awake()
         {
             _sceneStateMachine = new StateMachine();
@@ -53,6 +55,8 @@ namespace Controllers.Scenes
             _viewManager.GetView<EndGameView>().AddRestartButtonListener(RestartGame);
         }
 
+        
+
         private void SavePlayerData()
         {
             var playerData = new PlayerData()
@@ -61,6 +65,7 @@ namespace Controllers.Scenes
                 Position = _healthSystem.transform.position
             };
             _playerDataInteractor.SavePlayerData(playerData);
+            Debug.Log("wwwwwww");
         }
 
         private void GameStatesInit()
@@ -68,7 +73,7 @@ namespace Controllers.Scenes
             var firstSceneState = new FirstSceneState(this,_viewManager);
             var pauseState = new PauseState(this,_viewManager);
             var gameOverState = new GameOverState(this,_viewManager);
-
+        
             
             
             _sceneStateMachine.AddTransition(pauseState, firstSceneState, () => !_inputManager.MenuInput);
@@ -77,16 +82,22 @@ namespace Controllers.Scenes
             
             _sceneStateMachine.SetState(firstSceneState);
         }
-
+        
+       
         private void RestartGame()
         {
+            _playerDataInteractor.LoadLatestPlayerData();
             LoadingSceneManager.NextSceneName = "GameScene";
             SceneManager.LoadScene("LoadingScene");
+            
         }
-
+        
+        
+        
         public void InputManagerDisable()
         {
             _inputManager.gameObject.SetActive(false);
         }
+        
     }
 }

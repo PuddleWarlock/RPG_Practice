@@ -103,7 +103,7 @@ namespace Controllers.SaveLoad
 
         try
         {
-            var dataDict = JsonUtility.FromJson<SerializableDictionary>(File.ReadAllText(latestFile));
+            var dataDict = JsonConvert.DeserializeObject<SerializableDictionary>(File.ReadAllText(latestFile));
             return dataDict != null && dataDict.ContainsKey(key);
         }
         catch (Exception ex)
@@ -121,7 +121,7 @@ namespace Controllers.SaveLoad
 
         try
         {
-            var dataDict = JsonUtility.FromJson<SerializableDictionary>(File.ReadAllText(latestFile));
+            var dataDict = JsonConvert.DeserializeObject<SerializableDictionary>(File.ReadAllText(latestFile));
             if (dataDict != null && dataDict.ContainsKey(key))
             {
                 dataDict.Remove(key);

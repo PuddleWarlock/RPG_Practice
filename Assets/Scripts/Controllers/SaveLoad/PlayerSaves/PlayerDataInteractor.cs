@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Controllers.SaveLoad.Saveables;
+using UnityEngine;
 
 namespace Controllers.SaveLoad.PlayerSaves
 {
@@ -28,6 +29,9 @@ namespace Controllers.SaveLoad.PlayerSaves
         {
             CurrentSave = playerData;
             _playerDataRepository.Save(PlayerDataKey, CurrentSave);
+            
+
+            
         }
         
         public PlayerData LoadLatestPlayerData()

@@ -20,11 +20,11 @@ namespace Controllers.Entities.HealthController
         }
 
         public float MaxHealth { get; private set; } = 100f;
-
+        
         public UnityEvent<float, float> onHealthChanged { get; } = new();
         public UnityEvent<bool> onDeath { get; } = new();
         public UnityEvent onHit { get; } = new();
-        private float _health;
+        [SerializeField] private float _health;
 
         public void Init(float healthMultiplier)
         {
