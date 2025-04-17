@@ -27,6 +27,7 @@ namespace Bootstraps
         private GameObject _player;
         private HealthSystem _playerHealthSystem;
         private PlayerDataInteractor _playerDataInteractor;
+  
 
 
         [Header("Enemies")]
@@ -36,7 +37,7 @@ namespace Bootstraps
         [SerializeField] private Transform _enemiesSpawnPoint;
 
         private void Awake()
-        {   
+        {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             var settngsInteractor = GameManager.Instance.GetSettingsInteractor();
@@ -47,15 +48,19 @@ namespace Bootstraps
             SetUpPlayer();
             var skillsController = _player.GetComponent<SkillsController>();
             skillsController.Init(_camera);
-            cooldownView.SetMeleeListener(()=>cooldownView.SetMeleeFillAmount(skillsController.Skills[SkillType.Melee].GetReadyPercent()));
-            cooldownView.SetSpellListener(()=>cooldownView.SetSpellFillAmount(skillsController.Skills[SkillType.Fireball].GetReadyPercent()));
-            gameplayManager.Init(_inputManager,_playerHealthSystem, viewManager, _playerDataInteractor);
+            cooldownView.SetMeleeListener(() =>
+                cooldownView.SetMeleeFillAmount(skillsController.Skills[SkillType.Melee].GetReadyPercent()));
+            cooldownView.SetSpellListener(() =>
+                cooldownView.SetSpellFillAmount(skillsController.Skills[SkillType.Fireball].GetReadyPercent()));
+
 
             var enemyManager = new EnemyManager(settngsInteractor,
                 _enemiesSpawnAreaExtents,
                 _enemies,
                 _enemiesSpawnPoint.position,
                 _enemiesCount);
+            gameplayManager.Init(_inputManager, _playerHealthSystem, viewManager, _playerDataInteractor, enemyManager);
+            enemyManager.LoadEnemies(_playerDataInteractor.CurrentSave.Enemies); // Восстанавливаем врагов
         }
 
         private void SetUpPlayer()
@@ -64,7 +69,8 @@ namespace Bootstraps
             _player = Instantiate(_playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
             Debug.Log(_player.transform.position);
             _playerHealthSystem = _player.GetComponent<HealthSystem>();
-            healthBarView.Init(_playerHealthSystem.onHealthChanged);
+            // healthBarView.Init(_playerHealthSystem.onHealthChanged);
+            _playerHealthSystem.onHealthChanged.AddListener(healthBarView.ChangeHp);
             _playerHealthSystem.Init(1);
             _player.GetComponent<MovementController>().Init(_camera);
             _playerHealthSystem.SetHealth(_playerDataInteractor.CurrentSave.Health);

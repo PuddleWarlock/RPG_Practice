@@ -125,7 +125,7 @@ namespace Controllers.SaveLoad
             if (dataDict != null && dataDict.ContainsKey(key))
             {
                 dataDict.Remove(key);
-                File.WriteAllText(latestFile, JsonUtility.ToJson(dataDict));
+                File.WriteAllText(latestFile, JsonConvert.SerializeObject(dataDict));
             }
         }
         catch (Exception ex)
