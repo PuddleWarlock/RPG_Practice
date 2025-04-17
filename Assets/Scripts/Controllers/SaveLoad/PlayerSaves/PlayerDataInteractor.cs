@@ -20,7 +20,8 @@ namespace Controllers.SaveLoad.PlayerSaves
             CurrentSave = new PlayerData
             {
                 Health = 100f,
-                Position = default
+                Position = default,
+                Enemies = new List<EnemyData>() // Инициализируем пустой список врагов
             };
             _playerDataRepository.Save(PlayerDataKey, CurrentSave);
         }
@@ -29,20 +30,17 @@ namespace Controllers.SaveLoad.PlayerSaves
         {
             CurrentSave = playerData;
             _playerDataRepository.Save(PlayerDataKey, CurrentSave);
-            
-
-            
         }
         
         public PlayerData LoadLatestPlayerData()
         {
-            CurrentSave = _playerDataRepository.Load(PlayerDataKey, new PlayerData());
+            CurrentSave = _playerDataRepository.Load(PlayerDataKey, new PlayerData { Enemies = new List<EnemyData>() });
             return CurrentSave;
         }
 
         public PlayerData LoadByTimestamp(string timestamp)
         {
-            CurrentSave = _playerDataRepository.Load(PlayerDataKey, timestamp, new PlayerData());
+            CurrentSave = _playerDataRepository.Load(PlayerDataKey, timestamp, new PlayerData { Enemies = new List<EnemyData>() });
             return CurrentSave;
         }
 

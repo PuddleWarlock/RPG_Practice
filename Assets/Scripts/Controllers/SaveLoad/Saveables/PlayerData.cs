@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Controllers.SaveLoad.Saveables
 {
@@ -8,5 +9,16 @@ namespace Controllers.SaveLoad.Saveables
     {
         public float Health;
         public Vector3 Position;
+        public List<EnemyData> Enemies;
+    }
+
+    [Serializable]
+
+    public class EnemyData
+    {
+        public string Id;
+        public float Health;
+        public Vector3 Position;
+        public int PrefabIndex;
     }
 }

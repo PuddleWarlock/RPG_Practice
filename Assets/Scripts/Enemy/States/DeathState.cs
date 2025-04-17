@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Enemy.States
@@ -13,13 +14,15 @@ namespace Enemy.States
         }
 
         public override void Enter()
-        {   
+        {
+            EnemyController.isDead = true;
             hpCanvas.enabled = false;
             EnemyController.GetComponent<Collider>().enabled = false;
             EnemyAnimator.DeathEvent();
             NavMeshAgent.ResetPath();
             NavMeshAgent.isStopped = true;
             NavMeshAgent.angularSpeed = 0f;
+            EnemyController.StartCoroutine(Destroy());
         }
 
         public override void Execute()
@@ -28,6 +31,12 @@ namespace Enemy.States
 
         public override void Exit()
         {
+        }
+
+        public IEnumerator Destroy()
+        {
+            yield return new WaitUntil(()=>EnemyAnimator.CheckAnimationState(0, 0.99f, "deathTest"));
+            Object.Destroy(EnemyController.gameObject);
         }
     }
 }

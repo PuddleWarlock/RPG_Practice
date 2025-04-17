@@ -5,6 +5,7 @@ using Enemy.States;
 using StateMachines;
 using UnityEngine;
 using UnityEngine.AI;
+using Views.Gameplay;
 using StateMachine = StateMachines.StateMachine;
 using Weapons.Base;
 using AttackState = Enemy.States.AttackState;
@@ -16,7 +17,8 @@ namespace Enemy
         [SerializeField] private GameObject _sword;
         
         public Collider SwordCollider { get; private set; }
-        
+        public string UniqueId;
+        public int PrefabIndex;
         private Canvas hpCanvas;
         private StateMachine enemyStateMachine;
         private EnemyAnimator enemyAnimator;
@@ -27,8 +29,9 @@ namespace Enemy
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float searchRadius;
         [SerializeField] private float attackRange;
+        
         public bool IsChasing { get; private set;}
-
+        public bool isDead;
         public bool IsInAttackRange { get; private set;}
         
         private void Awake()
