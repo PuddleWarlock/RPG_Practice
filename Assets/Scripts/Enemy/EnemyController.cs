@@ -12,13 +12,37 @@ using AttackState = Enemy.States.AttackState;
 
 namespace Enemy
 {
-    public class EnemyController : MonoBehaviour
-    {
+    public class EnemyController : MonoBehaviour, ICharacterController
+    {   
+        
+        // public bool isDead { get; set; }
+        // public string UniqueId { get; set; }
+        // public int PrefabIndex { get; set; }
+        // Transform ICharacterController.transform => transform;
+        // GameObject ICharacterController.gameObject => gameObject;
+        // HealthSystem ICharacterController.GetComponent<T>() => GetComponent<HealthSystem>();
+        // T ICharacterController.GetComponentInChildren<T>() => GetComponentInChildren<T>();
+        
+        public bool isDead { get; set; }
+        public string UniqueId { get; set; }
+        public int PrefabIndex { get; set; }
+        Transform ICharacterController.transform => transform;
+        GameObject ICharacterController.gameObject => gameObject;
+        HealthSystem ICharacterController.GetComponent<T>() => GetComponent<HealthSystem>();
+        T ICharacterController.GetComponentInChildren<T>() => GetComponentInChildren<T>();
+        
+        
+        
+        
+        
+        
+        
+        
         [SerializeField] private GameObject _sword;
         
         public Collider SwordCollider { get; private set; }
-        public string UniqueId;
-        public int PrefabIndex;
+        // public string UniqueId;
+        // public int PrefabIndex;
         private Canvas hpCanvas;
         private StateMachine enemyStateMachine;
         private EnemyAnimator enemyAnimator;
@@ -29,9 +53,9 @@ namespace Enemy
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float searchRadius;
         [SerializeField] private float attackRange;
-        
+        public int deadEnemies;
         public bool IsChasing { get; private set;}
-        public bool isDead;
+        // public bool isDead;
         public bool IsInAttackRange { get; private set;}
         
         private void Awake()

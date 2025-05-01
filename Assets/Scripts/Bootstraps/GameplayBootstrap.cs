@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Anims;
 using Controllers;
 using Controllers.Entities;
@@ -10,6 +11,7 @@ using Controllers.UI;
 using Enemy;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using Views.Gameplay;
 using Weapons.Base;
 
@@ -35,6 +37,12 @@ namespace Bootstraps
         [SerializeField] private Vector2 _enemiesSpawnAreaExtents;
         [SerializeField] private int _enemiesCount;
         [SerializeField] private Transform _enemiesSpawnPoint;
+       
+
+        [Header("Boss")]
+        [SerializeField] private GameObject _boss;
+        [SerializeField] private Vector3 _bossSpawnPoint;
+        
 
         private void Awake()
         {
@@ -52,17 +60,20 @@ namespace Bootstraps
                 cooldownView.SetMeleeFillAmount(skillsController.Skills[SkillType.Melee].GetReadyPercent()));
             cooldownView.SetSpellListener(() =>
                 cooldownView.SetSpellFillAmount(skillsController.Skills[SkillType.Fireball].GetReadyPercent()));
-
-
+            _bossSpawnPoint = new Vector3(323.6f,261.71f, -103.5f);
+            
             var enemyManager = new EnemyManager(settngsInteractor,
                 _enemiesSpawnAreaExtents,
                 _enemies,
                 _enemiesSpawnPoint.position,
-                _enemiesCount);
+                _enemiesCount,
+                _boss, _bossSpawnPoint);
             gameplayManager.Init(_inputManager, _playerHealthSystem, viewManager, _playerDataInteractor, enemyManager);
             enemyManager.LoadEnemies(_playerDataInteractor.CurrentSave.Enemies); // Восстанавливаем врагов
+            
         }
-
+        
+        
         private void SetUpPlayer()
         {   
             Debug.Log(_playerDataInteractor.CurrentSave.Position);
@@ -94,5 +105,6 @@ namespace Bootstraps
         {
             _player.transform.position = _playerDataInteractor.CurrentSave.Position;
         }
+        
     }
 }

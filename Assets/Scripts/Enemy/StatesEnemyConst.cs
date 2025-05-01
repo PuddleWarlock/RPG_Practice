@@ -8,6 +8,7 @@ namespace Enemy
         protected EnemyController EnemyController;
         protected EnemyAnimator EnemyAnimator;
         protected NavMeshAgent NavMeshAgent;
+  
         
         protected StatesEnemyConst(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent)
         {

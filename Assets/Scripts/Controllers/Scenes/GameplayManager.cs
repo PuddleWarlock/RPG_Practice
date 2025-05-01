@@ -138,5 +138,7 @@ namespace Controllers.Scenes
         {
             _inputManager.gameObject.SetActive(false);
         }
+        
+        
     }
 }

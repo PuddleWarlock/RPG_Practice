@@ -17564,6 +17564,7 @@ MonoBehaviour:
   _enemiesSpawnAreaExtents: {x: 10, y: 10}
   _enemiesCount: 2
   _enemiesSpawnPoint: {fileID: 1344028252}
+  _boss: {fileID: 450077776516121992, guid: ee72f1f129392e44a8cb63d0940bd1ba, type: 3}
 --- !u!4 &1301717440
 Transform:
   m_ObjectHideFlags: 0
