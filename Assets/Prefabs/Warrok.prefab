@@ -594,10 +594,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08550100ef4495b94a7cf05e6dff615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillsArray: {fileID: 11400000, guid: 843b9eb4660e3c24583035a3cd472f50, type: 2}
+  _skillsArray: {fileID: 11400000, guid: fcaa23a77c6a2d54abd8a4c08b97370a, type: 2}
   _castPoint: {fileID: 0}
   _caster: {fileID: 0}
-  _sword: {fileID: 7361440164991489975}
+  _sword: {fileID: 0}
 --- !u!195 &561642795883711058
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -633,12 +633,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sword: {fileID: 7361440164991489975}
-  UniqueId: 
-  PrefabIndex: 0
-  _rotationSpeed: 0
+  _rotationSpeed: 5
   searchRadius: 15
   attackRange: 3
-  isDead: 0
 --- !u!4 &969734032608386866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 20595b3658f828341a37e44579eb7eab, type: 3}

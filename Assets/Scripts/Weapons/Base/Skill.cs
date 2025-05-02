@@ -54,6 +54,8 @@ namespace Weapons.Base
     public enum SkillType
     {   
         Melee,
-        Fireball
+        Fireball,
+        Punch,
+        Heavy
     }
 }

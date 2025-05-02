@@ -9,14 +9,14 @@ namespace Enemy.States
     public class BossAttackState : StatesBossConst
     {
         private SkillsController _skillsController;
-        public BossAttackState(BossController bossController, BossAnimator animator, NavMeshAgent navMeshAgent) : base(bossController, animator, navMeshAgent)
+        public BossAttackState(BossController bossController, BossAnimator animator, NavMeshAgent navMeshAgent, SkillsController skillsController) : base(bossController, animator, navMeshAgent)
         {
-            // _skillsController = skillsController;
+            _skillsController = skillsController;
         }
 
         public override void Enter()
         {
-            // _skillsController.Skills[SkillType.Fist].Cast();
+            _skillsController.Skills[SkillType.Punch].Cast();
             // EnemyAnimator.StartCoroutine(SwordColliderSwitch());
             Debug.Log("Entering BOSS ATTACK");
             BossAnimator.DoAttack();

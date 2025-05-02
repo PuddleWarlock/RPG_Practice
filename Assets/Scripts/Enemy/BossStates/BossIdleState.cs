@@ -23,7 +23,6 @@ namespace Enemy.States
 
         public override void Execute()
         {
-            BossController.RotateToPlayer();
         }
 
         public override void Exit()

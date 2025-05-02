@@ -12,6 +12,7 @@ using Enemy;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.Serialization;
 using Views.Gameplay;
 using Weapons.Base;
 
@@ -23,8 +24,8 @@ namespace Bootstraps
         [SerializeField] private Transform _playerSpawnPoint;
         [SerializeField] private GameObject _playerPrefab;
         [SerializeField] private Camera _camera;
-        [SerializeField] private CooldownView cooldownView;
-        [SerializeField] private HealthBarView healthBarView;
+        [SerializeField] private CooldownView _cooldownView;
+        [SerializeField] private HealthBarView _healthBarView;
         [SerializeField] private InputManager _inputManager;
         private GameObject _player;
         private HealthSystem _playerHealthSystem;
@@ -56,10 +57,10 @@ namespace Bootstraps
             SetUpPlayer();
             var skillsController = _player.GetComponent<SkillsController>();
             skillsController.Init(_camera);
-            cooldownView.SetMeleeListener(() =>
-                cooldownView.SetMeleeFillAmount(skillsController.Skills[SkillType.Melee].GetReadyPercent()));
-            cooldownView.SetSpellListener(() =>
-                cooldownView.SetSpellFillAmount(skillsController.Skills[SkillType.Fireball].GetReadyPercent()));
+            _cooldownView.SetMeleeListener(() =>
+                _cooldownView.SetMeleeFillAmount(skillsController.Skills[SkillType.Melee].GetReadyPercent()));
+            _cooldownView.SetSpellListener(() =>
+                _cooldownView.SetSpellFillAmount(skillsController.Skills[SkillType.Fireball].GetReadyPercent()));
             _bossSpawnPoint = new Vector3(323.6f,261.71f, -103.5f);
             
             var enemyManager = new EnemyManager(settngsInteractor,
@@ -81,7 +82,7 @@ namespace Bootstraps
             Debug.Log(_player.transform.position);
             _playerHealthSystem = _player.GetComponent<HealthSystem>();
             // healthBarView.Init(_playerHealthSystem.onHealthChanged);
-            _playerHealthSystem.onHealthChanged.AddListener(healthBarView.ChangeHp);
+            _playerHealthSystem.onHealthChanged.AddListener(_healthBarView.ChangeHp);
             _playerHealthSystem.Init(1);
             _player.GetComponent<MovementController>().Init(_camera);
             _playerHealthSystem.SetHealth(_playerDataInteractor.CurrentSave.Health);

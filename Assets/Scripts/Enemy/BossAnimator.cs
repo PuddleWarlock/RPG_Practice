@@ -5,6 +5,7 @@ namespace Enemy
     public class BossAnimator : MonoBehaviour
     {
         private static readonly int Death = Animator.StringToHash("Death");
+        private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Walk = Animator.StringToHash("Walk");
         private static readonly int Attack = Animator.StringToHash("Attack");
         private static readonly int Hitted = Animator.StringToHash("Hitted");
@@ -26,15 +27,17 @@ namespace Enemy
             _animator.SetTrigger(Death);
         }
         
+        
         public void WalkEvent()
         {
             _animator.SetBool(Walk, true);
+            _animator.SetBool(Idle,false);
         }
 
         public void IdleEvent()
         {
             _animator.SetBool(Walk, false);
-        
+            _animator.SetBool(Idle, true);
         }
         
         public void DoAttack()
@@ -51,10 +54,5 @@ namespace Enemy
         {
             _animator.SetTrigger(SuperAttack);
         }
-        
-        
-        
-        
-        
     }
 }

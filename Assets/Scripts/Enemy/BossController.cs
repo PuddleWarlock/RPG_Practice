@@ -1,4 +1,5 @@
-﻿using Controllers.Entities;
+﻿using System.Threading.Tasks;
+using Controllers.Entities;
 using Controllers.Entities.HealthController;
 using Controllers.Entities.HealthController.Interfaces;
 using Enemy.States;
@@ -57,10 +58,11 @@ namespace Enemy
         public bool IsChasing { get; private set;}
         // public bool isDead;
         public bool IsInAttackRange { get; private set;}
-        public bool _superAttack { get; private set; }
+        //public bool _superAttack { get; private set; }
         private void Awake()
         {
             enemyStateMachine = new StateMachine();
+            _skillsController = GetComponent<SkillsController>();
             bossAnimator = GetComponent<BossAnimator>();
             healthSystem = GetComponent<HealthSystem>();
             gameObject.GetComponent<IHittable>().onHit.AddListener(bossAnimator.DoHitEvent);
@@ -68,16 +70,28 @@ namespace Enemy
             hpCanvas = GetComponentInChildren<Canvas>();
         }
 
-        private void Start()
-        {   
-            _playerTransform = FindFirstObjectByType<CharacterController>().transform;
+        private async void Start()
+        {
+            await GetPlayer();
+            print(_playerTransform);
             BossStatesInit();
+        }
 
+        private async Task GetPlayer()
+        {
+            CharacterController player;
+            do
+            {
+                player = FindFirstObjectByType<CharacterController>();
+                await Task.Delay(10);
+            } while (!player);
+
+            _playerTransform = player.transform;
         }
 
         private void Update()
         {   
-            
+            if(!_playerTransform) return;
             ChasingChecker();
             _agent.SetDestination(_playerTransform.position);
             enemyStateMachine.Tick();
@@ -93,46 +107,45 @@ namespace Enemy
         private void BossStatesInit()
         {
             
-            
-            
-            SkillType type;
-            
-            var attackState = new BossAttackState(this, bossAnimator, _agent);
-            bool AttackReady() => _skillsController.Skills[type]._isReady;
+            var attackState = new BossAttackState(this, bossAnimator, _agent, _skillsController);
+            bool AttackReady() => _skillsController.Skills[SkillType.Punch]._isReady;
+            bool HeavyAttackReady() => _skillsController.Skills[SkillType.Heavy]._isReady;
 
             
-            var superAttackState = new BossSuperAttackState(this, bossAnimator, _agent);
+            var superAttackState = new BossSuperAttackState(this, bossAnimator, _agent, _skillsController);
             
             var idleState = new BossIdleState(this,bossAnimator, _agent);
             var walkState =  new BossWalkState(this,bossAnimator,_agent);
             var deathState = new BossDeathState(this,bossAnimator,_agent, hpCanvas);
             
-            bool AttackAnimationEnded() => bossAnimator.CheckAnimationState(0,1f,"BossAttack");
+            bool AttackAnimationEnded() => bossAnimator.CheckAnimationState(0,.99f,"BossAttack");
+            bool HeavyAttackAnimationEnded() => bossAnimator.CheckAnimationState(0,.99f,"BossSuperAttack");
 
+
+            enemyStateMachine.AddAnyTransition(deathState, () => healthSystem.Health <= 0f);
             
             enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
+            enemyStateMachine.AddTransition(idleState, superAttackState,
+                () => IsInAttackRange && HeavyAttackReady());
+            enemyStateMachine.AddTransition(idleState, attackState,
+                () => IsInAttackRange && AttackReady() && !HeavyAttackReady());
+            enemyStateMachine.AddTransition(walkState, superAttackState, () => IsInAttackRange && HeavyAttackReady());
+            enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange && AttackReady() && !HeavyAttackReady());
             enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing || IsInAttackRange);
-            enemyStateMachine.AddAnyTransition(deathState, () => healthSystem.Health <= 0f);
-            // enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange && AttackReady());
-            // enemyStateMachine.AddTransition(attackState, idleState,
-            //     () => IsInAttackRange && AttackAnimationEnded());
-            // enemyStateMachine.AddTransition(attackState, walkState,
-            //     () => !IsInAttackRange && AttackAnimationEnded());
-            
-            // enemyStateMachine.AddTransition(idleState, attackState,
-            //     () => IsInAttackRange && AttackReady());
-            
-            // enemyStateMachine.AddTransition(walkState, superAttackState, () => IsInAttackRange && AttackReady() && _superAttack);
-            // enemyStateMachine.AddTransition(superAttackState, idleState,
-            //     () => IsInAttackRange && AttackAnimationEnded());
-            // enemyStateMachine.AddTransition(attackState, superAttackState,
-            //     () => !IsInAttackRange && AttackAnimationEnded() && _superAttack);
-            // enemyStateMachine.AddTransition(idleState, superAttackState,
-            //     () => IsInAttackRange && AttackReady() && _superAttack);
-            
-           
+            enemyStateMachine.AddTransition(attackState, idleState,
+                () => IsInAttackRange && AttackAnimationEnded());
+            enemyStateMachine.AddTransition(attackState, superAttackState,
+                () => IsInAttackRange && AttackAnimationEnded() && HeavyAttackReady());
+            enemyStateMachine.AddTransition(attackState, walkState,
+                () => !IsInAttackRange && AttackAnimationEnded());
 
-            
+
+            enemyStateMachine.AddTransition(superAttackState, idleState,
+                () => IsInAttackRange && HeavyAttackAnimationEnded());
+            enemyStateMachine.AddTransition(superAttackState, walkState,
+                () => !IsInAttackRange && HeavyAttackAnimationEnded());
+
+
             enemyStateMachine.SetState(idleState);
         }
 
@@ -156,7 +169,5 @@ namespace Enemy
                 IsChasing = false;
             }
         }
-        
-        
-}
+    }
 }

@@ -17555,8 +17555,8 @@ MonoBehaviour:
   _playerSpawnPoint: {fileID: 1104674375}
   _playerPrefab: {fileID: 527704720479713833, guid: d155c05c12a5f674dbbb47db42bf897b, type: 3}
   _camera: {fileID: 49219025}
-  cooldownView: {fileID: 1561538693}
-  healthBarView: {fileID: 5061573780944666859}
+  _cooldownView: {fileID: 1561538693}
+  _healthBarView: {fileID: 5061573780944666859}
   _inputManager: {fileID: 766467258}
   _enemies:
   - {fileID: 3299443842164715338, guid: be470e06349199348af40fcdc5150367, type: 3}
@@ -17565,6 +17565,7 @@ MonoBehaviour:
   _enemiesCount: 2
   _enemiesSpawnPoint: {fileID: 1344028252}
   _boss: {fileID: 450077776516121992, guid: ee72f1f129392e44a8cb63d0940bd1ba, type: 3}
+  _bossSpawnPoint: {x: 0, y: 0, z: 0}
 --- !u!4 &1301717440
 Transform:
   m_ObjectHideFlags: 0

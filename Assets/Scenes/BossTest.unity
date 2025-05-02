@@ -206,8 +206,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49219023}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11175723, y: 0.0834092, z: -0.009413986, w: 0.9901841}
-  m_LocalPosition: {x: 0, y: 3.6228595, z: -4.7833424}
+  m_LocalRotation: {x: -0.078770615, y: 0.77897906, z: 0.09993543, w: 0.6140031}
+  m_LocalPosition: {x: -16.184885, y: 1.1910896, z: 17.551455}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -766,10 +766,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1104674375}
+  - component: {fileID: 1104674376}
   m_Layer: 0
   m_Name: PlayerSpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 83438053370c84456a73f7f95ef821fb, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -788,6 +789,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1104674376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104674374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9285ec1012fd0f442b98a6641f45f767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPrefab: {fileID: 527704720479713833, guid: d155c05c12a5f674dbbb47db42bf897b, type: 3}
+  _camera: {fileID: 49219025}
 --- !u!1001 &1225446352
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -842,7 +857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3299443842164715338, guid: be470e06349199348af40fcdc5150367, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -881,13 +896,15 @@ MonoBehaviour:
   _playerSpawnPoint: {fileID: 1104674375}
   _playerPrefab: {fileID: 527704720479713833, guid: d155c05c12a5f674dbbb47db42bf897b, type: 3}
   _camera: {fileID: 49219025}
-  cooldownView: {fileID: 1561538693}
-  healthBarView: {fileID: 5061573780944666859}
+  _cooldownView: {fileID: 0}
+  _healthBarView: {fileID: 0}
   _inputManager: {fileID: 766467258}
   _enemies: []
   _enemiesSpawnAreaExtents: {x: 0, y: 0}
   _enemiesCount: 0
   _enemiesSpawnPoint: {fileID: 0}
+  _boss: {fileID: 0}
+  _bossSpawnPoint: {x: 0, y: 0, z: 0}
 --- !u!4 &1301717440
 Transform:
   m_ObjectHideFlags: 0
@@ -931,17 +948,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &1561538693 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7663046667821648685, guid: 120745c14b9f71e4fa9d16ce3ded93ea, type: 3}
-  m_PrefabInstance: {fileID: 5061573780944666851}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a89cc51a6b4345a0afd8483e696d6e26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1679197995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9658,7 +9664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7361847629952758042, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7864134941946347011, guid: 9e0730c53eeb48c44a5037bcb5158549, type: 3}
       propertyPath: m_TagString
@@ -9871,17 +9877,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120745c14b9f71e4fa9d16ce3ded93ea, type: 3}
---- !u!114 &5061573780944666859 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1405394890350675652, guid: 120745c14b9f71e4fa9d16ce3ded93ea, type: 3}
-  m_PrefabInstance: {fileID: 5061573780944666851}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af04154b0fcc4efcb26c6d78a08d4cab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
