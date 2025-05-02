@@ -6,5 +6,6 @@ namespace Controllers.SaveLoad.Saveables
     public class GameSettings
     {
         public float EnemiesPower = 1f;
+        public bool PeaceMode;
     }
 }

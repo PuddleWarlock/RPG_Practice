@@ -57,7 +57,7 @@ namespace Enemy
         public bool IsChasing { get; private set;}
         // public bool isDead;
         public bool IsInAttackRange { get; private set;}
-        
+        private bool _isPeaceful;
         private void Awake()
         {
             SwordCollider = _sword.GetComponent<BoxCollider>();
@@ -70,20 +70,32 @@ namespace Enemy
             hpCanvas = GetComponentInChildren<Canvas>();
         }
 
-        private void Start()
-        {   
+        public void Init(bool isPeaceful)
+        {
+            _isPeaceful = isPeaceful;
             _playerTransform = FindFirstObjectByType<CharacterController>().transform;
             EnemyStatesInit();
-
         }
 
         private void Update()
         {   
-            
+            if(!_playerTransform) return;
             ChasingChecker();
-            _agent.SetDestination(_playerTransform.position);
             enemyStateMachine.Tick();
         }
+
+        public void SetFollowPlayer()
+        {
+            _agent.SetDestination(_playerTransform.position);
+        }
+
+        public void SetRunFromPlayer()
+        {
+            _agent.SetDestination(GetRunPoint());
+        }
+
+        private Vector3 GetRunPoint() => (transform.position - _playerTransform.position).normalized * 2f + transform.position;
+ 
 
         public void RotateToPlayer()
         {
@@ -112,23 +124,34 @@ namespace Enemy
             
             var idleState = new IdleState(this,enemyAnimator, _agent);
             var walkState =  new WalkState(this,enemyAnimator,_agent);
+            var fearState =  new FearState(this,enemyAnimator,_agent);
             var deathState = new DeathState(this,enemyAnimator,_agent, hpCanvas);
             
             bool AttackAnimationEnded() => enemyAnimator.CheckAnimationState(0,1f,"attackTest");
 
-            
-            enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
-            enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing || IsInAttackRange);
+
             enemyStateMachine.AddAnyTransition(deathState, () => healthSystem.Health <= 0f);
+
+            if (_isPeaceful)
+            {
+                enemyStateMachine.AddTransition(idleState, fearState, () => healthSystem.Health/healthSystem.MaxHealth <= .3f);
+            }
+            else
+            {
+                enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
+                enemyStateMachine.AddTransition(idleState, attackState,
+                    () => IsInAttackRange && AttackReady());
+            }
+            
+            
+            enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing || IsInAttackRange);
             enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange && AttackReady());
             enemyStateMachine.AddTransition(attackState, idleState,
                 () => IsInAttackRange && AttackAnimationEnded());
             enemyStateMachine.AddTransition(attackState, walkState,
                 () => !IsInAttackRange && AttackAnimationEnded());
-            enemyStateMachine.AddTransition(idleState, attackState,
-                () => IsInAttackRange && AttackReady());
-            
-            
+
+
             // enemyStateMachine.AddTransition(idleState, spellState, () => IsInCastRange && (Time.time - lastAttackTime >= attackCooldown));
             // enemyStateMachine.AddTransition(spellState, idleState, () => IsInCastRange && RangeAnimationEnded());
             // enemyStateMachine.AddTransition(walkState, spellState, () => IsInCastRange);
@@ -139,7 +162,6 @@ namespace Enemy
             
             enemyStateMachine.SetState(idleState);
         }
-
         
         private void ChasingChecker()
         {

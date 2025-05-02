@@ -3,22 +3,22 @@ using UnityEngine.AI;
 
 namespace Enemy.States
 {
-    public class WalkState : StatesEnemyConst
+    public class FearState : StatesEnemyConst
     {
-        public WalkState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent) : base(enemyController, animator, navMeshAgent)
+        public FearState(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent) : base(enemyController, animator, navMeshAgent)
         {
         }
 
         public override void Enter()
         {
-            Debug.Log("Entering ENEMY WALK");
+            Debug.Log("Entering ENEMY Fear");
             EnemyAnimator.WalkEvent();
             NavMeshAgent.isStopped = false;
         }
 
         public override void Execute()
         {
-            EnemyController.SetFollowPlayer();
+            EnemyController.SetRunFromPlayer();
         }
 
         public override void Exit()

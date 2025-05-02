@@ -36,13 +36,22 @@ namespace Controllers.Scenes
         private void SettingsToUI()
         {
             var settings = _settingsInteractor.LoadSettings();
-            _viewManager.GetView<SettingsView>().SetSliderValue(settings.EnemiesPower);
+            var settingsView = _viewManager.GetView<SettingsView>();
+            settingsView.SetSliderValue(settings.EnemiesPower);
+            settingsView.SetPeaceMode(settings.PeaceMode);
         }
 
-        private void UpdateSettings(float value)
+        private void UpdateEnemyPowerSettings(float value)
         {
             var settings = _settingsInteractor.LoadSettings();
             settings.EnemiesPower = value;
+            _settingsInteractor.SaveSettings(settings);
+        }
+        
+        private void UpdatePeaceModeSettings(bool value)
+        {
+            var settings = _settingsInteractor.LoadSettings();
+            settings.PeaceMode = value;
             _settingsInteractor.SaveSettings(settings);
         }
 
@@ -87,7 +96,8 @@ namespace Controllers.Scenes
             mainMenuView.SetLoadAction(() => loadView.ShowLoadGameMenu(GetTimestamps(),LoadSelected));
             mainMenuView.SetLoadAction(()=>_viewManager.SwitchViews(mainMenuView,loadView));
             
-            settingsView.SetSliderListener(UpdateSettings);
+            settingsView.SetSliderListener(UpdateEnemyPowerSettings);
+            settingsView.SetPeaceModeListener(UpdatePeaceModeSettings);
             settingsView.SetBackButtonListener(()=>_viewManager.SwitchViews(settingsView, mainMenuView));
 
 

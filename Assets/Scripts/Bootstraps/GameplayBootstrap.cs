@@ -68,7 +68,7 @@ namespace Bootstraps
                 _enemies,
                 _enemiesSpawnPoint.position,
                 _enemiesCount,
-                _boss, _bossSpawnPoint);
+                _boss, _bossSpawnPoint,_player.GetComponent<CharacterController>());
             gameplayManager.Init(_inputManager, _playerHealthSystem, viewManager, _playerDataInteractor, enemyManager);
             enemyManager.LoadEnemies(_playerDataInteractor.CurrentSave.Enemies); // Восстанавливаем врагов
             

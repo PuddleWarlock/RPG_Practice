@@ -195,6 +195,7 @@ namespace Enemy
 {
     public class EnemyManager
     {
+        private CharacterController _player;
         private readonly SettingsInteractor _settingsInteractor;
         private readonly GameObject[] _enemyPrefabs;
         private readonly Vector2 _enemiesSpawnAreaExtents;
@@ -208,7 +209,8 @@ namespace Enemy
 
         public EnemyManager(SettingsInteractor settingsInteractor, Vector2 enemiesSpawnAreaSize,
             GameObject[] enemyPrefabs,
-            Vector3 enemiesSpawnAreaCenter, int enemiesCount, GameObject bossPrefab, Vector3 bossSpawnPoint)
+            Vector3 enemiesSpawnAreaCenter, int enemiesCount, GameObject bossPrefab, Vector3 bossSpawnPoint,
+            CharacterController player)
         {
             _settingsInteractor = settingsInteractor ?? throw new ArgumentNullException(nameof(settingsInteractor));
             _enemiesSpawnAreaExtents = enemiesSpawnAreaSize;
@@ -217,13 +219,16 @@ namespace Enemy
             _enemiesCount = enemiesCount;
             _bossPrefab = bossPrefab ?? throw new ArgumentNullException(nameof(bossPrefab));
             _bossSpawnPoint = bossSpawnPoint;
+            _player = player;
             SpawnEnemies(_enemiesCount);
         }
 
         public void SpawnEnemies(int enemiesCount)
         {
             _aliveCount = enemiesCount;
-            var enemiesPower = _settingsInteractor.LoadSettings().EnemiesPower;
+            var loadSettings = _settingsInteractor.LoadSettings();
+            var enemiesPower = loadSettings.EnemiesPower;
+            var peaceMode = loadSettings.PeaceMode;
             for (int i = 0; i < enemiesCount; i++)
             {
                 int prefabIndex = Random.Range(0, _enemyPrefabs.Length);
@@ -260,6 +265,7 @@ namespace Enemy
                     Debug.LogWarning($"Enemy {enemy.name} does not have SkillsController component.");
                 }
 
+                enemy.Init(peaceMode);
                 healthSystem.Init(enemiesPower);
                 healthSystem.onDeath.AddListener((_) => OnEnemyDeath());
                 skillsController?.Init(null);
@@ -452,6 +458,7 @@ namespace Enemy
             healthSystem.Init(_settingsInteractor.LoadSettings().EnemiesPower);
             healthSystem.onDeath.AddListener((_) => OnEnemyDeath());
             skillsController?.Init(null);
+            boss.Init(_settingsInteractor.LoadSettings().PeaceMode);
             boss.UniqueId = Guid.NewGuid().ToString();
             boss.PrefabIndex = -1; // Босс не использует индекс префаба из _enemyPrefabs
             _characters.Add(boss);

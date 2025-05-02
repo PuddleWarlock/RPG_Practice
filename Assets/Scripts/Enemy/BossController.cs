@@ -54,6 +54,8 @@ namespace Enemy
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float searchRadius;
         [SerializeField] private float attackRange;
+
+        private bool _isPeaceful;
         
         public bool IsChasing { get; private set;}
         // public bool isDead;
@@ -70,8 +72,9 @@ namespace Enemy
             hpCanvas = GetComponentInChildren<Canvas>();
         }
 
-        private async void Start()
+        public async void Init(bool isPeaceful)
         {
+            _isPeaceful = isPeaceful;
             await GetPlayer();
             print(_playerTransform);
             BossStatesInit();
@@ -121,14 +124,27 @@ namespace Enemy
             bool AttackAnimationEnded() => bossAnimator.CheckAnimationState(0,.99f,"BossAttack");
             bool HeavyAttackAnimationEnded() => bossAnimator.CheckAnimationState(0,.99f,"BossSuperAttack");
 
+            bool WasHit() => !Mathf.Approximately(healthSystem.Health, healthSystem.MaxHealth);
+            
 
             enemyStateMachine.AddAnyTransition(deathState, () => healthSystem.Health <= 0f);
+            if (_isPeaceful)
+            {
+                enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange && WasHit());
+                enemyStateMachine.AddTransition(idleState, superAttackState,
+                    () => IsInAttackRange && HeavyAttackReady() && WasHit());
+                enemyStateMachine.AddTransition(idleState, attackState,
+                    () => IsInAttackRange && AttackReady() && !HeavyAttackReady() && WasHit());
+            }
+            else
+            {
+                enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
+                enemyStateMachine.AddTransition(idleState, superAttackState,
+                    () => IsInAttackRange && HeavyAttackReady());
+                enemyStateMachine.AddTransition(idleState, attackState,
+                    () => IsInAttackRange && AttackReady() && !HeavyAttackReady());
+            }
             
-            enemyStateMachine.AddTransition(idleState, walkState, () => IsChasing && !IsInAttackRange);
-            enemyStateMachine.AddTransition(idleState, superAttackState,
-                () => IsInAttackRange && HeavyAttackReady());
-            enemyStateMachine.AddTransition(idleState, attackState,
-                () => IsInAttackRange && AttackReady() && !HeavyAttackReady());
             enemyStateMachine.AddTransition(walkState, superAttackState, () => IsInAttackRange && HeavyAttackReady());
             enemyStateMachine.AddTransition(walkState, attackState, () => IsInAttackRange && AttackReady() && !HeavyAttackReady());
             enemyStateMachine.AddTransition(walkState, idleState, () => !IsChasing || IsInAttackRange);
@@ -147,6 +163,8 @@ namespace Enemy
 
 
             enemyStateMachine.SetState(idleState);
+
+            
         }
 
         
