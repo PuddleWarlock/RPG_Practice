@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Move;
-using UnityEngine;
 
 namespace StateMachines
 {
     public class StateMachine
     {
-        private IPlayerState _currentState;
+        private IState _currentState;
 
         private Dictionary<Type, List<Transition>> _states = new Dictionary<Type, List<Transition>>();
 
@@ -28,7 +26,7 @@ namespace StateMachines
             _currentState?.Execute();
         }
 
-        public void SetState(IPlayerState state)
+        public void SetState(IState state)
         {
             if (state == _currentState)
             {
@@ -49,7 +47,7 @@ namespace StateMachines
             _currentState?.Enter();
         }
 
-        public void AddTransition(IPlayerState from, IPlayerState to, Func<bool> predicate)
+        public void AddTransition(IState from, IState to, Func<bool> predicate)
         {
             if (predicate == null)
             {
@@ -65,7 +63,7 @@ namespace StateMachines
             states.Add(new Transition(to, predicate));
         }
 
-        public void AddAnyTransition(IPlayerState state, Func<bool> predicate)
+        public void AddAnyTransition(IState state, Func<bool> predicate)
         {
             if (predicate == null)
             {

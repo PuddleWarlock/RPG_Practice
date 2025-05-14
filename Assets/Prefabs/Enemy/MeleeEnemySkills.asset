@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74b43d04a4c4698870ec333f60aeed8, type: 3}
+  m_Name: MeleeEnemySkills
+  m_EditorClassIdentifier: 
+  skillEntries:
+  - _skillClass: {fileID: 11500000, guid: 333a5c3416e54703ad3ffbac26ba69d1, type: 3}
+    _skillData: {fileID: 11400000, guid: 7f853c14f9f73004583fd4a5aab7f917, type: 2}

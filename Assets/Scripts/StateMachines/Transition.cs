@@ -1,14 +1,13 @@
 ﻿using System;
-using Move;
 
 namespace StateMachines
 {
     public class Transition
     {
-        public IPlayerState To { get; }
+        public IState To { get; }
         public Func<bool> Condition { get; }
 
-        public Transition(IPlayerState to, Func<bool> condition)
+        public Transition(IState to, Func<bool> condition)
         {
             To = to;
             Condition = condition;
