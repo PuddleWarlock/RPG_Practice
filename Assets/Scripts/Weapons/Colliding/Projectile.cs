@@ -1,6 +1,7 @@
 ﻿using System.Collections;
-using Fight;
+using Controllers.Entities.HealthController.Interfaces;
 using UnityEngine;
+using Weapons.Base;
 
 namespace Weapons.Colliding
 {

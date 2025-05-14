@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Weapons.Scriptable_Objects;
+using Weapons.ScriptableObjects;
 
 namespace Weapons.Base
 {
@@ -52,8 +52,10 @@ namespace Weapons.Base
     }
 
     public enum SkillType
-    {
+    {   
         Melee,
-        Fireball
+        Fireball,
+        Punch,
+        Heavy
     }
 }

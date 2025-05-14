@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapons
+namespace Weapons.Base
 {
     [Serializable] public struct Damage
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Enemy
+namespace Enemy.States
 {
     public class WalkState : StatesEnemyConst
     {
@@ -18,6 +18,7 @@ namespace Enemy
 
         public override void Execute()
         {
+            EnemyController.SetFollowPlayer();
         }
 
         public override void Exit()

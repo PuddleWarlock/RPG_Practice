@@ -1,5 +1,4 @@
-﻿using Fight;
-using StateMachines;
+﻿using StateMachines;
 using UnityEngine.AI;
 
 namespace Enemy
@@ -9,6 +8,7 @@ namespace Enemy
         protected EnemyController EnemyController;
         protected EnemyAnimator EnemyAnimator;
         protected NavMeshAgent NavMeshAgent;
+  
         
         protected StatesEnemyConst(EnemyController enemyController, EnemyAnimator animator, NavMeshAgent navMeshAgent)
         {

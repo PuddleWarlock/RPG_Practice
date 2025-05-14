@@ -1,6 +1,6 @@
-﻿using Fight;
+﻿using Controllers.Entities.HealthController.Interfaces;
 
-namespace Weapons
+namespace Weapons.Base
 {
     public interface IDamaging
     {
