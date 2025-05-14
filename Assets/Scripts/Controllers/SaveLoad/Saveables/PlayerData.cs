@@ -9,7 +9,7 @@ namespace Controllers.SaveLoad.Saveables
     {
         public float Health;
         public Vector3 Position;
-        public List<EnemyData> Enemies;
+        public List<EnemyData> Enemies; 
     }
 
     [Serializable]
@@ -20,5 +20,16 @@ namespace Controllers.SaveLoad.Saveables
         public float Health;
         public Vector3 Position;
         public int PrefabIndex;
+        public bool IsBoss { get; set; }
     }
+    
+    
+    // [Serializable]
+    //
+    // public class LvlData
+    // {
+    //     public string Id;
+    //     public string LvlName;
+    // }
+    
 }

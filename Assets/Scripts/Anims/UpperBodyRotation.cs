@@ -19,7 +19,7 @@ namespace Anims
         
         
         
-        public override async void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             _fightController = animator.GetComponent<FightController>();
             _isInitialized = false;

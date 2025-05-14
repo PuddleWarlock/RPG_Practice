@@ -586,9 +586,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sword: {fileID: 4688596184881057799}
+  UniqueId: 
+  PrefabIndex: 0
   _rotationSpeed: 8
   searchRadius: 10
   attackRange: 2
+  deadEnemies: 0
+  isDead: 0
 --- !u!114 &4760317775050364864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,7 +605,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af04154b0fcc4efcb26c6d78a08d4cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthSystem: {fileID: 1458955062392892736}
   _hpFront: {fileID: 7916581488071510274}
   _hpMiddle: {fileID: 7166216934182327470}
 --- !u!114 &1458955062392892736
@@ -616,6 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c3db853b931f94bb58ff73e39a2b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 100
 --- !u!114 &-644272708357399473
 MonoBehaviour:
   m_ObjectHideFlags: 0

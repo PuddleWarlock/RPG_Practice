@@ -23,7 +23,7 @@ namespace Controllers.Entities
             var melee = new MeleeSkill(_skillsArray.skillEntries[0]);
             Skills.Add(spell.SkillType,spell);
             Skills.Add(melee.SkillType,melee);*/
-
+            
             
         }
 

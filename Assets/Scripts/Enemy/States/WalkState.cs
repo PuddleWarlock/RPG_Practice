@@ -18,6 +18,7 @@ namespace Enemy.States
 
         public override void Execute()
         {
+            EnemyController.SetFollowPlayer();
         }
 
         public override void Exit()

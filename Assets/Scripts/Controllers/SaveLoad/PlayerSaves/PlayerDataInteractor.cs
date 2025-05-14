@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Controllers.SaveLoad.Saveables;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Controllers.SaveLoad.PlayerSaves
@@ -21,7 +22,7 @@ namespace Controllers.SaveLoad.PlayerSaves
             {
                 Health = 100f,
                 Position = default,
-                Enemies = new List<EnemyData>() // Инициализируем пустой список врагов
+                Enemies = new List<EnemyData>()
             };
             _playerDataRepository.Save(PlayerDataKey, CurrentSave);
         }
