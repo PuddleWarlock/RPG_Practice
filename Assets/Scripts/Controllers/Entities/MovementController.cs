@@ -58,7 +58,7 @@ namespace Controllers.Entities
         private void Update()
         {
             _moveStateMachine.Tick();
-            SetControllerParams();
+            //SetControllerParams();
             Rotate();
             ApplyGravity();
             CheckGround();
@@ -150,10 +150,10 @@ namespace Controllers.Entities
             _controller.Move(Vector3.up * (_velocityVertical * Time.deltaTime));
         }
 
-        public void SetControllerParams()
+        private void SetControllerParams()
         {
             var size = _head.position.y - _foot.position.y;
-            _controller.height = size;
+            _controller.height = size+.4f;
             _controller.center = _root.localPosition;
         }
         
